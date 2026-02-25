@@ -10,7 +10,6 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-// Input Schema for the AI Engagement Scorer
 const AiEngagementScorerInputSchema = z.object({
   cleanedTranscript: z
     .string()
@@ -29,7 +28,6 @@ const AiEngagementScorerInputSchema = z.object({
 });
 export type AiEngagementScorerInput = z.infer<typeof AiEngagementScorerInputSchema>;
 
-// Output Schema for the AI Engagement Scorer
 const AiEngagementScorerOutputSchema = z.object({
   podScore: z.object({
     questionQuality: z
@@ -101,22 +99,31 @@ const AiEngagementScorerOutputSchema = z.object({
 });
 export type AiEngagementScorerOutput = z.infer<typeof AiEngagementScorerOutputSchema>;
 
-// Wrapper function to call the Genkit flow
 export async function aiEngagementScorer(
   input: AiEngagementScorerInput
 ): Promise<AiEngagementScorerOutput> {
   return aiEngagementScorerFlow(input);
 }
 
-// Define the Genkit prompt for AI engagement scoring
 const engagementScorerPrompt = ai.definePrompt({
   name: 'engagementScorerPrompt',
   input: { schema: AiEngagementScorerInputSchema },
   output: { schema: AiEngagementScorerOutputSchema },
-  prompt: `You are an expert podcast content analyst. Your task is to meticulously evaluate a podcast episode's transcript to determine its engagement, identify key moments, and predict its viral potential.\n\nAnalyze the provided cleaned transcript, considering the context of any previously identified low energy sections, silences, and filler words (though your primary analysis should be on the cleaned transcript content itself).\n\nFocus on the following:\n1.  **PodScore**: Assign scores (1-10) for question quality, domain expertise, presentation quality, and overall engagement strength. Calculate an overall PodScore.\n2.  **High Moments**: Identify up to 5-10 distinct moments in the transcript that stand out due to strong emotion, compelling content, or high engagement potential. For each, provide a timestamp (in seconds, approximate based on content length), the primary emotion/theme, the text of the moment, an engagement score (1-10), and a viral probability (0-1).\n3.  **Low Energy Sections**: Re-evaluate or identify sections within the *cleaned transcript* that could lead to decreased listener engagement due to pacing, content, or tone. Provide start and end timestamps (approximate in seconds) and a brief reason.\n4.  **Drop Prediction**: Based on your analysis, predict if and why listeners might drop off, pointing to specific content areas or patterns.\n5.  **Viral Score**: Assign an overall viral potential score (0-100) for the entire episode.\n\nWhen estimating timestamps, assume an an average speaking rate of 150 words per minute for the cleaned transcript. The provided 'removedSilences' and 'removedFillers' information can help contextualize potential pacing issues but do not directly influence your content-based timestamp estimations.\n\nCleaned Transcript:\n{{{cleanedTranscript}}}\n\nPreviously Identified Low Energy Sections (for context):\n{{#if lowEnergySections}}\n{{#each lowEnergySections}}\n- From {{this.start}}s to {{this.end}}s\n{{/each}}\n{{else}}\nNone\n{{/if}}\n\nPreviously Removed Silences (for context):\n{{#if removedSilences}}\n{{#each removedSilences}}\n- From {{this.start}}s to {{this.end}}s\n{{/each}}\n{{else}}\nNone\n{{/if}}\n\nPreviously Removed Filler Words (for context):\n{{#if removedFillers}}\n{{#each removedFillers}}\n- Text: "{{this.text}}"\n{{/each}}\n{{else}}\nNone\n{{/if}}\n\nProvide your analysis in the specified JSON format.\n`,
+  prompt: (input) => `You are an expert podcast content analyst. Your task is to meticulously evaluate a podcast episode's transcript to determine its engagement, identify key moments, and predict its viral potential.\n\nAnalyze the provided cleaned transcript, considering the context of any previously identified low energy sections, silences, and filler words (though your primary analysis should be on the cleaned transcript content itself).\n\nFocus on the following:\n1.  **PodScore**: Assign scores (1-10) for question quality, domain expertise, presentation quality, and overall engagement strength. Calculate an overall PodScore.\n2.  **High Moments**: Identify up to 5-10 distinct moments in the transcript that stand out due to strong emotion, compelling content, or high engagement potential. For each, provide a timestamp (in seconds, approximate based on content length), the primary emotion/theme, the text of the moment, an engagement score (1-10), and a viral probability (0-1).\n3.  **Low Energy Sections**: Re-evaluate or identify sections within the *cleaned transcript* that could lead to decreased listener engagement due to pacing, content, or tone. Provide start and end timestamps (approximate in seconds) and a brief reason.\n4.  **Drop Prediction**: Based on your analysis, predict if and why listeners might drop off, pointing to specific content areas or patterns.\n5.  **Viral Score**: Assign an overall viral potential score (0-100) for the entire episode.\n\nWhen estimating timestamps, assume an an average speaking rate of 150 words per minute for the cleaned transcript. The provided 'removedSilences' and 'removedFillers' information can help contextualize potential pacing issues but do not directly influence your content-based timestamp estimations.\n\nCleaned Transcript:\n${input.cleanedTranscript}\n\nPreviously Identified Low Energy Sections (for context):\n${
+    input.lowEnergySections && input.lowEnergySections.length > 0
+      ? input.lowEnergySections.map(s => `- From ${s.start}s to ${s.end}s`).join('\n')
+      : 'None'
+  }\n\nPreviously Removed Silences (for context):\n${
+    input.removedSilences && input.removedSilences.length > 0
+      ? input.removedSilences.map(s => `- From ${s.start}s to ${s.end}s`).join('\n')
+      : 'None'
+  }\n\nPreviously Removed Filler Words (for context):\n${
+    input.removedFillers && input.removedFillers.length > 0
+      ? input.removedFillers.map(f => `- Text: "${f.text}"`).join('\n')
+      : 'None'
+  }\n\nProvide your analysis in the specified JSON format.\n`,
 });
 
-// Define the Genkit flow for AI engagement scoring
 const aiEngagementScorerFlow = ai.defineFlow(
   {
     name: 'aiEngagementScorerFlow',

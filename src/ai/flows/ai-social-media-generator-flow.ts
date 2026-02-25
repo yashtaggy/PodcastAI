@@ -70,22 +70,21 @@ const generateSocialMediaContentPrompt = ai.definePrompt({
   name: 'generateSocialMediaContentPrompt',
   input: { schema: AiSocialMediaGeneratorInputSchema },
   output: { schema: AiSocialMediaGeneratorOutputSchema },
-  prompt: `You are an expert social media content creator specializing in podcast promotion. Your goal is to generate viral content for various platforms based on high-engagement moments from a podcast episode.
+  prompt: (input) => `You are an expert social media content creator specializing in podcast promotion. Your goal is to generate viral content for various platforms based on high-engagement moments from a podcast episode.
 
-Podcast Title: {{{podcastTitle}}}
-Episode Title: {{{episodeTitle}}}
-Podcast Niche: {{{podcastNiche}}}
-Target Audience: {{{targetAudience}}}
+Podcast Title: ${input.podcastTitle}
+Episode Title: ${input.episodeTitle}
+Podcast Niche: ${input.podcastNiche}
+Target Audience: ${input.targetAudience}
 
 Here are the high-engagement moments identified from the episode. Focus on the 'text' of these moments, and consider their 'emotion' and 'viralPotential' to craft highly engaging content.
 
-{{#each highMoments}}
-Timestamp: {{{timestamp}}}s
-Emotion: {{{emotion}}}
-Viral Potential: {{{viralPotential}}}
-Text: {{{text}}}
+${input.highMoments.map(moment => `Timestamp: ${moment.timestamp}s
+Emotion: ${moment.emotion}
+Viral Potential: ${moment.viralPotential}
+Text: ${moment.text}
 ---
-{{/each}}
+`).join('')}
 
 Generate the following content, ensuring it is tailored to each platform's best practices and optimized for virality and engagement:
 
