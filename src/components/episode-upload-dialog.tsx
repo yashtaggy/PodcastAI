@@ -63,7 +63,7 @@ export function EpisodeUploadDialog() {
         <DialogHeader>
           <DialogTitle className="font-headline">Upload New Episode</DialogTitle>
           <DialogDescription>
-            Select your audio file. We'll handle the magic from there.
+            Select your audio or video file. We'll handle the magic from there.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -72,17 +72,17 @@ export function EpisodeUploadDialog() {
             <Input id="title" placeholder="e.g. The Future of AI" ref={titleRef} />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label htmlFor="audio-file">Audio File</Label>
+            <Label htmlFor="media-file">Media File</Label>
             <div
               className="relative flex items-center justify-center w-full h-32 border-2 border-dashed rounded-lg border-border hover:border-primary transition-colors cursor-pointer"
-              onClick={() => document.getElementById('audio-file-input')?.click()}
+              onClick={() => document.getElementById('media-file-input')?.click()}
             >
               <Input
-                id="audio-file-input"
+                id="media-file-input"
                 type="file"
                 className="hidden"
                 onChange={handleFileChange}
-                accept="audio/*"
+                accept="audio/*,video/*"
               />
               {!file ? (
                 <div className="text-center">
@@ -90,7 +90,7 @@ export function EpisodeUploadDialog() {
                   <p className="mt-2 text-sm text-muted-foreground">
                     Click to browse or drag & drop
                   </p>
-                  <p className="text-xs text-muted-foreground/70">MP3, WAV, AAC (max 500MB)</p>
+                  <p className="text-xs text-muted-foreground/70">Audio or Video file (MP4, MOV, MP3, WAV)</p>
                 </div>
               ) : (
                 <div className="p-4 text-center">
