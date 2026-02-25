@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import { LayoutGrid, ListVideo, Settings, LogOut, LifeBuoy, Podcast } from "lucide-react"
+import { LayoutGrid, ListVideo, Settings, LogOut, LifeBuoy, Podcast, Sparkles } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { Logo } from "./logo";
@@ -18,6 +18,7 @@ import { Button } from "./ui/button";
 
 const navItems = [
     { href: "/dashboard", icon: Podcast, label: "Episodes" },
+    { href: "/dashboard/authority-engine", icon: Sparkles, label: "Authority Engine"},
 ];
 
 export function DashboardSidebar() {

@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useContext, useEffect, useState } from 'react';
@@ -20,22 +21,10 @@ import {
   Clock,
   Speaker,
   Lightbulb,
-  Share2,
-  Instagram,
-  Linkedin,
-  Twitter,
-  Youtube,
-  Quote,
   Flame,
-  MessageSquare,
-  BookText,
-  Film
 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 function ScoreCard({ title, score, explanation, icon: Icon }: { title: string; score: number; explanation: string; icon: React.ElementType }) {
   return (
@@ -79,16 +68,6 @@ function OverallScore({ score, explanation }: { score: number, explanation: stri
     )
 }
 
-function SocialIcon({ platform }: { platform: string }) {
-    switch (platform.toLowerCase()) {
-        case 'instagram': return <Instagram className="size-5" />;
-        case 'linkedin': return <Linkedin className="size-5" />;
-        case 'twitter': return <Twitter className="size-5" />;
-        case 'youtube': return <Youtube className="size-5" />;
-        default: return <Share2 className="size-5" />;
-    }
-}
-
 export default function EpisodeDetailPage() {
   const router = useRouter();
   const { getEpisodeById } = useContext(EpisodesContext);
@@ -124,7 +103,7 @@ export default function EpisodeDetailPage() {
     );
   }
   
-  const { podScore, engagementTimeline, improvementIntelligence, cleanTranscript, viralContent } = episode.analysis;
+  const { podScore, engagementTimeline, improvementIntelligence, cleanTranscript } = episode.analysis;
   
   const scoreDimensions = [
       { id: 'questionQuality', title: 'Question Quality', icon: BrainCircuit },
@@ -176,107 +155,6 @@ export default function EpisodeDetailPage() {
         </CardContent>
       </Card>
       
-      {/* Viral Content Engine Section */}
-      {viralContent && (
-        <Card className="bg-gradient-to-br from-primary/10 via-card to-accent/10">
-          <CardHeader>
-            <CardTitle className="font-headline text-3xl flex items-center gap-3"><Sparkles className="text-primary"/>Podcast Authority Engine</CardTitle>
-            <CardDescription>Turn one episode into weeks of content. Here's your platform-specific authority package.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Tabs defaultValue="instagram">
-              <TabsList className="grid w-full grid-cols-4">
-                  <TabsTrigger value="instagram"><Instagram className="mr-2"/>Instagram</TabsTrigger>
-                  <TabsTrigger value="linkedin"><Linkedin className="mr-2"/>LinkedIn</TabsTrigger>
-                  <TabsTrigger value="twitter"><Twitter className="mr-2"/>Twitter</TabsTrigger>
-                  <TabsTrigger value="youtube"><Youtube className="mr-2"/>YouTube</TabsTrigger>
-              </TabsList>
-              <div className="mt-4 p-4 rounded-lg bg-background/50">
-                <TabsContent value="instagram">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <h3 className="font-semibold text-lg flex items-center gap-2"><Film/>Reel Scripts</h3>
-                      <Accordion type="single" collapsible className="w-full">
-                        {viralContent.instagram.reelScripts.map((script, i) => (
-                           <AccordionItem value={`item-${i}`} key={i}>
-                            <AccordionTrigger>Reel Script #{i + 1}</AccordionTrigger>
-                            <AccordionContent className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap">{script}</AccordionContent>
-                          </AccordionItem>
-                        ))}
-                      </Accordion>
-                    </div>
-                     <div className="space-y-4">
-                        <h3 className="font-semibold text-lg flex items-center gap-2"><MessageSquare/>Captions & Hooks</h3>
-                        <Accordion type="single" collapsible className="w-full">
-                          <AccordionItem value="hooks">
-                              <AccordionTrigger>Hook Variations ({viralContent.instagram.hookVariations.length})</AccordionTrigger>
-                              <AccordionContent>
-                                <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                                    {viralContent.instagram.hookVariations.map((h, i) => <li key={i}>{h}</li>)}
-                                </ul>
-                              </AccordionContent>
-                          </AccordionItem>
-                           <AccordionItem value="captions">
-                              <AccordionTrigger>Caption Variations ({viralContent.instagram.captionVariations.length})</AccordionTrigger>
-                              <AccordionContent>
-                                <ul className="space-y-4">
-                                    {viralContent.instagram.captionVariations.map((c, i) => <li key={i} className="p-3 bg-muted/50 rounded-md text-sm text-muted-foreground">{c}</li>)}
-                                </ul>
-                              </AccordionContent>
-                          </AccordionItem>
-                        </Accordion>
-                        <h3 className="font-semibold text-lg">Hashtags</h3>
-                        <div className="flex flex-wrap gap-2">
-                           {viralContent.instagram.hashtags.map((tag, i) => <Badge key={i} variant="secondary">{tag}</Badge>)}
-                        </div>
-                     </div>
-                  </div>
-                </TabsContent>
-                <TabsContent value="linkedin" className="space-y-6">
-                    <div>
-                        <h3 className="font-semibold text-lg flex items-center gap-2"><Target/>Authority Post</h3>
-                        <p className="text-sm text-muted-foreground p-4 mt-2 whitespace-pre-wrap bg-muted/50 rounded-md">{viralContent.linkedin.authorityPost}</p>
-                    </div>
-                     <div>
-                        <h3 className="font-semibold text-lg flex items-center gap-2"><BookText/>Storytelling Post</h3>
-                        <p className="text-sm text-muted-foreground p-4 mt-2 whitespace-pre-wrap bg-muted/50 rounded-md">{viralContent.linkedin.storytellingPost}</p>
-                    </div>
-                </TabsContent>
-                 <TabsContent value="twitter" className="space-y-6">
-                    <div>
-                        <h3 className="font-semibold text-lg flex items-center gap-2">Tweet Thread</h3>
-                        <p className="text-sm text-muted-foreground p-4 mt-2 whitespace-pre-wrap bg-muted/50 rounded-md">{viralContent.twitter.tweetThread}</p>
-                    </div>
-                     <div>
-                        <h3 className="font-semibold text-lg flex items-center gap-2"><Quote/>Quote Tweet</h3>
-                        <p className="text-sm text-muted-foreground p-4 mt-2 italic bg-muted/50 rounded-md">"{viralContent.twitter.quoteTweet}"</p>
-                    </div>
-                 </TabsContent>
-                  <TabsContent value="youtube" className="space-y-6">
-                    <div>
-                        <h3 className="font-semibold text-lg flex items-center gap-2"><Film/>Short Scripts</h3>
-                        <Accordion type="single" collapsible className="w-full">
-                        {viralContent.youtubeShorts.shortScripts.map((script, i) => (
-                           <AccordionItem value={`item-${i}`} key={i}>
-                            <AccordionTrigger>Short Script #{i + 1}</AccordionTrigger>
-                            <AccordionContent className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap">{script}</AccordionContent>
-                          </AccordionItem>
-                        ))}
-                      </Accordion>
-                    </div>
-                     <div>
-                        <h3 className="font-semibold text-lg flex items-center gap-2"><Lightbulb/>Title Ideas</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                            {viralContent.youtubeShorts.titleIdeas.map((title, i) => <li key={i}>{title}</li>)}
-                        </ul>
-                    </div>
-                 </TabsContent>
-              </div>
-            </Tabs>
-          </CardContent>
-        </Card>
-      )}
-
       {/* Improvement & Timeline Section */}
        <div className="grid lg:grid-cols-5 gap-6">
           <Card className="lg:col-span-3">
