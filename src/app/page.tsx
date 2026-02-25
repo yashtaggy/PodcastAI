@@ -23,7 +23,7 @@ export default function Home() {
 
       <div className="mt-8 flex gap-4">
         <Button asChild size="lg" className="font-semibold text-lg bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20">
-          <Link href="/dashboard">Get Started</Link>
+          <Link href="/dashboard/onboarding">Get Started</Link>
         </Button>
         <Button asChild size="lg" variant="outline" className="font-semibold text-lg">
           <Link href="/login">Sign In</Link>
