@@ -36,7 +36,7 @@ export function DashboardSidebar() {
       <SidebarHeader>
         <Link href="/dashboard" className="flex items-center gap-2">
           <Logo className="size-7 text-primary" />
-          <span className="font-headline text-xl font-semibold text-primary">PodVision</span>
+          <span className="font-headline text-xl font-semibold text-primary">PodCastAI</span>
         </Link>
       </SidebarHeader>
       <SidebarContent className="p-2">

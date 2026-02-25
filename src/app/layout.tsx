@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'PodVision AI',
+  title: 'PodCastAI',
   description: 'Intelligent Podcast Performance & Viral Engine',
 };
 

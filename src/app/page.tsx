@@ -13,7 +13,7 @@ export default function Home() {
       </div>
       
       <h1 className="font-headline text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-        PodVision AI
+        PodCastAI
       </h1>
       
       <p className="mt-4 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -40,11 +40,11 @@ export default function Home() {
           <div className="p-8">
             <p className="font-code text-left text-muted-foreground">
               <span className="text-accent">// Your podcast's future, powered by AI.</span><br/>
-              <span className="text-primary">const</span> podvision = <span className="text-accent">new</span> AI_Engine(&#123; <br />
+              <span className="text-primary">const</span> podcastai = <span className="text-accent">new</span> AI_Engine(&#123; <br />
               &nbsp;&nbsp;audio: <span className="text-green-400">'your-podcast.mp3'</span>,<br/>
               &nbsp;&nbsp;goals: [<span className="text-green-400">'grow_audience'</span>, <span className="text-green-400">'increase_engagement'</span>, <span className="text-green-400">'go_viral'</span>]<br/>
               &#125;);<br/><br/>
-              podvision.analyze().then(<span className="text-accent">results</span> =&gt; &#123;<br/>
+              podcastai.analyze().then(<span className="text-accent">results</span> =&gt; &#123;<br/>
               &nbsp;&nbsp;console.log(<span className="text-accent">results</span>.viralContent);<br/>
               &#125;);
             </p>

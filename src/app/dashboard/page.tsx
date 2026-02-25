@@ -37,7 +37,7 @@ export default function DashboardPage() {
               <div className="mx-auto bg-primary/10 p-3 rounded-full w-fit">
                 <Rocket className="w-8 h-8 text-primary" />
               </div>
-              <CardTitle className="font-headline text-3xl mt-4">Welcome to PodVision AI</CardTitle>
+              <CardTitle className="font-headline text-3xl mt-4">Welcome to PodCastAI</CardTitle>
               <CardDescription className="text-base">
                 Let's get started by uploading your first episode to analyze its performance.
               </CardDescription>
