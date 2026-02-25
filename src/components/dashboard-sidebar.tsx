@@ -37,7 +37,7 @@ export function DashboardSidebar() {
             {navItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
                     <Link href={item.href}>
-                        <SidebarMenuButton tooltip={item.label} isActive={pathname.startsWith(item.href)}>
+                        <SidebarMenuButton tooltip={item.label} isActive={pathname.startsWith(item.href) && (item.href === '/dashboard' ? pathname === item.href : true)}>
                             <item.icon />
                             <span>{item.label}</span>
                         </SidebarMenuButton>
@@ -49,7 +49,7 @@ export function DashboardSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-             <Link href="#">
+             <Link href="/dashboard/onboarding">
                 <SidebarMenuButton tooltip="Settings">
                     <Settings />
                     <span>Settings</span>
