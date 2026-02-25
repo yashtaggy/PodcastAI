@@ -16,7 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Loader2, Sparkles, Instagram, Linkedin, Twitter, Youtube, Film, MessageSquare, Target, BookText, Quote, Lightbulb, Clapperboard, Briefcase, MessageCircle, YoutubeIcon } from 'lucide-react';
+import { Loader2, Sparkles, Instagram, Linkedin, Twitter, Youtube, Film, MessageSquare, Target, BookText, Quote, Lightbulb, Clapperboard, Briefcase, MessageCircle, YoutubeIcon, Users } from 'lucide-react';
 import Balancer from 'react-wrap-balancer';
 
 const platforms = [
@@ -75,6 +75,10 @@ export default function AuthorityEnginePage() {
         return;
     }
 
+    const storedOnboardingData = localStorage.getItem("onboardingData");
+    const onboardingData = storedOnboardingData ? JSON.parse(storedOnboardingData) : null;
+    const targetAudience = onboardingData?.targetAudience || "a general audience of podcast listeners";
+
     try {
         const input: AiViralContentInput = {
             podcastTopic: selectedEpisode.title,
@@ -82,6 +86,7 @@ export default function AuthorityEnginePage() {
             engagementTimeline: selectedEpisode.analysis.engagementTimeline,
             platforms: data.platforms,
             brandTone: data.brandTone,
+            targetAudience: targetAudience,
         };
         const result = await generateViralContent(input);
         setGeneratedContent(result);
@@ -197,7 +202,7 @@ export default function AuthorityEnginePage() {
                 <Sparkles className="w-12 h-12 animate-pulse text-primary" />
                 <p className="ml-4 text-xl font-semibold">Building your content...</p>
                 </div>
-                <p className="text-muted-foreground max-w-md"><Balancer>The AI is extracting smart clips, writing posts, and tailoring content for your selected platforms. This might take a moment.</Balancer></p>
+                <p className="text-muted-foreground max-w-md"><Balancer>The AI is extracting smart clips, writing posts, and simulating audience reactions. This might take a moment.</Balancer></p>
             </div>
         )}
 
@@ -248,44 +253,61 @@ export default function AuthorityEnginePage() {
                         </TabsList>
                         <div className="mt-4 p-4 rounded-lg bg-background/50">
                             {generatedContent.instagram && <TabsContent value="instagram">
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div className="space-y-4">
-                                <h3 className="font-semibold text-lg flex items-center gap-2"><Film/>Reel Scripts</h3>
-                                <Accordion type="single" collapsible className="w-full">
-                                    {generatedContent.instagram.reelScripts.map((script, i) => (
-                                    <AccordionItem value={`item-${i}`} key={i}>
-                                        <AccordionTrigger>Reel Script #{i + 1}</AccordionTrigger>
-                                        <AccordionContent className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap">{script}</AccordionContent>
-                                    </AccordionItem>
-                                    ))}
-                                </Accordion>
-                                </div>
-                                <div className="space-y-4">
-                                    <h3 className="font-semibold text-lg flex items-center gap-2"><MessageSquare/>Captions & Hooks</h3>
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div className="space-y-4">
+                                    <h3 className="font-semibold text-lg flex items-center gap-2"><Film/>Reel Scripts</h3>
                                     <Accordion type="single" collapsible className="w-full">
-                                    <AccordionItem value="hooks">
-                                        <AccordionTrigger>Hook Variations ({generatedContent.instagram.hookVariations.length})</AccordionTrigger>
-                                        <AccordionContent>
-                                            <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                                                {generatedContent.instagram.hookVariations.map((h, i) => <li key={i}>{h}</li>)}
-                                            </ul>
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="captions">
-                                        <AccordionTrigger>Caption Variations ({generatedContent.instagram.captionVariations.length})</AccordionTrigger>
-                                        <AccordionContent>
-                                            <ul className="space-y-4">
-                                                {generatedContent.instagram.captionVariations.map((c, i) => <li key={i} className="p-3 bg-muted/50 rounded-md text-sm text-muted-foreground">{c}</li>)}
-                                            </ul>
-                                        </AccordionContent>
-                                    </AccordionItem>
+                                        {generatedContent.instagram.reelScripts.map((script, i) => (
+                                        <AccordionItem value={`item-${i}`} key={i}>
+                                            <AccordionTrigger>Reel Script #{i + 1}</AccordionTrigger>
+                                            <AccordionContent className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap">{script}</AccordionContent>
+                                        </AccordionItem>
+                                        ))}
                                     </Accordion>
-                                    <h3 className="font-semibold text-lg">Hashtags</h3>
-                                    <div className="flex flex-wrap gap-2">
-                                    {generatedContent.instagram.hashtags.map((tag, i) => <Badge key={i} variant="secondary">{tag}</Badge>)}
+                                    </div>
+                                    <div className="space-y-4">
+                                        <h3 className="font-semibold text-lg flex items-center gap-2"><MessageSquare/>Captions & Hooks</h3>
+                                        <Accordion type="single" collapsible className="w-full">
+                                        <AccordionItem value="hooks">
+                                            <AccordionTrigger>Hook Variations ({generatedContent.instagram.hookVariations.length})</AccordionTrigger>
+                                            <AccordionContent>
+                                                <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                                                    {generatedContent.instagram.hookVariations.map((h, i) => <li key={i}>{h}</li>)}
+                                                </ul>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                        <AccordionItem value="captions">
+                                            <AccordionTrigger>Caption Variations ({generatedContent.instagram.captionVariations.length})</AccordionTrigger>
+                                            <AccordionContent>
+                                                <ul className="space-y-4">
+                                                    {generatedContent.instagram.captionVariations.map((c, i) => <li key={i} className="p-3 bg-muted/50 rounded-md text-sm text-muted-foreground">{c}</li>)}
+                                                </ul>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                        </Accordion>
+                                        <h3 className="font-semibold text-lg">Hashtags</h3>
+                                        <div className="flex flex-wrap gap-2">
+                                        {generatedContent.instagram.hashtags.map((tag, i) => <Badge key={i} variant="secondary">{tag}</Badge>)}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div className="mt-6">
+                                    <h3 className="font-semibold text-lg flex items-center gap-2 mb-2"><Users/>Simulated Audience Reactions</h3>
+                                    <Accordion type="single" collapsible className="w-full">
+                                        <AccordionItem value="reactions">
+                                            <AccordionTrigger>View Potential Comments & Feedback</AccordionTrigger>
+                                            <AccordionContent>
+                                                <ul className="space-y-3">
+                                                    {generatedContent.instagram.simulatedReactions.map((reaction, i) => (
+                                                        <li key={i} className="bg-muted/30 p-3 rounded-md border border-border/50">
+                                                            <p className="italic text-muted-foreground">"{reaction}"</p>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                    </Accordion>
+                                </div>
                             </TabsContent>}
                             {generatedContent.linkedin && <TabsContent value="linkedin" className="space-y-6">
                                 <div>
@@ -296,6 +318,23 @@ export default function AuthorityEnginePage() {
                                     <h3 className="font-semibold text-lg flex items-center gap-2"><BookText/>Storytelling Post</h3>
                                     <p className="text-sm text-muted-foreground p-4 mt-2 whitespace-pre-wrap bg-muted/50 rounded-md">{generatedContent.linkedin.storytellingPost}</p>
                                 </div>
+                                <div className="mt-6">
+                                    <h3 className="font-semibold text-lg flex items-center gap-2 mb-2"><Users/>Simulated Audience Reactions</h3>
+                                    <Accordion type="single" collapsible className="w-full">
+                                        <AccordionItem value="reactions">
+                                            <AccordionTrigger>View Potential Comments & Feedback</AccordionTrigger>
+                                            <AccordionContent>
+                                                <ul className="space-y-3">
+                                                    {generatedContent.linkedin.simulatedReactions.map((reaction, i) => (
+                                                        <li key={i} className="bg-muted/30 p-3 rounded-md border border-border/50">
+                                                            <p className="italic text-muted-foreground">"{reaction}"</p>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                    </Accordion>
+                                </div>
                             </TabsContent>}
                             {generatedContent.twitter && <TabsContent value="twitter" className="space-y-6">
                                 <div>
@@ -305,6 +344,23 @@ export default function AuthorityEnginePage() {
                                 <div>
                                     <h3 className="font-semibold text-lg flex items-center gap-2"><Quote/>Quote Tweet</h3>
                                     <p className="text-sm text-muted-foreground p-4 mt-2 italic bg-muted/50 rounded-md">"{generatedContent.twitter.quoteTweet}"</p>
+                                </div>
+                                <div className="mt-6">
+                                    <h3 className="font-semibold text-lg flex items-center gap-2 mb-2"><Users/>Simulated Audience Reactions</h3>
+                                    <Accordion type="single" collapsible className="w-full">
+                                        <AccordionItem value="reactions">
+                                            <AccordionTrigger>View Potential Comments & Feedback</AccordionTrigger>
+                                            <AccordionContent>
+                                                <ul className="space-y-3">
+                                                    {generatedContent.twitter.simulatedReactions.map((reaction, i) => (
+                                                        <li key={i} className="bg-muted/30 p-3 rounded-md border border-border/50">
+                                                            <p className="italic text-muted-foreground">"{reaction}"</p>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                    </Accordion>
                                 </div>
                             </TabsContent>}
                             {generatedContent.youtube && <TabsContent value="youtube" className="space-y-6">
@@ -324,6 +380,23 @@ export default function AuthorityEnginePage() {
                                     <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
                                         {generatedContent.youtube.titleIdeas.map((title, i) => <li key={i}>{title}</li>)}
                                     </ul>
+                                </div>
+                                <div className="mt-6">
+                                    <h3 className="font-semibold text-lg flex items-center gap-2 mb-2"><Users/>Simulated Audience Reactions</h3>
+                                    <Accordion type="single" collapsible className="w-full">
+                                        <AccordionItem value="reactions">
+                                            <AccordionTrigger>View Potential Comments & Feedback</AccordionTrigger>
+                                            <AccordionContent>
+                                                <ul className="space-y-3">
+                                                    {generatedContent.youtube.simulatedReactions.map((reaction, i) => (
+                                                        <li key={i} className="bg-muted/30 p-3 rounded-md border border-border/50">
+                                                            <p className="italic text-muted-foreground">"{reaction}"</p>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                    </Accordion>
                                 </div>
                             </TabsContent>}
                         </div>

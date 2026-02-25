@@ -94,6 +94,8 @@ export default function OnboardingPage() {
             const strategy = await generateLaunchStrategy(data as AiLaunchStrategyInput);
             // Store strategy in local storage to pass to the next page
             localStorage.setItem("launchStrategy", JSON.stringify(strategy));
+            // Store onboarding inputs for other features
+            localStorage.setItem("onboardingData", JSON.stringify(data));
             toast({
                 title: "Strategy Generated!",
                 description: "Your AI-powered launch strategy is ready.",
