@@ -58,7 +58,8 @@ const aiAudioCleanerFlow = ai.defineFlow(
     name: 'aiAudioCleanerFlow',
     inputSchema: AiAudioCleanerInputSchema,
     outputSchema: AiAudioCleanerOutputSchema,
-  },\n  async (input) => {
+  },
+  async (input) => {
     const {output} = await aiAudioCleanerPrompt(input);
     // Ensure output fields for silences and low energy sections are populated,
     // even if they were optional in input but required in output.
