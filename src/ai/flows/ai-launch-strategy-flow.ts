@@ -10,7 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-export const AiLaunchStrategyInputSchema = z.object({
+const AiLaunchStrategyInputSchema = z.object({
   podcastNiche: z.string().describe('The niche or category of the podcast.'),
   targetAudience: z.string().describe('A description of the target audience.'),
   languages: z.array(z.string()).describe('List of preferred languages for the content.'),
@@ -23,7 +23,7 @@ export const AiLaunchStrategyInputSchema = z.object({
 });
 export type AiLaunchStrategyInput = z.infer<typeof AiLaunchStrategyInputSchema>;
 
-export const AiLaunchStrategyOutputSchema = z.object({
+const AiLaunchStrategyOutputSchema = z.object({
     podcastFormat: z.string().describe("A suggested format for the podcast (e.g., Interview, Solo, Panel Discussion)."),
     episodeStructure: z.object({
         intro: z.string().describe("Suggestion for the episode intro."),

@@ -44,7 +44,7 @@ const PostingSuggestionsSchema = z.object({
   bestTime: z.string().describe('Suggested best time of day to post.'),
 });
 
-export const AiSocialMediaGeneratorInputSchema = z.object({
+const AiSocialMediaGeneratorInputSchema = z.object({
   podcastTitle: z.string().describe('The title of the podcast.'),
   episodeTitle: z.string().describe('The title of the episode.'),
   podcastNiche: z.string().describe('The niche or category of the podcast.'),
@@ -54,7 +54,7 @@ export const AiSocialMediaGeneratorInputSchema = z.object({
 
 export type AiSocialMediaGeneratorInput = z.infer<typeof AiSocialMediaGeneratorInputSchema>;
 
-export const AiSocialMediaGeneratorOutputSchema = z.object({
+const AiSocialMediaGeneratorOutputSchema = z.object({
   platformContent: z.object({
     instagram: InstagramContentSchema,
     linkedin: LinkedInContentSchema,
