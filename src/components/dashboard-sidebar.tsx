@@ -10,19 +10,26 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import { LayoutGrid, ListVideo, Settings, LogOut, LifeBuoy, Podcast, Sparkles } from "lucide-react"
+import { Rocket, Podcast, Sparkles, LogOut } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { Logo } from "./logo";
-import { Button } from "./ui/button";
 
 const navItems = [
+    { href: "/dashboard/onboarding", icon: Rocket, label: "Onboarding" },
     { href: "/dashboard", icon: Podcast, label: "Episodes" },
     { href: "/dashboard/authority-engine", icon: Sparkles, label: "Authority Engine"},
 ];
 
 export function DashboardSidebar() {
   const pathname = usePathname();
+
+  const getIsActive = (itemHref: string) => {
+    if (itemHref === '/dashboard') {
+        return pathname === itemHref || pathname.startsWith('/dashboard/episodes');
+    }
+    return pathname.startsWith(itemHref);
+  }
 
   return (
     <Sidebar>
@@ -37,7 +44,7 @@ export function DashboardSidebar() {
             {navItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
                     <Link href={item.href}>
-                        <SidebarMenuButton tooltip={item.label} isActive={pathname.startsWith(item.href) && (item.href === '/dashboard' ? pathname === item.href || pathname.startsWith('/dashboard/episodes') : true)}>
+                        <SidebarMenuButton tooltip={item.label} isActive={getIsActive(item.href)}>
                             <item.icon />
                             <span>{item.label}</span>
                         </SidebarMenuButton>
@@ -48,14 +55,6 @@ export function DashboardSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem>
-             <Link href="/dashboard/onboarding">
-                <SidebarMenuButton tooltip="Onboarding">
-                    <Settings />
-                    <span>Onboarding</span>
-                </SidebarMenuButton>
-            </Link>
-          </SidebarMenuItem>
            <SidebarMenuItem>
             <Link href="/login">
                 <SidebarMenuButton tooltip="Logout">

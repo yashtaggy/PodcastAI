@@ -26,7 +26,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { generateLaunchStrategy, AiLaunchStrategyInput } from "@/ai/flows/ai-launch-strategy-flow";
-import { Loader2 } from "lucide-react";
+import { Loader2, Rocket, ChevronLeft } from "lucide-react";
+import Balancer from "react-wrap-balancer";
 
 const languages = [
   { id: "english", label: "English" },
@@ -68,6 +69,7 @@ export default function OnboardingPage() {
     const router = useRouter();
     const { toast } = useToast();
     const [isLoading, setIsLoading] = useState(false);
+    const [showForm, setShowForm] = useState(false);
 
     const {
         control,
@@ -109,16 +111,53 @@ export default function OnboardingPage() {
         }
     };
 
+    if (!showForm) {
+        return (
+            <div className="flex items-center justify-center" style={{minHeight: 'calc(100vh - 15rem)'}}>
+                <Card className="bg-card/70 backdrop-blur-lg border border-border/50 text-center max-w-2xl">
+                    <CardHeader>
+                    <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit">
+                        <Rocket className="w-10 h-10 text-primary" />
+                    </div>
+                    <CardTitle className="font-headline text-4xl mt-4">Create Your AI-Powered Launch Strategy</CardTitle>
+                    <CardDescription className="text-lg text-muted-foreground pt-2">
+                        <Balancer>
+                        Answer a few questions about your podcast, and our AI will generate a personalized, step-by-step launch plan to help you grow your audience from day one.
+                        </Balancer>
+                    </CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex flex-col items-center">
+                        <Button size="lg" onClick={() => setShowForm(true)}>
+                            Start Onboarding
+                        </Button>
+                        <p className="text-xs text-muted-foreground mt-4">It only takes a few minutes!</p>
+                    </CardContent>
+                </Card>
+            </div>
+        );
+    }
+
     return (
         <div className="space-y-6">
-            <Card className="bg-card/70 backdrop-blur-lg border border-border/50">
-                <CardHeader>
-                    <CardTitle className="font-headline text-3xl">Creator Onboarding</CardTitle>
-                    <CardDescription>
-                        Tell us about your podcast. This will help us generate a personalized AI launch strategy for you.
-                    </CardDescription>
-                </CardHeader>
+             <div className="flex items-center gap-4">
+                <Button variant="outline" size="icon" className="h-10 w-10 flex-shrink-0" onClick={() => setShowForm(false)}>
+                    <ChevronLeft className="h-5 w-5" />
+                    <span className="sr-only">Back</span>
+                </Button>
+                <div>
+                    <h1 className="font-headline text-3xl">Creator Onboarding</h1>
+                    <p className="text-muted-foreground">
+                        Tell us about your podcast to generate a personalized AI launch strategy.
+                    </p>
+                </div>
+            </div>
+            
+            <Card>
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    <CardHeader>
+                        <CardTitle>Podcast Details</CardTitle>
+                        <CardDescription>The more details you provide, the better the strategy will be.</CardDescription>
+                    </CardHeader>
                     <CardContent className="space-y-8">
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-2">
