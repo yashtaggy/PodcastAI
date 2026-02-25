@@ -8,7 +8,7 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
+import { z } from 'zod';
 
 const AiLaunchStrategyInputSchema = z.object({
   podcastNiche: z.string().describe('The niche or category of the podcast.'),

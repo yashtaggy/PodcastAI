@@ -10,14 +10,14 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import { LayoutGrid, ListVideo, Settings, LogOut, LifeBuoy } from "lucide-react"
+import { LayoutGrid, ListVideo, Settings, LogOut, LifeBuoy, Podcast } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { Logo } from "./logo";
 import { Button } from "./ui/button";
 
 const navItems = [
-    { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
+    { href: "/dashboard", icon: Podcast, label: "Episodes" },
 ];
 
 export function DashboardSidebar() {
@@ -36,7 +36,7 @@ export function DashboardSidebar() {
             {navItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
                     <Link href={item.href}>
-                        <SidebarMenuButton tooltip={item.label} isActive={pathname.startsWith(item.href) && (item.href === '/dashboard' ? pathname === item.href : true)}>
+                        <SidebarMenuButton tooltip={item.label} isActive={pathname.startsWith(item.href) && (item.href === '/dashboard' ? pathname === item.href || pathname.startsWith('/dashboard/episodes') : true)}>
                             <item.icon />
                             <span>{item.label}</span>
                         </SidebarMenuButton>
@@ -49,9 +49,9 @@ export function DashboardSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
              <Link href="/dashboard/onboarding">
-                <SidebarMenuButton tooltip="Settings">
+                <SidebarMenuButton tooltip="Onboarding">
                     <Settings />
-                    <span>Settings</span>
+                    <span>Onboarding</span>
                 </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>
