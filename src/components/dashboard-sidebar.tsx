@@ -36,12 +36,10 @@ export function DashboardSidebar() {
         <SidebarMenu>
             {navItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                    <Link href={item.href} passHref legacyBehavior>
-                        <SidebarMenuButton asChild tooltip={item.label} isActive={pathname.startsWith(item.href)}>
-                            <a>
-                                <item.icon />
-                                <span>{item.label}</span>
-                            </a>
+                    <Link href={item.href}>
+                        <SidebarMenuButton tooltip={item.label} isActive={pathname.startsWith(item.href)}>
+                            <item.icon />
+                            <span>{item.label}</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
@@ -51,22 +49,18 @@ export function DashboardSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-             <Link href="#" passHref legacyBehavior>
-                <SidebarMenuButton asChild tooltip="Settings">
-                    <a>
-                        <Settings />
-                        <span>Settings</span>
-                    </a>
+             <Link href="#">
+                <SidebarMenuButton tooltip="Settings">
+                    <Settings />
+                    <span>Settings</span>
                 </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>
            <SidebarMenuItem>
-            <Link href="/login" passHref legacyBehavior>
-                <SidebarMenuButton asChild tooltip="Logout">
-                    <a>
-                        <LogOut />
-                        <span>Logout</span>
-                    </a>
+            <Link href="/login">
+                <SidebarMenuButton tooltip="Logout">
+                    <LogOut />
+                    <span>Logout</span>
                 </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>
