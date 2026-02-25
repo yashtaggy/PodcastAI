@@ -16,15 +16,22 @@ import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Loader2, Sparkles, Instagram, Linkedin, Twitter, Youtube, Film, MessageSquare, Target, BookText, Quote, Lightbulb } from 'lucide-react';
+import { Loader2, Sparkles, Instagram, Linkedin, Twitter, Youtube, Film, MessageSquare, Target, BookText, Quote, Lightbulb, Clapperboard, Briefcase, MessageCircle, YoutubeIcon } from 'lucide-react';
 import Balancer from 'react-wrap-balancer';
 
 const platforms = [
-    { id: "instagram", label: "Instagram" },
-    { id: "linkedin", label: "LinkedIn" },
-    { id: "twitter", label: "Twitter" },
-    { id: "youtube", label: "YouTube Shorts" },
+    { id: "instagram", label: "Instagram", icon: Instagram },
+    { id: "linkedin", label: "LinkedIn", icon: Briefcase },
+    { id: "twitter", label: "Twitter", icon: MessageCircle },
+    { id: "youtube", label: "YouTube Shorts", icon: YoutubeIcon },
 ];
+
+const clipIcons = {
+    'Insight': <Lightbulb className="w-5 h-5 text-yellow-400" />,
+    'Opinion': <MessageSquare className="w-5 h-5 text-blue-400" />,
+    'Story': <BookText className="w-5 h-5 text-green-400" />,
+    'Quote': <Quote className="w-5 h-5 text-purple-400" />,
+}
 
 const formSchema = z.object({
   episodeId: z.string().min(1, "Please select an episode."),
@@ -45,14 +52,17 @@ export default function AuthorityEnginePage() {
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<AuthorityEngineFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      platforms: ["instagram"],
+      platforms: ["instagram", "linkedin", "twitter", "youtube"],
       brandTone: 'Casual',
     },
   });
+  
+  const selectedPlatforms = watch('platforms') || [];
 
   const onSubmit = async (data: AuthorityEngineFormValues) => {
     setIsLoading(true);
@@ -163,6 +173,7 @@ export default function AuthorityEnginePage() {
                                                         : field.onChange(field.value?.filter((value) => value !== platform.id));
                                                 }}
                                             />
+                                            <platform.icon className="w-5 h-5 text-muted-foreground" />
                                             <Label htmlFor={`platform-${platform.id}`} className="font-normal">{platform.label}</Label>
                                         </div>
                                     ))}
@@ -191,103 +202,135 @@ export default function AuthorityEnginePage() {
         )}
 
         {generatedContent && (
-             <Card className="bg-gradient-to-br from-primary/10 via-card to-accent/10">
-                <CardHeader>
-                    <CardTitle className="font-headline text-3xl flex items-center gap-3">Your Authority Package</CardTitle>
-                    <CardDescription>Here is your generated content, optimized for each platform.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <Tabs defaultValue="instagram">
-                    <TabsList className="grid w-full grid-cols-4">
-                        <TabsTrigger value="instagram" disabled={!generatedContent.instagram}><Instagram className="mr-2"/>Instagram</TabsTrigger>
-                        <TabsTrigger value="linkedin" disabled={!generatedContent.linkedin}><Linkedin className="mr-2"/>LinkedIn</TabsTrigger>
-                        <TabsTrigger value="twitter" disabled={!generatedContent.twitter}><Twitter className="mr-2"/>Twitter</TabsTrigger>
-                        <TabsTrigger value="youtube" disabled={!generatedContent.youtubeShorts}><Youtube className="mr-2"/>YouTube</TabsTrigger>
-                    </TabsList>
-                    <div className="mt-4 p-4 rounded-lg bg-background/50">
-                        <TabsContent value="instagram">
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-4">
-                            <h3 className="font-semibold text-lg flex items-center gap-2"><Film/>Reel Scripts</h3>
-                            <Accordion type="single" collapsible className="w-full">
-                                {generatedContent.instagram.reelScripts.map((script, i) => (
-                                <AccordionItem value={`item-${i}`} key={i}>
-                                    <AccordionTrigger>Reel Script #{i + 1}</AccordionTrigger>
-                                    <AccordionContent className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap">{script}</AccordionContent>
-                                </AccordionItem>
-                                ))}
-                            </Accordion>
-                            </div>
-                            <div className="space-y-4">
-                                <h3 className="font-semibold text-lg flex items-center gap-2"><MessageSquare/>Captions & Hooks</h3>
+             <div className="space-y-8">
+                <Card className="bg-gradient-to-br from-primary/10 via-card to-accent/10">
+                    <CardHeader>
+                        <CardTitle className="font-headline text-3xl flex items-center gap-3"><Clapperboard className="text-primary"/>AI-Extracted Smart Clips</CardTitle>
+                        <CardDescription>The most potent, viral-ready moments from your episode, ready to become clips.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Accordion type="single" collapsible className="w-full space-y-4">
+                            {generatedContent.extractedClips.map((clip, i) => (
+                            <AccordionItem value={`clip-${i}`} key={i} className="bg-background/50 border-border/50 rounded-lg px-4">
+                                <AccordionTrigger>
+                                    <div className="flex items-center gap-3">
+                                        {clipIcons[clip.clipCategory]}
+                                        <div className="text-left">
+                                            <p className="font-semibold">{clip.clipCategory}</p>
+                                            <p className="text-sm text-muted-foreground font-normal">{clip.description}</p>
+                                        </div>
+                                        <Badge variant="outline" className="ml-auto">
+                                            {new Date(clip.timestamp * 1000).toISOString().substr(14, 5)}
+                                        </Badge>
+                                    </div>
+                                </AccordionTrigger>
+                                <AccordionContent className="prose prose-sm prose-invert max-w-none bg-muted/30 p-4 rounded-b-md">
+                                    <p className="italic">"{clip.transcriptSnippet}"</p>
+                                </AccordionContent>
+                            </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="font-headline text-2xl flex items-center gap-3">Your Platform Authority Package</CardTitle>
+                        <CardDescription>Here is your generated content, optimized for each platform you selected.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Tabs defaultValue={selectedPlatforms[0] || 'instagram'} className="w-full">
+                        <TabsList className={`grid w-full grid-cols-${selectedPlatforms.length > 0 ? selectedPlatforms.length : 1}`}>
+                            {selectedPlatforms.includes("instagram") && <TabsTrigger value="instagram"><Instagram className="mr-2"/>Instagram</TabsTrigger>}
+                            {selectedPlatforms.includes("linkedin") && <TabsTrigger value="linkedin"><Linkedin className="mr-2"/>LinkedIn</TabsTrigger>}
+                            {selectedPlatforms.includes("twitter") && <TabsTrigger value="twitter"><Twitter className="mr-2"/>Twitter</TabsTrigger>}
+                            {selectedPlatforms.includes("youtube") && <TabsTrigger value="youtube"><Youtube className="mr-2"/>YouTube</TabsTrigger>}
+                        </TabsList>
+                        <div className="mt-4 p-4 rounded-lg bg-background/50">
+                            {generatedContent.instagram && <TabsContent value="instagram">
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div className="space-y-4">
+                                <h3 className="font-semibold text-lg flex items-center gap-2"><Film/>Reel Scripts</h3>
                                 <Accordion type="single" collapsible className="w-full">
-                                <AccordionItem value="hooks">
-                                    <AccordionTrigger>Hook Variations ({generatedContent.instagram.hookVariations.length})</AccordionTrigger>
-                                    <AccordionContent>
-                                        <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                                            {generatedContent.instagram.hookVariations.map((h, i) => <li key={i}>{h}</li>)}
-                                        </ul>
-                                    </AccordionContent>
-                                </AccordionItem>
-                                <AccordionItem value="captions">
-                                    <AccordionTrigger>Caption Variations ({generatedContent.instagram.captionVariations.length})</AccordionTrigger>
-                                    <AccordionContent>
-                                        <ul className="space-y-4">
-                                            {generatedContent.instagram.captionVariations.map((c, i) => <li key={i} className="p-3 bg-muted/50 rounded-md text-sm text-muted-foreground">{c}</li>)}
-                                        </ul>
-                                    </AccordionContent>
-                                </AccordionItem>
+                                    {generatedContent.instagram.reelScripts.map((script, i) => (
+                                    <AccordionItem value={`item-${i}`} key={i}>
+                                        <AccordionTrigger>Reel Script #{i + 1}</AccordionTrigger>
+                                        <AccordionContent className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap">{script}</AccordionContent>
+                                    </AccordionItem>
+                                    ))}
                                 </Accordion>
-                                <h3 className="font-semibold text-lg">Hashtags</h3>
-                                <div className="flex flex-wrap gap-2">
-                                {generatedContent.instagram.hashtags.map((tag, i) => <Badge key={i} variant="secondary">{tag}</Badge>)}
+                                </div>
+                                <div className="space-y-4">
+                                    <h3 className="font-semibold text-lg flex items-center gap-2"><MessageSquare/>Captions & Hooks</h3>
+                                    <Accordion type="single" collapsible className="w-full">
+                                    <AccordionItem value="hooks">
+                                        <AccordionTrigger>Hook Variations ({generatedContent.instagram.hookVariations.length})</AccordionTrigger>
+                                        <AccordionContent>
+                                            <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                                                {generatedContent.instagram.hookVariations.map((h, i) => <li key={i}>{h}</li>)}
+                                            </ul>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                    <AccordionItem value="captions">
+                                        <AccordionTrigger>Caption Variations ({generatedContent.instagram.captionVariations.length})</AccordionTrigger>
+                                        <AccordionContent>
+                                            <ul className="space-y-4">
+                                                {generatedContent.instagram.captionVariations.map((c, i) => <li key={i} className="p-3 bg-muted/50 rounded-md text-sm text-muted-foreground">{c}</li>)}
+                                            </ul>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                    </Accordion>
+                                    <h3 className="font-semibold text-lg">Hashtags</h3>
+                                    <div className="flex flex-wrap gap-2">
+                                    {generatedContent.instagram.hashtags.map((tag, i) => <Badge key={i} variant="secondary">{tag}</Badge>)}
+                                    </div>
                                 </div>
                             </div>
+                            </TabsContent>}
+                            {generatedContent.linkedin && <TabsContent value="linkedin" className="space-y-6">
+                                <div>
+                                    <h3 className="font-semibold text-lg flex items-center gap-2"><Target/>Authority Post</h3>
+                                    <p className="text-sm text-muted-foreground p-4 mt-2 whitespace-pre-wrap bg-muted/50 rounded-md">{generatedContent.linkedin.authorityPost}</p>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-lg flex items-center gap-2"><BookText/>Storytelling Post</h3>
+                                    <p className="text-sm text-muted-foreground p-4 mt-2 whitespace-pre-wrap bg-muted/50 rounded-md">{generatedContent.linkedin.storytellingPost}</p>
+                                </div>
+                            </TabsContent>}
+                            {generatedContent.twitter && <TabsContent value="twitter" className="space-y-6">
+                                <div>
+                                    <h3 className="font-semibold text-lg flex items-center gap-2">Tweet Thread</h3>
+                                    <p className="text-sm text-muted-foreground p-4 mt-2 whitespace-pre-wrap bg-muted/50 rounded-md">{generatedContent.twitter.tweetThread}</p>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-lg flex items-center gap-2"><Quote/>Quote Tweet</h3>
+                                    <p className="text-sm text-muted-foreground p-4 mt-2 italic bg-muted/50 rounded-md">"{generatedContent.twitter.quoteTweet}"</p>
+                                </div>
+                            </TabsContent>}
+                            {generatedContent.youtube && <TabsContent value="youtube" className="space-y-6">
+                                <div>
+                                    <h3 className="font-semibold text-lg flex items-center gap-2"><Film/>Short Scripts</h3>
+                                    <Accordion type="single" collapsible className="w-full">
+                                    {generatedContent.youtube.shortScripts.map((script, i) => (
+                                    <AccordionItem value={`item-${i}`} key={i}>
+                                        <AccordionTrigger>Short Script #{i + 1}</AccordionTrigger>
+                                        <AccordionContent className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap">{script}</AccordionContent>
+                                    </AccordionItem>
+                                    ))}
+                                </Accordion>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-lg flex items-center gap-2"><Lightbulb/>Title Ideas</h3>
+                                    <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                                        {generatedContent.youtube.titleIdeas.map((title, i) => <li key={i}>{title}</li>)}
+                                    </ul>
+                                </div>
+                            </TabsContent>}
                         </div>
-                        </TabsContent>
-                        <TabsContent value="linkedin" className="space-y-6">
-                            <div>
-                                <h3 className="font-semibold text-lg flex items-center gap-2"><Target/>Authority Post</h3>
-                                <p className="text-sm text-muted-foreground p-4 mt-2 whitespace-pre-wrap bg-muted/50 rounded-md">{generatedContent.linkedin.authorityPost}</p>
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-lg flex items-center gap-2"><BookText/>Storytelling Post</h3>
-                                <p className="text-sm text-muted-foreground p-4 mt-2 whitespace-pre-wrap bg-muted/50 rounded-md">{generatedContent.linkedin.storytellingPost}</p>
-                            </div>
-                        </TabsContent>
-                        <TabsContent value="twitter" className="space-y-6">
-                            <div>
-                                <h3 className="font-semibold text-lg flex items-center gap-2">Tweet Thread</h3>
-                                <p className="text-sm text-muted-foreground p-4 mt-2 whitespace-pre-wrap bg-muted/50 rounded-md">{generatedContent.twitter.tweetThread}</p>
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-lg flex items-center gap-2"><Quote/>Quote Tweet</h3>
-                                <p className="text-sm text-muted-foreground p-4 mt-2 italic bg-muted/50 rounded-md">"{generatedContent.twitter.quoteTweet}"</p>
-                            </div>
-                        </TabsContent>
-                        <TabsContent value="youtube" className="space-y-6">
-                            <div>
-                                <h3 className="font-semibold text-lg flex items-center gap-2"><Film/>Short Scripts</h3>
-                                <Accordion type="single" collapsible className="w-full">
-                                {generatedContent.youtubeShorts.shortScripts.map((script, i) => (
-                                <AccordionItem value={`item-${i}`} key={i}>
-                                    <AccordionTrigger>Short Script #{i + 1}</AccordionTrigger>
-                                    <AccordionContent className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap">{script}</AccordionContent>
-                                </AccordionItem>
-                                ))}
-                            </Accordion>
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-lg flex items-center gap-2"><Lightbulb/>Title Ideas</h3>
-                                <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                                    {generatedContent.youtubeShorts.titleIdeas.map((title, i) => <li key={i}>{title}</li>)}
-                                </ul>
-                            </div>
-                        </TabsContent>
-                    </div>
-                    </Tabs>
-                </CardContent>
-            </Card>
+                        </Tabs>
+                    </CardContent>
+                </Card>
+            </div>
         )}
     </div>
   );

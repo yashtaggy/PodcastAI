@@ -40,22 +40,22 @@ const AiViralContentOutputSchema = z.object({
         hookVariations: z.array(z.string()).describe("Five hook variations to capture attention immediately."),
         captionVariations: z.array(z.string()).describe("Three caption variations for the posts."),
         hashtags: z.array(z.string()).describe("Ten optimized hashtags, including India-aware tags if relevant."),
-    }).describe("Content package for Instagram."),
+    }).optional().describe("Content package for Instagram."),
 
     linkedin: z.object({
         authorityPost: z.string().describe("A post framed to establish authority, based on a key insight from the podcast."),
         storytellingPost: z.string().describe("A post that uses a narrative or story from the podcast to engage the audience."),
-    }).describe("Content package for LinkedIn."),
+    }).optional().describe("Content package for LinkedIn."),
 
     twitter: z.object({
         tweetThread: z.string().describe("A 5-tweet thread expanding on a core idea from the podcast."),
         quoteTweet: z.string().describe("A concise, impactful quote from the podcast, ready to be posted as a quote-style image or text."),
-    }).describe("Content package for Twitter/X."),
+    }).optional().describe("Content package for Twitter/X."),
     
-    youtubeShorts: z.object({
+    youtube: z.object({
         shortScripts: z.array(z.string()).describe("Two scripts for short-form videos, optimized for YouTube Shorts."),
         titleIdeas: z.array(z.string()).describe("Three optimized title ideas for the shorts."),
-    }).describe("Content package for YouTube Shorts."),
+    }).optional().describe("Content package for YouTube Shorts."),
 });
 export type AiViralContentOutput = z.infer<typeof AiViralContentOutputSchema>;
 
@@ -105,7 +105,7 @@ const viralContentPrompt = ai.definePrompt({
       - Write two scripts for vertical videos under 60 seconds.
       - Suggest three catchy, SEO-friendly titles for these shorts.
 
-    Produce the output in the specified JSON format.
+    Produce the output in the specified JSON format. If a platform is not requested, do not include its key in the final JSON.
     `,
 });
 
@@ -120,7 +120,27 @@ const aiViralContentFlow = ai.defineFlow(
     if (!output) {
       throw new Error('Failed to generate viral content.');
     }
-    return output;
+    
+    // Ensure only requested platforms are in the output
+    const requestedPlatforms = new Set(input.platforms);
+    const finalOutput: AiViralContentOutput = {
+      extractedClips: output.extractedClips,
+    };
+
+    if (requestedPlatforms.has('instagram') && output.instagram) {
+      finalOutput.instagram = output.instagram;
+    }
+    if (requestedPlatforms.has('linkedin') && output.linkedin) {
+      finalOutput.linkedin = output.linkedin;
+    }
+    if (requestedPlatforms.has('twitter') && output.twitter) {
+      finalOutput.twitter = output.twitter;
+    }
+    if (requestedPlatforms.has('youtube') && output.youtube) {
+      finalOutput.youtube = output.youtube;
+    }
+
+    return finalOutput;
   }
 );
 
