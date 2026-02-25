@@ -18,7 +18,6 @@ import { Button } from "./ui/button";
 
 const navItems = [
     { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
-    { href: "/dashboard/episodes", icon: ListVideo, label: "Episodes" },
 ];
 
 export function DashboardSidebar() {

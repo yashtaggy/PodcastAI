@@ -53,7 +53,9 @@ const formSchema = z.object({
     targetAudience: z.string().min(10, "Target audience description must be at least 10 characters long."),
     languages: z.array(z.string()).min(1, "Please select at least one language."),
     tone: z.enum(['Professional', 'Casual', 'Humorous', 'Inspirational', 'Educational']),
+    postingFrequency: z.enum(['Daily', 'Weekly', 'Bi-Weekly', 'Monthly']),
     platformPriority: z.array(z.string()).min(1, "Please select at least one platform."),
+    expertiseLevel: z.enum(['Beginner', 'Intermediate', 'Expert']),
     brandColors: z.object({
         primary: z.string().regex(/^#[0-9a-fA-F]{6}$/, "Must be a valid hex color."),
         accent: z.string().regex(/^#[0-9a-fA-F]{6}$/, "Must be a valid hex color."),
@@ -78,6 +80,8 @@ export default function OnboardingPage() {
             languages: ["english"],
             platformPriority: ["Instagram"],
             tone: 'Casual',
+            postingFrequency: 'Weekly',
+            expertiseLevel: 'Intermediate',
             brandColors: { primary: '#8b5cf6', accent: '#ec4899' }
         },
     });
@@ -126,6 +130,50 @@ export default function OnboardingPage() {
                                 <Label htmlFor="targetAudience">Target Audience</Label>
                                 <Input id="targetAudience" placeholder="e.g., Aspiring entrepreneurs, Busy professionals, History buffs" {...register("targetAudience")} />
                                 {errors.targetAudience && <p className="text-sm text-destructive">{errors.targetAudience.message}</p>}
+                            </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <Label>Posting Frequency</Label>
+                                <Controller
+                                    name="postingFrequency"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select frequency" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="Daily">Daily</SelectItem>
+                                                <SelectItem value="Weekly">Weekly</SelectItem>
+                                                <SelectItem value="Bi-Weekly">Bi-Weekly</SelectItem>
+                                                <SelectItem value="Monthly">Monthly</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    )}
+                                />
+                                {errors.postingFrequency && <p className="text-sm text-destructive">{errors.postingFrequency.message}</p>}
+                            </div>
+                            <div className="space-y-2">
+                                <Label>Your Expertise Level</Label>
+                                <Controller
+                                    name="expertiseLevel"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select your expertise" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="Beginner">Beginner</SelectItem>
+                                                <SelectItem value="Intermediate">Intermediate</SelectItem>
+                                                <SelectItem value="Expert">Expert</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    )}
+                                />
+                                {errors.expertiseLevel && <p className="text-sm text-destructive">{errors.expertiseLevel.message}</p>}
                             </div>
                         </div>
 

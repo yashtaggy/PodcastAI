@@ -6,7 +6,7 @@ import { AiLaunchStrategyOutput } from "@/ai/flows/ai-launch-strategy-flow";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Bot, Calendar, ListChecks, Mic, Lightbulb, Users, FileText } from "lucide-react";
+import { Bot, Calendar, ListChecks, Mic, Lightbulb, Users, FileText, Clock } from "lucide-react";
 
 export default function StrategyPage() {
     const router = useRouter();
@@ -73,6 +73,16 @@ export default function StrategyPage() {
                     </CardContent>
                 </Card>
             </div>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2"><Clock /> Posting Strategy</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                    <h4 className="font-semibold">{strategy.postingStrategy.recommendation}</h4>
+                    <p className="text-muted-foreground">{strategy.postingStrategy.reasoning}</p>
+                </CardContent>
+            </Card>
 
              <Card>
                 <CardHeader>

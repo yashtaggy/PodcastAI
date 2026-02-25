@@ -15,7 +15,9 @@ const AiLaunchStrategyInputSchema = z.object({
   targetAudience: z.string().describe('A description of the target audience.'),
   languages: z.array(z.string()).describe('List of preferred languages for the content.'),
   tone: z.enum(['Professional', 'Casual', 'Humorous', 'Inspirational', 'Educational']).describe('The desired tone of the podcast.'),
+  postingFrequency: z.enum(['Daily', 'Weekly', 'Bi-Weekly', 'Monthly']).describe('How often the user plans to post new episodes.'),
   platformPriority: z.array(z.enum(['Instagram', 'LinkedIn', 'YouTube', 'Twitter'])).describe('The social media platforms to prioritize.'),
+  expertiseLevel: z.enum(['Beginner', 'Intermediate', 'Expert']).describe("The user's expertise level in their podcasting niche."),
   brandColors: z.object({
     primary: z.string().describe('Primary brand color in hex format.'),
     accent: z.string().describe('Accent brand color in hex format.'),
@@ -37,6 +39,10 @@ const AiLaunchStrategyOutputSchema = z.object({
     })).describe("A 30-day content plan with ideas for different platforms."),
     guestRecommendations: z.array(z.string()).describe("A list of 5 potential guest recommendations relevant to the niche."),
     episodeThemes: z.array(z.string()).describe("A list of 5 potential episode themes to explore."),
+    postingStrategy: z.object({
+        recommendation: z.string().describe("A recommendation for the best day and time to post based on the target audience and platforms."),
+        reasoning: z.string().describe("The reasoning behind the posting strategy recommendation.")
+    }).describe("A strategy for when to post content for maximum impact.")
 });
 export type AiLaunchStrategyOutput = z.infer<typeof AiLaunchStrategyOutputSchema>;
 
@@ -50,8 +56,10 @@ const launchStrategyPrompt = ai.definePrompt({
     User Preferences:
     - Podcast Niche: ${input.podcastNiche}
     - Target Audience: ${input.targetAudience}
+    - Expertise Level: ${input.expertiseLevel}
     - Languages: ${JSON.stringify(input.languages)}
     - Tone: ${input.tone}
+    - Desired Posting Frequency: ${input.postingFrequency}
     - Platform Priority: ${JSON.stringify(input.platformPriority)}
     - Brand Colors: Primary: ${input.brandColors.primary}, Accent: ${input.brandColors.accent}
 
@@ -61,8 +69,9 @@ const launchStrategyPrompt = ai.definePrompt({
     3.  **30-Day Content Plan**: Provide a high-level 30-day content calendar. Include at least 10 content ideas spread across the prioritized platforms. For each, specify the day, the content idea, and the target platform.
     4.  **Guest Recommendations**: List 5 specific and relevant potential guests (can be archetypes or real people).
     5.  **Episode Themes**: Suggest 5 compelling episode themes.
+    6.  **Posting Calendar Strategy**: Provide a recommendation for the best day and time to post content, along with the reasoning, tailored to the target audience and platforms.
     
-    If the selected languages include Indian languages, provide some India-specific insights or content angles where applicable. Tailor recommendations to the specified tone and target audience.
+    If the selected languages include Indian languages, provide some India-specific insights or content angles where applicable. Tailor recommendations to the specified tone, expertise level, and target audience.
 
     Provide the output in the specified JSON format.
     `,
