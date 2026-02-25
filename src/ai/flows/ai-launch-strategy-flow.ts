@@ -45,15 +45,15 @@ const launchStrategyPrompt = ai.definePrompt({
     name: 'launchStrategyPrompt',
     input: { schema: AiLaunchStrategyInputSchema },
     output: { schema: AiLaunchStrategyOutputSchema },
-    prompt: `You are a world-class podcast launch strategist. Based on the following user preferences, generate a comprehensive launch strategy.
+    prompt: (input) => `You are a world-class podcast launch strategist. Based on the following user preferences, generate a comprehensive launch strategy.
 
     User Preferences:
-    - Podcast Niche: {{{podcastNiche}}}
-    - Target Audience: {{{targetAudience}}}
-    - Languages: {{{JSON.stringify languages}}}
-    - Tone: {{{tone}}}
-    - Platform Priority: {{{JSON.stringify platformPriority}}}
-    - Brand Colors: Primary: {{{brandColors.primary}}}, Accent: {{{brandColors.accent}}}
+    - Podcast Niche: ${input.podcastNiche}
+    - Target Audience: ${input.targetAudience}
+    - Languages: ${JSON.stringify(input.languages)}
+    - Tone: ${input.tone}
+    - Platform Priority: ${JSON.stringify(input.platformPriority)}
+    - Brand Colors: Primary: ${input.brandColors.primary}, Accent: ${input.brandColors.accent}
 
     Generate the following strategy components:
     1.  **Podcast Format**: Recommend the best format (e.g., Interview, Solo, Panel).

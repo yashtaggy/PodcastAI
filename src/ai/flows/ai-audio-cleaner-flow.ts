@@ -50,7 +50,22 @@ const aiAudioCleanerPrompt = ai.definePrompt({
   name: 'aiAudioCleanerPrompt',
   input: { schema: AiAudioCleanerInputSchema },
   output: { schema: AiAudioCleanerOutputSchema },
-  prompt: `You are an expert podcast audio editor and transcriber. Your task is to review a given audio transcript, identify and remove common filler words, and consolidate information about silence and low energy sections.\n\nInstructions:\n1. Analyze the provided 'transcript' and identify common filler words such as "um", "uh", "like", "you know", "so", "right", etc. When identifying filler words, also determine their approximate start and end character indices within the original transcript.\n2. Create a 'cleanedTranscript' by removing these identified filler words. Ensure the cleaned transcript flows naturally and professionally.\n3. Populate the 'removedFillers' array with the identified filler words, their text, and their original 'startIndex' and 'endIndex' in the raw transcript.\n4. Re-output the 'detectedSilences' and 'detectedLowEnergySections' arrays into the 'removedSilences' and 'lowEnergySections' fields in the output JSON. If these are not provided in the input, assume empty arrays for them.\n\nOriginal Transcript:\n{{{transcript}}}\n\nPre-detected Silences (if any):\n{{{JSON.stringify detectedSilences}}}\n\nPre-detected Low Energy Sections (if any):\n{{{JSON.stringify detectedLowEnergySections}}}`,
+  prompt: (input) => `You are an expert podcast audio editor and transcriber. Your task is to review a given audio transcript, identify and remove common filler words, and consolidate information about silence and low energy sections.
+
+Instructions:
+1. Analyze the provided 'transcript' and identify common filler words such as "um", "uh", "like", "you know", "so", "right", etc. When identifying filler words, also determine their approximate start and end character indices within the original transcript.
+2. Create a 'cleanedTranscript' by removing these identified filler words. Ensure the cleaned transcript flows naturally and professionally.
+3. Populate the 'removedFillers' array with the identified filler words, their text, and their original 'startIndex' and 'endIndex' in the raw transcript.
+4. Re-output the 'detectedSilences' and 'detectedLowEnergySections' arrays into the 'removedSilences' and 'lowEnergySections' fields in the output JSON. If these are not provided in the input, assume empty arrays for them.
+
+Original Transcript:
+${input.transcript}
+
+Pre-detected Silences (if any):
+${JSON.stringify(input.detectedSilences)}
+
+Pre-detected Low Energy Sections (if any):
+${JSON.stringify(input.detectedLowEnergySections)}`,
 });
 
 const aiAudioCleanerFlow = ai.defineFlow(
