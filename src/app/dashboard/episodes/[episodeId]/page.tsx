@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Balancer from 'react-wrap-balancer';
 import { EpisodesContext } from '@/context/episodes-context';
 import type { Episode, PodScoreDimension } from '@/lib/types';
@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import {
   Bot,
   CheckCircle2,
+  ChevronLeft,
   ChevronRight,
   Sparkles,
   Target,
@@ -20,8 +21,8 @@ import {
   Clock,
   Speaker,
 } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
 
 function ScoreCard({ title, score, explanation, icon: Icon }: { title: string; score: number; explanation: string; icon: React.ElementType }) {
   return (
@@ -66,6 +67,7 @@ function OverallScore({ score, explanation }: { score: number, explanation: stri
 }
 
 export default function EpisodeDetailPage() {
+  const router = useRouter();
   const { getEpisodeById } = useContext(EpisodesContext);
   const params = useParams();
   const [episode, setEpisode] = useState<Episode | null>(null);
@@ -108,14 +110,20 @@ export default function EpisodeDetailPage() {
 
   return (
     <div className="space-y-8">
-      <Card className="bg-card/70 backdrop-blur-lg border border-border/50">
-        <CardHeader>
-          <CardTitle className="font-headline text-3xl">{episode.title}</CardTitle>
-          <CardDescription>
-            Here is the detailed engagement analysis and PodScore for your episode.
-          </CardDescription>
-        </CardHeader>
-      </Card>
+      <div className="flex items-center gap-4">
+        <Button variant="outline" size="icon" className="h-12 w-12 flex-shrink-0" onClick={() => router.back()}>
+          <ChevronLeft className="h-6 w-6" />
+          <span className="sr-only">Back</span>
+        </Button>
+        <Card className="w-full bg-card/70 backdrop-blur-lg border border-border/50">
+            <CardHeader>
+                <CardTitle className="font-headline text-3xl">{episode.title}</CardTitle>
+                <CardDescription>
+                    Here is the detailed engagement analysis and PodScore for your episode.
+                </CardDescription>
+            </CardHeader>
+        </Card>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
@@ -174,13 +182,15 @@ export default function EpisodeDetailPage() {
             <CardContent className="space-y-4">
                 {engagementTimeline.map((item, i) => (
                     <div key={i}>
-                        <div className="flex items-center gap-3">
-                            <div className="font-mono text-sm text-primary bg-primary/10 px-2 py-1 rounded-md">
-                                {new Date(item.timestamp * 1000).toISOString().substr(14, 5)}
+                        <div key={i}>
+                            <div className="flex items-center gap-3">
+                                <div className="font-mono text-sm text-primary bg-primary/10 px-2 py-1 rounded-md">
+                                    {new Date(item.timestamp * 1000).toISOString().substr(14, 5)}
+                                </div>
+                                <Badge variant="secondary">{item.eventType}</Badge>
                             </div>
-                            <Badge variant="secondary">{item.eventType}</Badge>
+                            <p className="text-sm text-muted-foreground mt-2 pl-3 border-l-2 border-border ml-3">{item.description}</p>
                         </div>
-                        <p className="text-sm text-muted-foreground mt-2 pl-3 border-l-2 border-border ml-3">{item.description}</p>
                     </div>
                 ))}
             </CardContent>
