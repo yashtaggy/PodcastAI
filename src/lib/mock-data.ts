@@ -37,14 +37,14 @@ export const episodes: Episode[] = [
     contentAssets: {
       platformContent: {
         instagram: {
-          reelScripts: ["Hook: 'AI will have rights?' - Watch as Dr. Sharma explains the controversial future of AI ethics."],
-          hooks: ["Will AI achieve consciousness?", "The #1 myth about quantum computing.", "Could AI learn from your dreams?"],
+          reelScripts: ["Hook: 'AI will have rights?' - Watch as Dr. Sharma explains the controversial future of AI ethics.", "Are we ready for conscious AI? Dr. Sharma gives a shocking answer.", "Quantum computing could change EVERYTHING. Here's how."],
+          hooks: ["Will AI achieve consciousness?", "The #1 myth about quantum computing.", "Could AI learn from your dreams?", "The ethical question EVERYONE is avoiding.", "One sentence that will change how you see AI."],
           hashtags: ["#AI", "#FutureTech", "#Podcast", "#QuantumComputing", "#ArtificialIntelligence", "#Ethics", "#TechTalk", "#Innovation", "#PodVision", "#Science"],
-          captions: ["Is AI consciousness inevitable? Dr. Anya Sharma dives deep into the future of tech and ethics in our latest episode. Link in bio!"]
+          captions: ["Is AI consciousness inevitable? Dr. Anya Sharma dives deep into the future of tech and ethics in our latest episode. Link in bio!", "Mind-blowing conversation with Dr. Anya Sharma on AI, quantum leaps, and digital consciousness. You don't want to miss this.", "We asked an expert if AI should have rights. Her answer was not what we expected. Listen now."]
         },
         linkedin: {
-          authorityPost: "The intersection of quantum computing and artificial intelligence represents a paradigm shift. In my latest podcast episode, Dr. Anya Sharma, a leading researcher in the field, discusses...",
-          storyPost: "I had my mind blown this week. I asked Dr. Anya Sharma about AI consciousness, and her answer wasn't what I expected. It all comes down to one thing: dreams."
+          authorityPost: "The intersection of quantum computing and artificial intelligence represents a paradigm shift not just in technology, but in our understanding of consciousness itself. In my latest podcast episode, Dr. Anya Sharma, a leading researcher in the field, provides a compelling analysis of the upcoming challenges and opportunities. We discuss the technical underpinnings, the ethical frameworks required, and the potential for AI to emerge from our collective digital footprint. This is a must-listen for any professional in the tech, ethics, and innovation sectors. #AI #QuantumComputing #FutureofWork #Ethics #Leadership",
+          storyPost: "I had my mind blown this week. I went into my conversation with Dr. Anya Sharma thinking I understood the basics of AI. I left with a completely new perspective on consciousness, digital existence, and well... dreams. It all came down to one surprising answer she gave about AI rights. It challenges everything we think we know. Sometimes, the most profound insights come from the most unexpected questions. #Innovation #Perspective #Tech #Storytelling"
         },
         twitter: {
           tweetThread: [
@@ -56,7 +56,7 @@ export const episodes: Episode[] = [
           ]
         },
         youtubeShorts: {
-          shortScripts: ["Text on screen: 'Should AI have human rights?' - [Clip of Dr. Sharma saying '...yes.'] - Text on screen: 'Find out why. Link in description.'"]
+          shortScripts: ["Text on screen: 'Should AI have human rights?' - [Clip of Dr. Sharma saying '...yes.'] - Text on screen: 'Find out why. Link in description.'", "Text on screen: 'AI could learn from... YOUR DREAMS?!' - [Clip of Dr. Sharma: '...learning from our collective dreams and stories.'] - Text on screen: 'The future is here.'"]
         }
       },
       postingSuggestions: { bestDay: 'Wednesday', bestTime: '9:00 AM EST' }
@@ -102,7 +102,7 @@ export const episodes: Episode[] = [
     },
     contentAssets: {
         platformContent: {
-            instagram: { reelScripts: [], hooks: [], hashtags: [], captions: [] },
+            instagram: { reelScripts: ["Stop trying to do more. Do this instead.", "Productivity hack that actually works.", "Less is more. Here's why."], hooks: ["You're doing productivity wrong.", "The secret to getting more done.", "The art of strategic laziness.", "Want to be more productive? Stop multitasking.", "One simple trick to reclaim your focus."], hashtags: ["#Productivity", "#Mindfulness", "#Focus", "#WorkSmarter", "#DeepWork", "#TimeManagement", "#PodVision", "#Success", "#Motivation", "#SelfHelp"], captions: ["Overwhelmed? You might be trying to do too much. In our latest episode, we explore the art of mindful productivity.", "What if the key to productivity wasn't adding more, but subtracting? Dive into the 'do less, but better' philosophy. Link in bio.", "Reclaim your focus and achieve more than you thought possible. Listen to our new episode on mindful productivity."] },
             linkedin: { authorityPost: "", storyPost: "" },
             twitter: { tweetThread: [] },
             youtubeShorts: { shortScripts: [] }
@@ -151,9 +151,9 @@ export const analyticsData: AnalyticsData = {
     { month: 'Jul', score: 88 },
   ],
   platformDistribution: [
-    { platform: 'Instagram', count: 72, fill: 'var(--color-chart-1)' },
-    { platform: 'Twitter', count: 45, fill: 'var(--color-chart-2)' },
-    { platform: 'LinkedIn', count: 22, fill: 'var(--color-chart-3)' },
-    { platform: 'YouTube', count: 15, fill: 'var(--color-chart-4)' },
+    { platform: 'Instagram', count: 72, fill: 'hsl(var(--chart-1))' },
+    { platform: 'Twitter', count: 45, fill: 'hsl(var(--chart-2))' },
+    { platform: 'LinkedIn', count: 22, fill: 'hsl(var(--chart-3))' },
+    { platform: 'YouTube', count: 15, fill: 'hsl(var(--chart-4))' },
   ],
 };

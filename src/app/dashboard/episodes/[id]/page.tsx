@@ -1,6 +1,7 @@
 'use client';
 
-import { episodes } from "@/lib/mock-data";
+import { useContext, useMemo } from 'react';
+import { EpisodesContext } from '@/context/episodes-context';
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import {
@@ -19,7 +20,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { BarChart, Clock, ExternalLink, FileText, Bot, Share2, Twitter, Linkedin, Instagram, Youtube } from "lucide-react";
+import { BarChart, Clock, ExternalLink, FileText, Bot, Share2, Twitter, Linkedin, Instagram, Youtube, Loader2 } from "lucide-react";
 import {
   ChartContainer,
   ChartTooltip,
@@ -28,13 +29,19 @@ import {
   ChartLegendContent
 } from "@/components/ui/chart";
 import { RadialBar, RadialBarChart, PolarGrid } from "recharts";
+import { useToast } from '@/hooks/use-toast';
 
 type PageProps = {
   params: { id: string };
 };
 
 export default function EpisodeDetailPage({ params }: PageProps) {
-  const episode = episodes.find((ep) => ep.id === params.id);
+  const { episodes } = useContext(EpisodesContext);
+  const { toast } = useToast();
+
+  const episode = useMemo(() => {
+    return episodes.find((ep) => ep.id === params.id)
+  }, [episodes, params.id]);
 
   if (!episode) {
     notFound();
@@ -56,10 +63,12 @@ export default function EpisodeDetailPage({ params }: PageProps) {
   const podScore = episode.podScore;
   const content = episode.contentAssets;
 
-  const scoreData = podScore ? [
-    { name: 'Overall', value: podScore.podScore.overallScore * 10, fill: 'hsl(var(--primary))' },
-    { name: 'Viral', value: podScore.viralScore, fill: 'hsl(var(--accent))' },
-  ] : [];
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+        title: 'Copied to clipboard!',
+    });
+  }
 
   return (
     <div className="space-y-6">
@@ -98,7 +107,19 @@ export default function EpisodeDetailPage({ params }: PageProps) {
           <TabsTrigger value="transcript"><FileText className="w-4 h-4 mr-2" />Transcript</TabsTrigger>
         </TabsList>
         <TabsContent value="analytics" className="mt-6">
-          {podScore ? (
+          {episode.status === 'processing' && (
+            <div className="text-center py-12 flex flex-col items-center justify-center gap-4 text-muted-foreground">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              <p className="text-lg">AI analysis in progress...</p>
+              <p className="text-sm">Your analytics and content are being generated. This might take a moment.</p>
+            </div>
+          )}
+          {episode.status === 'failed' && (
+             <div className="text-center py-12">
+              <p className="text-destructive">Analysis failed. Please try processing the episode again.</p>
+            </div>
+          )}
+          {podScore && episode.status === 'completed' && (
             <div className="grid gap-6 lg:grid-cols-3">
               <Card className="lg:col-span-2 bg-card/70 backdrop-blur-lg border border-border/50">
                 <CardHeader>
@@ -134,55 +155,54 @@ export default function EpisodeDetailPage({ params }: PageProps) {
                 </CardContent>
               </Card>
             </div>
-          ) : (
-            <div className="text-center py-12">
-              <p>Analytics are being generated. Check back soon!</p>
-            </div>
           )}
         </TabsContent>
         <TabsContent value="content" className="mt-6">
-            {content ? (
+            {content && episode.status === 'completed' ? (
                 <Card className="bg-card/70 backdrop-blur-lg border border-border/50">
                     <CardHeader>
                         <CardTitle className="font-headline">AI-Generated Content</CardTitle>
                         <CardDescription>Ready-to-use posts, threads, and scripts for your social media.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Accordion type="single" collapsible className="w-full">
+                        <Accordion type="single" collapsible className="w-full" defaultValue="instagram">
                             <AccordionItem value="instagram">
                                 <AccordionTrigger className="text-lg font-semibold"><Instagram className="mr-2 text-pink-500" />Instagram</AccordionTrigger>
                                 <AccordionContent className="space-y-4 pl-2">
-                                    <ContentSection title="Reel Scripts" items={content.platformContent.instagram.reelScripts} />
-                                    <ContentSection title="Hooks" items={content.platformContent.instagram.hooks} />
-                                    <ContentSection title="Captions" items={content.platformContent.instagram.captions} />
-                                    <ContentSection title="Hashtags" items={content.platformContent.instagram.hashtags.map(h => ({ content: h, type: 'badge' }))} />
+                                    <ContentSection title="Reel Scripts" items={content.platformContent.instagram.reelScripts} onCopy={handleCopy} />
+                                    <ContentSection title="Hooks" items={content.platformContent.instagram.hooks} onCopy={handleCopy} />
+                                    <ContentSection title="Captions" items={content.platformContent.instagram.captions} onCopy={handleCopy} />
+                                    <ContentSection title="Hashtags" items={content.platformContent.instagram.hashtags.map(h => ({ content: h, type: 'badge' }))} onCopy={handleCopy} />
                                 </AccordionContent>
                             </AccordionItem>
                              <AccordionItem value="twitter">
                                 <AccordionTrigger className="text-lg font-semibold"><Twitter className="mr-2 text-sky-500" />Twitter</AccordionTrigger>
                                 <AccordionContent className="space-y-4 pl-2">
-                                     <ContentSection title="Tweet Thread" items={content.platformContent.twitter.tweetThread} />
+                                     <ContentSection title="Tweet Thread" items={content.platformContent.twitter.tweetThread} onCopy={handleCopy} />
                                 </AccordionContent>
                             </AccordionItem>
                             <AccordionItem value="linkedin">
                                 <AccordionTrigger className="text-lg font-semibold"><Linkedin className="mr-2 text-blue-500" />LinkedIn</AccordionTrigger>
                                 <AccordionContent className="space-y-4 pl-2">
-                                     <ContentSection title="Authority Post" items={[content.platformContent.linkedin.authorityPost]} />
-                                     <ContentSection title="Story Post" items={[content.platformContent.linkedin.storyPost]} />
+                                     <ContentSection title="Authority Post" items={[content.platformContent.linkedin.authorityPost]} onCopy={handleCopy} />
+                                     <ContentSection title="Story Post" items={[content.platformContent.linkedin.storyPost]} onCopy={handleCopy} />
                                 </AccordionContent>
                             </AccordionItem>
                              <AccordionItem value="youtube">
                                 <AccordionTrigger className="text-lg font-semibold"><Youtube className="mr-2 text-red-500" />YouTube Shorts</AccordionTrigger>
                                 <AccordionContent className="space-y-4 pl-2">
-                                     <ContentSection title="Shorts Scripts" items={content.platformContent.youtubeShorts.shortScripts} />
+                                     <ContentSection title="Shorts Scripts" items={content.platformContent.youtubeShorts.shortScripts} onCopy={handleCopy} />
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
                     </CardContent>
                 </Card>
             ) : (
-                 <div className="text-center py-12">
-                    <p>Content is being generated. Check back soon!</p>
+                <div className="text-center py-12 flex flex-col items-center justify-center gap-4 text-muted-foreground">
+                    {episode.status === 'processing' && <Loader2 className="w-8 h-8 animate-spin text-primary" />}
+                    <p className="text-lg">
+                        {episode.status === 'processing' ? 'Generating content...' : 'Content not available.'}
+                    </p>
                 </div>
             )}
         </TabsContent>
@@ -254,26 +274,31 @@ function ScoreItem({ title, score }: { title: string; score: number }) {
     )
 }
 
-function ContentSection({ title, items }: { title: string, items: (string | { content: string, type: 'badge' })[] }) {
+function ContentSection({ title, items, onCopy }: { title: string, items: (string | { content: string, type: 'badge' })[], onCopy: (text: string) => void }) {
     return (
         <div>
             <h4 className="font-semibold mb-2">{title}</h4>
-            <div className="space-y-3">
-            {items.map((item, index) => {
-                const content = typeof item === 'string' ? item : item.content;
-                const type = typeof item === 'string' ? 'text' : item.type;
-                if (type === 'badge') {
-                    return <Badge key={index} variant="secondary">{content}</Badge>
-                }
-                return (
-                    <div key={index} className="p-3 text-sm rounded-md bg-muted/50 text-foreground/80 relative group">
-                        {content}
-                        <Button variant="ghost" size="icon" className="absolute top-1 right-1 h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <CopyIcon className="h-4 w-4" />
-                        </Button>
-                    </div>
-                )
-            })}
+            <div className="flex flex-wrap gap-2">
+            {title === "Hashtags" ? (
+                items.map((item, index) => {
+                    const content = typeof item === 'string' ? item : item.content;
+                     return <Badge key={index} variant="secondary" className="cursor-pointer" onClick={() => onCopy(content)}>{content}</Badge>
+                })
+            ) : (
+                <div className="space-y-3 w-full">
+                {items.map((item, index) => {
+                    const content = typeof item === 'string' ? item : item.content;
+                    return (
+                        <div key={index} className="p-3 text-sm rounded-md bg-muted/50 text-foreground/80 relative group">
+                            {content}
+                            <Button variant="ghost" size="icon" className="absolute top-1 right-1 h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => onCopy(content)}>
+                                <CopyIcon className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    )
+                })}
+                </div>
+            )}
             </div>
         </div>
     )

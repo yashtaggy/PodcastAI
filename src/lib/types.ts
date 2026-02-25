@@ -19,6 +19,11 @@ export type Episode = {
   contentAssets?: AiSocialMediaGeneratorOutput;
 };
 
+export type NewEpisodePayload = {
+    title: string;
+    file: File;
+}
+
 export type AnalyticsData = {
   averagePodScore: number;
   averageViralScore: number;

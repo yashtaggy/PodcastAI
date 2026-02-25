@@ -1,3 +1,5 @@
+'use client';
+import { useContext } from "react";
 import {
   Card,
   CardContent,
@@ -14,14 +16,15 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { episodes } from "@/lib/mock-data"
 import { EpisodeUploadDialog } from "@/components/episode-upload-dialog"
 import Link from "next/link"
 import { MoreVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { EpisodesContext } from "@/context/episodes-context";
 
 export default function EpisodesPage() {
+  const { episodes } = useContext(EpisodesContext);
 
   const getStatusBadge = (status: string) => {
     switch (status) {

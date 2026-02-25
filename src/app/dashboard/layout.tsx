@@ -1,6 +1,7 @@
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { DashboardSidebar } from "@/components/dashboard-sidebar"
 import { DashboardHeader } from "@/components/dashboard-header"
+import { EpisodesProvider } from "@/context/episodes-context"
 
 export default function DashboardLayout({
   children,
@@ -9,6 +10,7 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
+      <EpisodesProvider>
         <DashboardSidebar />
         <SidebarInset>
             <DashboardHeader />
@@ -16,6 +18,7 @@ export default function DashboardLayout({
                 {children}
             </main>
         </SidebarInset>
+      </EpisodesProvider>
     </SidebarProvider>
   )
 }

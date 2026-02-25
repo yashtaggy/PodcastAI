@@ -12,14 +12,18 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { UploadCloud, File, X } from "lucide-react";
-import { useState } from "react";
+import { UploadCloud, File, X, Loader2 } from "lucide-react";
+import { useState, useContext, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { EpisodesContext } from "@/context/episodes-context";
 
 export function EpisodeUploadDialog() {
   const [file, setFile] = useState<File | null>(null);
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
+  const { addEpisode, isProcessing } = useContext(EpisodesContext);
+  const titleRef = useRef<HTMLInputElement>(null);
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -28,24 +32,21 @@ export function EpisodeUploadDialog() {
   };
 
   const handleUpload = () => {
-    // Simulate upload
-    if (file) {
+    const title = titleRef.current?.value;
+    if (file && title) {
+      addEpisode({ title, file });
       toast({
         title: "Upload Started",
-        description: `"${file.name}" is now being processed.`,
+        description: `"${title}" is now being processed.`,
       });
-      // Here you would typically call a server action or API endpoint
-      // to get a presigned URL and upload the file to S3.
-      // After which, you'd trigger the Step Function.
-      
-      // Reset state and close dialog
       setFile(null);
+      if(titleRef.current) titleRef.current.value = "";
       setOpen(false);
     } else {
         toast({
             variant: "destructive",
             title: "Upload Failed",
-            description: "Please select a file to upload.",
+            description: "Please provide a title and select a file to upload.",
         });
     }
   };
@@ -68,7 +69,7 @@ export function EpisodeUploadDialog() {
         <div className="grid gap-4 py-4">
           <div className="grid w-full items-center gap-1.5">
             <Label htmlFor="title">Episode Title</Label>
-            <Input id="title" placeholder="e.g. The Future of AI" />
+            <Input id="title" placeholder="e.g. The Future of AI" ref={titleRef} />
           </div>
           <div className="grid w-full items-center gap-1.5">
             <Label htmlFor="audio-file">Audio File</Label>
@@ -112,7 +113,14 @@ export function EpisodeUploadDialog() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="button" onClick={handleUpload}>Upload & Process</Button>
+          <Button type="button" onClick={handleUpload} disabled={isProcessing}>
+            {isProcessing ? (
+                <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Processing...
+                </>
+            ) : "Upload & Process"}
+            </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

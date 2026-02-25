@@ -1,5 +1,5 @@
 'use client';
-
+import { useContext } from "react";
 import {
   Card,
   CardContent,
@@ -27,14 +27,16 @@ import {
   PieChart,
   Cell,
 } from "recharts"
-import { analyticsData, episodes } from "@/lib/mock-data"
+import { analyticsData } from "@/lib/mock-data"
 import { EpisodeUploadDialog } from "@/components/episode-upload-dialog"
 import Link from "next/link"
 import { ArrowUpRight, MoreVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
+import { EpisodesContext } from "@/context/episodes-context";
 
 export default function DashboardPage() {
+  const { episodes } = useContext(EpisodesContext);
   const recentEpisodes = episodes.slice(0, 4);
 
   const getStatusBadge = (status: string) => {
@@ -84,7 +86,7 @@ export default function DashboardPage() {
              <span className="text-2xl">🎙️</span>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-bold font-headline">{analyticsData.totalEpisodes}</div>
+            <div className="text-4xl font-bold font-headline">{episodes.length}</div>
             <p className="text-xs text-muted-foreground">+2 this month</p>
           </CardContent>
         </Card>

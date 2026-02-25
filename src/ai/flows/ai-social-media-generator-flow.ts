@@ -12,7 +12,7 @@ import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const HighMomentSchema = z.object({
-  timestamp: z.string().describe('The timestamp of the high-engagement moment (e.g., "00:01:23").'),
+  timestamp: z.number().describe('The timestamp in seconds of the high-engagement moment.'),
   emotion: z.string().describe('The dominant emotion detected during this moment.'),
   score: z.number().describe('An engagement score for this moment.'),
   viralPotential: z.number().describe('A score indicating the viral potential of this moment.'),
@@ -80,7 +80,7 @@ Target Audience: {{{targetAudience}}}
 Here are the high-engagement moments identified from the episode. Focus on the 'text' of these moments, and consider their 'emotion' and 'viralPotential' to craft highly engaging content.
 
 {{#each highMoments}}
-Timestamp: {{{timestamp}}}
+Timestamp: {{{timestamp}}}s
 Emotion: {{{emotion}}}
 Viral Potential: {{{viralPotential}}}
 Text: {{{text}}}
