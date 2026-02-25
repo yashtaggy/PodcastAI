@@ -1,3 +1,40 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "podcast-mic",
+      "description": "A professional microphone in a podcasting setup",
+      "imageUrl": "https://images.unsplash.com/photo-1657121576152-d492866543a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtaWNyb3Bob25lJTIwcG9kY2FzdHxlbnwwfHx8fDE3NzE5OTMzMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "microphone podcast"
+    },
+    {
+      "id": "audio-wave",
+      "description": "An abstract audio waveform",
+      "imageUrl": "https://images.unsplash.com/photo-1617994452722-4145e196248b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhdWRpbyUyMHdhdmV8ZW58MHx8fHwxNzcyMDEyOTUyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "audio wave"
+    },
+    {
+      "id": "headphones",
+      "description": "A person wearing headphones and speaking",
+      "imageUrl": "https://images.unsplash.com/photo-1676127437237-4a324b887244?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwZXJzb24lMjBoZWFkcGhvbmVzfGVufDB8fHx8MTc3MTkwOTQwMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person headphones"
+    },
+    {
+      "id": "mixing-desk",
+      "description": "An audio mixing desk",
+      "imageUrl": "https://images.unsplash.com/photo-1640521843794-cb61ae396ddb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhdWRpbyUyMG1peGVyfGVufDB8fHx8MTc3MTk5NDE0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "audio mixer"
+    },
+    {
+      "id": "podcast-interview",
+      "description": "Two people in a podcast interview",
+      "imageUrl": "https://images.unsplash.com/photo-1559523161-0fc0d8b38a7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwb2RjYXN0JTIwaW50ZXJ2aWV3fGVufDB8fHx8MTc3MjAxMjk1Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "podcast interview"
+    },
+    {
+      "id": "social-media",
+      "description": "Abstract representation of social media icons",
+      "imageUrl": "https://images.unsplash.com/photo-1600096194534-95cf5ece04cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzb2NpYWwlMjBtZWRpYXxlbnwwfHx8fDE3NzE5OTU3NjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "social media"
+    }
+  ]
 }
