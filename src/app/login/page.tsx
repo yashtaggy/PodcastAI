@@ -1,55 +1,187 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Logo } from "@/components/logo"
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { signIn, fetchAuthSession } from "aws-amplify/auth";
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const session = await fetchAuthSession();
+        if (session.tokens?.idToken) {
+          router.push("/dashboard");
+        }
+      } catch {}
+    };
+    checkUser();
+  }, [router]);
+
+  const handleSignIn = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      await signIn({
+        username: email,
+        password,
+      });
+
+      const session = await fetchAuthSession();
+      const payload = session.tokens?.idToken?.payload;
+
+      const userId = payload?.sub;
+      const userEmail = payload?.email;
+
+      if (userId && userEmail) {
+        await fetch("/api/create-user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, email: userEmail }),
+        });
+      }
+
+      const response = await fetch("/api/get-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      });
+
+      const userData = await response.json();
+
+      if (!userData?.isProfileComplete) {
+        router.push("/onboarding");
+      } else {
+        router.push("/dashboard");
+      }
+
+    } catch (err: any) {
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background">
-      <Card className="mx-auto max-w-sm w-full bg-card/70 backdrop-blur-lg border border-border/50">
-        <CardHeader className="text-center">
-          <Logo className="w-16 h-16 mx-auto mb-4" />
-          <CardTitle className="text-2xl font-headline">Welcome Back</CardTitle>
-          <CardDescription>Enter your credentials to access your dashboard</CardDescription>
+    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-[#1e1b4b] via-[#4c1d95] to-[#6b21a8]">
+
+      {/* Animated Sound Bars */}
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 opacity-20">
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className="w-1 bg-gradient-to-t from-[#a3e635] to-[#c4b5fd] animate-wave"
+            style={{
+              height: `${Math.random() * 80 + 40}px`,
+              animationDelay: `${i * 0.1}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Moving Gradient Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(163,230,53,0.2),transparent_40%),radial-gradient(circle_at_70%_70%,rgba(196,181,253,0.25),transparent_40%)] animate-pulse" />
+
+      <Card className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl rounded-2xl">
+        <CardHeader className="text-center space-y-6">
+
+          {/* LOGO SPACE */}
+          <div className="flex justify-center">
+            <div className="h-20 w-20 flex items-center justify-center rounded-full bg-white/10 border border-white/20 shadow-inner">
+              {/* Replace this div with your logo image */}
+              <img
+  src="/podcast-logo.png"
+  alt="PodCast AI Logo"
+  className="h-22 w-22 object-contain"
+/>
+            </div>
+          </div>
+
+          <div>
+            <CardTitle className="text-3xl font-headline text-white">
+              Welcome Back
+            </CardTitle>
+            <CardDescription className="text-purple-200 mt-2">
+              Enter your credentials to access PodCast AI
+            </CardDescription>
+          </div>
         </CardHeader>
+
         <CardContent>
-          <div className="grid gap-4">
+          <div className="grid gap-5">
+
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label className="text-purple-200">Email</Label>
               <Input
-                id="email"
                 type="email"
-                placeholder="m@example.com"
-                required
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-white/10 border-white/20 text-white placeholder:text-purple-300 focus:ring-2 focus:ring-[#a3e635] focus:border-transparent transition-all"
               />
             </div>
+
             <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                <Link href="#" className="ml-auto inline-block text-sm underline">
-                  Forgot your password?
-                </Link>
-              </div>
-              <Input id="password" type="password" required />
+              <Label className="text-purple-200">Password</Label>
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="bg-white/10 border-white/20 text-white focus:ring-2 focus:ring-[#a3e635] focus:border-transparent transition-all"
+              />
             </div>
-            <Button type="submit" className="w-full" asChild>
-                <Link href="/dashboard">Sign In</Link>
+
+            {error && (
+              <p className="text-sm text-red-400">
+                {error}
+              </p>
+            )}
+
+            <Button
+              onClick={handleSignIn}
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-[#a3e635] to-[#22c55e] text-black font-semibold hover:opacity-90 transition-all"
+            >
+              {loading ? "Signing in..." : "Sign In"}
             </Button>
-            <Button variant="outline" className="w-full">
-              <svg role="img" viewBox="0 0 24 24" className="mr-2 h-4 w-4"><path fill="currentColor" d="M12.48 10.92v3.28h7.84c-.24 1.84-.85 3.18-1.73 4.1-1.02 1.02-2.3 1.62-4.38 1.62-3.82 0-6.94-3.1-6.94-6.94s3.12-6.94 6.94-6.94c2.2 0 3.58.88 4.38 1.62l2.82-2.82C18.46 2.58 15.76 1.5 12.48 1.5c-5.45 0-9.94 4.45-9.94 9.94s4.49 9.94 9.94 9.94c5.22 0 9.52-3.52 9.52-9.74 0-.65-.06-1.29-.17-1.9H12.48z"></path></svg>
-              Sign in with Google
-            </Button>
-          </div>
-          <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link href="#" className="underline">
-              Sign up
-            </Link>
+
+            <div className="text-center text-sm text-purple-200">
+              Don’t have an account?{" "}
+              <Link
+                href="/signup"
+                className="font-semibold text-[#a3e635] hover:underline"
+              >
+                Sign up
+              </Link>
+            </div>
+
           </div>
         </CardContent>
       </Card>
+
+      <style jsx>{`
+        @keyframes wave {
+          0%, 100% { transform: scaleY(0.6); }
+          50% { transform: scaleY(1.4); }
+        }
+        .animate-wave {
+          animation: wave 1.5s infinite ease-in-out;
+        }
+      `}</style>
+
     </div>
-  )
+  );
 }
