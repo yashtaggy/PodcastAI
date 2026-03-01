@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUp, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
+import Link from "next/link";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -96,15 +97,19 @@ export default function SignupPage() {
         ))}
       </div>
 
-      {/* Moving Gradient Glow */}
+      {/* Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(163,230,53,0.2),transparent_40%),radial-gradient(circle_at_70%_70%,rgba(196,181,253,0.25),transparent_40%)] animate-pulse" />
 
       <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl rounded-2xl p-8">
 
-        {/* LOGO SPACE */}
+        {/* Logo Space */}
         <div className="flex justify-center mb-6">
           <div className="h-20 w-20 flex items-center justify-center rounded-full bg-white/10 border border-white/20 shadow-inner">
-            <span className="text-white text-sm tracking-wider">LOGO</span>
+            <img
+  src="/podcast-logo.png"
+  alt="PodCast AI Logo"
+  className="h-16 w-16 object-contain"
+/>
           </div>
         </div>
 
@@ -155,6 +160,17 @@ export default function SignupPage() {
                 {loading ? "Creating..." : "Sign Up"}
               </button>
 
+              {/* Login Link */}
+              <div className="text-center text-sm text-purple-200 mt-4">
+                Already have an account?{" "}
+                <Link
+                  href="/login"
+                  className="font-semibold text-[#a3e635] hover:underline"
+                >
+                  Login
+                </Link>
+              </div>
+
             </div>
           </>
         )}
@@ -195,6 +211,14 @@ export default function SignupPage() {
                 className="text-sm text-[#a3e635] hover:underline w-full text-center"
               >
                 Resend Code
+              </button>
+
+              {/* Back Button */}
+              <button
+                onClick={() => setStep("signup")}
+                className="text-sm text-purple-300 hover:underline w-full text-center mt-2"
+              >
+                ← Back to Signup
               </button>
 
             </div>
