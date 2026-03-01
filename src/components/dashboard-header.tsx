@@ -20,6 +20,8 @@ import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 
+import { Logo } from "./logo";
+
 export function DashboardHeader() {
   const router = useRouter();
   const [avatar, setAvatar] = useState("🎙️");
@@ -60,48 +62,60 @@ export function DashboardHeader() {
   };
 
   return (
-    <header className="flex h-16 items-center gap-4 border-b bg-background/70 backdrop-blur-lg px-4 md:px-6 sticky top-0 z-30">
-      <SidebarTrigger className="md:hidden" />
-
-      <div className="w-full flex-1">
-        <form>
-          <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search..."
-              className="w-full appearance-none bg-transparent pl-8 md:w-2/3 lg:w-1/3"
-            />
-          </div>
-        </form>
+    <header className="flex h-24 items-center justify-between border-b bg-background/80 backdrop-blur-xl px-6 md:px-12 sticky top-0 z-50">
+      <div className="flex items-center gap-6">
+        <SidebarTrigger className="hover:bg-accent p-2 rounded-xl transition-colors md:hidden" />
+        <Link href="/dashboard" className="flex items-center gap-4 group">
+          <Logo className="h-12 w-12 transition-transform duration-500 group-hover:rotate-12" />
+          <span className="text-3xl font-black tracking-tighter text-foreground hidden sm:block">
+            PodCast AI
+          </span>
+        </Link>
       </div>
 
-      <Button variant="ghost" size="icon" className="rounded-full">
-        <Bell className="h-5 w-5" />
-      </Button>
+      <div className="flex items-center gap-6">
+        <Button variant="ghost" size="icon" className="rounded-2xl hover:bg-accent transition-colors w-12 h-12">
+          <Bell className="h-6 w-6 text-muted-foreground" />
+        </Button>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <Avatar className="h-8 w-8">
-              <AvatarFallback>{avatar}</AvatarFallback>
-            </Avatar>
-          </Button>
-        </DropdownMenuTrigger>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="rounded-2xl p-0 hover:bg-transparent h-14 w-14 group relative">
+              <Avatar className="h-14 w-14 border-2 border-transparent group-hover:border-primary p-1 transition-all bg-background shadow-sm overflow-visible">
+                <div className="w-full h-full rounded-2xl bg-background flex items-center justify-center text-3xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-border overflow-hidden ring-4 ring-primary/10 group-hover:ring-primary/20 transition-all relative">
+                  {avatar.startsWith('/') ? (
+                    <img
+                      src={avatar}
+                      alt="User Avatar"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <AvatarFallback className="bg-background">{avatar}</AvatarFallback>
+                  )}
+                </div>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
-            <Link href="/dashboard/settings" className="w-full cursor-pointer">Settings</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>
-            Logout
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          <DropdownMenuContent align="end" className="w-64 p-3 rounded-3xl border-border bg-popover text-popover-foreground shadow-2xl mt-4">
+            <DropdownMenuLabel className="px-3 pb-3 text-muted-foreground font-bold uppercase text-[10px] tracking-widest">My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-border mx-[-12px] mb-2" />
+            <DropdownMenuItem asChild className="rounded-xl p-3 font-bold text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors mb-1">
+              <Link href="/dashboard">Dashboard</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild className="rounded-xl p-3 font-bold text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors mb-1">
+              <Link href="/dashboard/settings">Settings</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="rounded-xl p-3 font-bold text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors mb-1">
+              Support
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-border mx-[-12px] my-2" />
+            <DropdownMenuItem onClick={handleLogout} className="rounded-xl p-3 font-black text-destructive hover:bg-destructive/10 hover:text-destructive cursor-pointer transition-colors">
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </header>
   );
 }

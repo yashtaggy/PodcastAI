@@ -115,24 +115,29 @@ export default function OnboardingPage() {
 
     if (!showForm) {
         return (
-            <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 15rem)' }}>
-                <Card className="bg-card/70 backdrop-blur-lg border border-border/50 text-center max-w-2xl">
-                    <CardHeader>
-                        <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit">
-                            <Rocket className="w-10 h-10 text-primary" />
+            <div className="flex items-center justify-center min-h-[70vh] p-6">
+                <Card className="bg-card/50 backdrop-blur-xl border border-border/50 text-center max-w-2xl px-8 py-12 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+                    <CardHeader className="space-y-6">
+                        <div className="mx-auto bg-primary/20 p-6 rounded-3xl w-fit transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110">
+                            <Rocket className="w-12 h-12 text-primary" />
                         </div>
-                        <CardTitle className="font-headline text-4xl mt-4">Create Your AI-Powered Launch Strategy</CardTitle>
-                        <CardDescription className="text-lg text-muted-foreground pt-2">
-                            <Balancer>
-                                Answer a few questions about your podcast, and our AI will generate a personalized, step-by-step launch plan to help you grow your audience from day one.
-                            </Balancer>
-                        </CardDescription>
+                        <div className="space-y-2">
+                            <CardTitle className="font-headline text-4xl md:text-5xl font-black tracking-tighter leading-tight">
+                                Launch Your <span className="text-primary italic">AI Strategy</span>
+                            </CardTitle>
+                            <CardDescription className="text-lg md:text-xl text-muted-foreground pt-4">
+                                <Balancer>
+                                    Define your podcast goal, and we'll generate a personalized, step-by-step launch plan powered by AI.
+                                </Balancer>
+                            </CardDescription>
+                        </div>
                     </CardHeader>
-                    <CardContent className="flex flex-col items-center">
-                        <Button size="lg" onClick={() => setShowForm(true)}>
+                    <CardContent className="mt-8 flex flex-col items-center">
+                        <Button size="lg" onClick={() => setShowForm(true)} className="h-16 px-12 text-xl font-black rounded-2xl bg-primary hover:bg-primary/90 shadow-xl transition-all hover:translate-y-[-2px]">
                             Start Onboarding
                         </Button>
-                        <p className="text-xs text-muted-foreground mt-4">It only takes a few minutes!</p>
+                        <p className="text-xs text-muted-foreground mt-6 font-bold uppercase tracking-widest opacity-60">Ready in under 2 minutes</p>
                     </CardContent>
                 </Card>
             </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, fetchAuthSession } from "aws-amplify/auth";
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -100,13 +101,8 @@ export default function LoginPage() {
 
           {/* LOGO SPACE */}
           <div className="flex justify-center">
-            <div className="h-20 w-20 flex items-center justify-center rounded-full bg-white/10 border border-white/20 shadow-inner">
-              {/* Replace this div with your logo image */}
-              <img
-                src="/podcast-logo.png"
-                alt="PodCast AI Logo"
-                className="h-22 w-22 object-contain"
-              />
+            <div className="h-20 w-20 flex items-center justify-center rounded-full bg-white/10 border border-white/20 shadow-inner overflow-hidden">
+              <Logo className="h-16 w-16" />
             </div>
           </div>
 
