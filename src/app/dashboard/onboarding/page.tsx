@@ -7,21 +7,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
@@ -30,16 +30,16 @@ import { Loader2, Rocket, ChevronLeft } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 
 const languages = [
-  { id: "english", label: "English" },
-  { id: "hindi", label: "Hindi" },
-  { id: "tamil", label: "Tamil" },
-  { id: "telugu", label: "Telugu" },
-  { id: "bengali", label: "Bengali" },
-  { id: "marathi", label: "Marathi" },
-  { id: "gujarati", label: "Gujarati" },
-  { id: "kannada", label: "Kannada" },
-  { id: "malayalam", label: "Malayalam" },
-  { id: "punjabi", label: "Punjabi" },
+    { id: "english", label: "English" },
+    { id: "hindi", label: "Hindi" },
+    { id: "tamil", label: "Tamil" },
+    { id: "telugu", label: "Telugu" },
+    { id: "bengali", label: "Bengali" },
+    { id: "marathi", label: "Marathi" },
+    { id: "gujarati", label: "Gujarati" },
+    { id: "kannada", label: "Kannada" },
+    { id: "malayalam", label: "Malayalam" },
+    { id: "punjabi", label: "Punjabi" },
 ];
 
 const platforms = [
@@ -87,7 +87,7 @@ export default function OnboardingPage() {
             brandColors: { primary: '#8b5cf6', accent: '#ec4899' }
         },
     });
-    
+
     const onSubmit = async (data: OnboardingFormValues) => {
         setIsLoading(true);
         try {
@@ -115,18 +115,18 @@ export default function OnboardingPage() {
 
     if (!showForm) {
         return (
-            <div className="flex items-center justify-center" style={{minHeight: 'calc(100vh - 15rem)'}}>
+            <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 15rem)' }}>
                 <Card className="bg-card/70 backdrop-blur-lg border border-border/50 text-center max-w-2xl">
                     <CardHeader>
-                    <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit">
-                        <Rocket className="w-10 h-10 text-primary" />
-                    </div>
-                    <CardTitle className="font-headline text-4xl mt-4">Create Your AI-Powered Launch Strategy</CardTitle>
-                    <CardDescription className="text-lg text-muted-foreground pt-2">
-                        <Balancer>
-                        Answer a few questions about your podcast, and our AI will generate a personalized, step-by-step launch plan to help you grow your audience from day one.
-                        </Balancer>
-                    </CardDescription>
+                        <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit">
+                            <Rocket className="w-10 h-10 text-primary" />
+                        </div>
+                        <CardTitle className="font-headline text-4xl mt-4">Create Your AI-Powered Launch Strategy</CardTitle>
+                        <CardDescription className="text-lg text-muted-foreground pt-2">
+                            <Balancer>
+                                Answer a few questions about your podcast, and our AI will generate a personalized, step-by-step launch plan to help you grow your audience from day one.
+                            </Balancer>
+                        </CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center">
                         <Button size="lg" onClick={() => setShowForm(true)}>
@@ -141,7 +141,7 @@ export default function OnboardingPage() {
 
     return (
         <div className="space-y-6">
-             <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
                 <Button variant="outline" size="icon" className="h-10 w-10 flex-shrink-0" onClick={() => setShowForm(false)}>
                     <ChevronLeft className="h-5 w-5" />
                     <span className="sr-only">Back</span>
@@ -153,7 +153,7 @@ export default function OnboardingPage() {
                     </p>
                 </div>
             </div>
-            
+
             <Card>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <CardHeader>
@@ -244,8 +244,8 @@ export default function OnboardingPage() {
                             />
                             {errors.languages && <p className="text-sm text-destructive">{errors.languages.message}</p>}
                         </div>
-                        
-                         <div className="space-y-4">
+
+                        <div className="space-y-4">
                             <Label>Platform Priority</Label>
                             <Controller
                                 name="platformPriority"
@@ -269,14 +269,14 @@ export default function OnboardingPage() {
                                     </div>
                                 )}
                             />
-                             {errors.platformPriority && <p className="text-sm text-destructive">{errors.platformPriority.message}</p>}
+                            {errors.platformPriority && <p className="text-sm text-destructive">{errors.platformPriority.message}</p>}
                         </div>
 
 
                         <div className="grid md:grid-cols-3 gap-6">
                             <div className="space-y-2">
                                 <Label>Tone & Content Style</Label>
-                                 <Controller
+                                <Controller
                                     name="tone"
                                     control={control}
                                     render={({ field }) => (
@@ -298,12 +298,12 @@ export default function OnboardingPage() {
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="brandPrimary">Primary Brand Color</Label>
-                                <Input id="brandPrimary" type="color" {...register("brandColors.primary")} className="p-1 h-10"/>
+                                <Input id="brandPrimary" type="color" {...register("brandColors.primary")} className="p-1 h-10" />
                                 {errors.brandColors?.primary && <p className="text-sm text-destructive">{errors.brandColors.primary.message}</p>}
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="brandAccent">Accent Brand Color</Label>
-                                <Input id="brandAccent" type="color" {...register("brandColors.accent")} className="p-1 h-10"/>
+                                <Input id="brandAccent" type="color" {...register("brandColors.accent")} className="p-1 h-10" />
                                 {errors.brandColors?.accent && <p className="text-sm text-destructive">{errors.brandColors.accent.message}</p>}
                             </div>
                         </div>

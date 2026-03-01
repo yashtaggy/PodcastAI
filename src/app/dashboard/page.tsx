@@ -62,7 +62,7 @@ export default function DashboardPage() {
       )}
 
       {episodes.length === 0 ? (
-        <div className="flex items-center justify-center" style={{minHeight: 'calc(100vh - 15rem)'}}>
+        <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 15rem)' }}>
           <Card className="bg-card/70 backdrop-blur-lg border border-border/50 text-center max-w-lg">
             <CardHeader>
               <div className="mx-auto bg-primary/10 p-3 rounded-full w-fit">
@@ -98,12 +98,12 @@ export default function DashboardPage() {
                     {episode.status === 'processed' && episode.analysis ? (
                       <div className="font-bold text-lg text-green-400 flex items-center gap-1">
                         {episode.analysis.podScore.overall.score}
-                      <span className='text-xs text-muted-foreground'>/100</span>
+                        <span className='text-xs text-muted-foreground'>/100</span>
                       </div>
                     ) : (
                       <Badge variant="secondary" className="whitespace-nowrap">
-                        {episode.status === 'processing' ? 
-                          <Bot className="mr-2 animate-spin" /> : 
+                        {episode.status === 'processing' ?
+                          <Bot className="mr-2 animate-spin" /> :
                           <Clock className="mr-2" />
                         }
                         {episode.status}

@@ -25,7 +25,7 @@ export default function LoginPage() {
         if (session.tokens?.idToken) {
           router.push("/dashboard");
         }
-      } catch {}
+      } catch { }
     };
     checkUser();
   }, [router]);
@@ -103,10 +103,10 @@ export default function LoginPage() {
             <div className="h-20 w-20 flex items-center justify-center rounded-full bg-white/10 border border-white/20 shadow-inner">
               {/* Replace this div with your logo image */}
               <img
-  src="/podcast-logo.png"
-  alt="PodCast AI Logo"
-  className="h-22 w-22 object-contain"
-/>
+                src="/podcast-logo.png"
+                alt="PodCast AI Logo"
+                className="h-22 w-22 object-contain"
+              />
             </div>
           </div>
 

@@ -32,12 +32,12 @@ export default function StrategyPage() {
             </div>
         );
     }
-    
+
     return (
         <div className="space-y-8">
             <Card className="bg-card/70 backdrop-blur-lg border border-border/50">
-                 <CardHeader>
-                    <CardTitle className="font-headline text-3xl flex items-center gap-2"><Lightbulb className="text-primary"/>Your AI-Generated Launch Strategy</CardTitle>
+                <CardHeader>
+                    <CardTitle className="font-headline text-3xl flex items-center gap-2"><Lightbulb className="text-primary" />Your AI-Generated Launch Strategy</CardTitle>
                     <CardDescription>Here is a personalized plan to kickstart your podcast journey.</CardDescription>
                 </CardHeader>
             </Card>
@@ -60,13 +60,13 @@ export default function StrategyPage() {
                             <h4 className="font-semibold">Intro</h4>
                             <p className="text-muted-foreground">{strategy.episodeStructure.intro}</p>
                         </div>
-                         <div>
+                        <div>
                             <h4 className="font-semibold">Segments</h4>
                             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
                                 {strategy.episodeStructure.segments.map((segment, i) => <li key={i}>{segment}</li>)}
                             </ul>
                         </div>
-                         <div>
+                        <div>
                             <h4 className="font-semibold">Outro</h4>
                             <p className="text-muted-foreground">{strategy.episodeStructure.outro}</p>
                         </div>
@@ -84,7 +84,7 @@ export default function StrategyPage() {
                 </CardContent>
             </Card>
 
-             <Card>
+            <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2"><Users /> Guest Recommendations</CardTitle>
                 </CardHeader>
@@ -92,7 +92,7 @@ export default function StrategyPage() {
                     {strategy.guestRecommendations.map((guest, i) => <Badge key={i} variant="secondary">{guest}</Badge>)}
                 </CardContent>
             </Card>
-            
+
             <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2"><FileText /> Episode Themes</CardTitle>
@@ -108,18 +108,18 @@ export default function StrategyPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
-                    {strategy.contentPlan.map((item, i) => (
-                        <div key={i} className="p-3 rounded-lg bg-muted/50 flex items-start gap-4">
-                           <div className="flex flex-col items-center">
-                                <span className="font-bold text-primary text-lg">Day</span>
-                                <span className="font-headline text-2xl">{item.day}</span>
-                           </div>
-                           <div className="flex-1">
-                                <p className="font-semibold">{item.idea}</p>
-                                <Badge>{item.platform}</Badge>
-                           </div>
-                        </div>
-                    ))}
+                        {strategy.contentPlan.map((item, i) => (
+                            <div key={i} className="p-3 rounded-lg bg-muted/50 flex items-start gap-4">
+                                <div className="flex flex-col items-center">
+                                    <span className="font-bold text-primary text-lg">Day</span>
+                                    <span className="font-headline text-2xl">{item.day}</span>
+                                </div>
+                                <div className="flex-1">
+                                    <p className="font-semibold">{item.idea}</p>
+                                    <Badge>{item.platform}</Badge>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </CardContent>
             </Card>

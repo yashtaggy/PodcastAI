@@ -1,5 +1,6 @@
 import "./globals.css";
 import AmplifyProvider from "@/components/AmplifyProvider";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata = {
   title: "PodCast AI",
@@ -12,11 +13,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <AmplifyProvider>
-          {children}
-        </AmplifyProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AmplifyProvider>
+            {children}
+          </AmplifyProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

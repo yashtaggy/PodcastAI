@@ -106,10 +106,10 @@ export default function SignupPage() {
         <div className="flex justify-center mb-6">
           <div className="h-20 w-20 flex items-center justify-center rounded-full bg-white/10 border border-white/20 shadow-inner">
             <img
-  src="/podcast-logo.png"
-  alt="PodCast AI Logo"
-  className="h-16 w-16 object-contain"
-/>
+              src="/podcast-logo.png"
+              alt="PodCast AI Logo"
+              className="h-16 w-16 object-contain"
+            />
           </div>
         </div>
 

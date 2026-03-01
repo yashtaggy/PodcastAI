@@ -25,30 +25,30 @@ export function DashboardHeader() {
   const [avatar, setAvatar] = useState("🎙️");
 
   useEffect(() => {
-  const loadUser = async () => {
-    try {
-      const session = await fetchAuthSession();
-      const payload = session.tokens?.idToken?.payload;
-      const userId = payload?.sub;
+    const loadUser = async () => {
+      try {
+        const session = await fetchAuthSession();
+        const payload = session.tokens?.idToken?.payload;
+        const userId = payload?.sub;
 
-      const response = await fetch("/api/get-user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
-      });
+        const response = await fetch("/api/get-user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        });
 
-      const userData = await response.json();
-      if (userData?.avatar) {
-        setAvatar(userData.avatar);
+        const userData = await response.json();
+        if (userData?.avatar) {
+          setAvatar(userData.avatar);
+        }
+
+      } catch (error) {
+        console.error(error);
       }
+    };
 
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  loadUser();
-}, []);
+    loadUser();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -92,7 +92,9 @@ export function DashboardHeader() {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/settings" className="w-full cursor-pointer">Settings</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout}>
