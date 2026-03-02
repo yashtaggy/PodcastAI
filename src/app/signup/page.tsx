@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { signUp, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { Mic, Brain, TrendingUp, Activity, Cpu, Sparkles, Coins, Zap } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -82,26 +84,71 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-[#1e1b4b] via-[#4c1d95] to-[#6b21a8]">
+    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-[#030303]">
+
+      {/* High-Contrast Mesh Gradient Background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-purple-600/30 blur-[130px] animate-mesh-1"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-rose-500/20 blur-[130px] animate-mesh-2"></div>
+        <div className="absolute top-[20%] right-[10%] w-[40%] h-[40%] rounded-full bg-violet-600/25 blur-[130px] animate-mesh-3"></div>
+        <div className="absolute bottom-[20%] left-[10%] w-[45%] h-[45%] rounded-full bg-purple-500/20 blur-[130px] animate-mesh-4"></div>
+      </div>
+
+      {/* Deep Glow Overlays */}
+      <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-purple-900/10 to-transparent pointer-events-none"></div>
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-rose-900/5 to-transparent pointer-events-none"></div>
+
+      {/* Floating Aesthetic Objects */}
+      <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden">
+        {[
+          { Icon: Mic, color: "text-purple-400", size: 48, top: "15%", left: "10%", delay: "0s", duration: "15s" },
+          { Icon: Brain, color: "text-rose-400", size: 64, top: "25%", left: "75%", delay: "-2s", duration: "18s" },
+          { Icon: TrendingUp, color: "text-violet-400", size: 56, top: "65%", left: "15%", delay: "-5s", duration: "20s" },
+          { Icon: Activity, color: "text-purple-300", size: 40, top: "75%", left: "80%", delay: "-7s", duration: "16s" },
+          { Icon: Cpu, color: "text-rose-300", size: 52, top: "45%", left: "20%", delay: "-3s", duration: "22s" },
+          { Icon: Sparkles, color: "text-violet-300", size: 32, top: "10%", left: "60%", delay: "-8s", duration: "14s" },
+          { Icon: Coins, color: "text-purple-400", size: 44, top: "85%", left: "40%", delay: "-1s", duration: "19s" },
+          { Icon: Zap, color: "text-rose-400", size: 36, top: "50%", left: "85%", delay: "-4s", duration: "17s" },
+        ].map((item, i) => (
+          <div
+            key={i}
+            className={`absolute ${item.color} opacity-40 blur-[1px] flex items-center justify-center`}
+            style={{
+              top: item.top,
+              left: item.left,
+              animationName: 'floatWavy',
+              animationDuration: item.duration,
+              animationTimingFunction: 'ease-in-out',
+              animationIterationCount: 'infinite',
+              animationDirection: 'alternate',
+              animationDelay: item.delay,
+            }}
+          >
+            <div className="p-4 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl scale-125">
+              <item.Icon size={item.size} strokeWidth={1.5} />
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* Animated Sound Bars */}
-      <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 opacity-20">
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 opacity-10 z-10">
         {[...Array(30)].map((_, i) => (
           <div
             key={i}
             className="w-1 bg-gradient-to-t from-[#a3e635] to-[#c4b5fd] animate-wave"
             style={{
-              height: `${Math.random() * 80 + 40}px`,
+              height: `${Math.random() * 60 + 20}px`,
               animationDelay: `${i * 0.1}s`,
             }}
           />
         ))}
       </div>
 
-      {/* Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(163,230,53,0.2),transparent_40%),radial-gradient(circle_at_70%_70%,rgba(196,181,253,0.25),transparent_40%)] animate-pulse" />
+      {/* Mesh Glow Overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(139,92,246,0.2),transparent_40%),radial-gradient(circle_at_70%_70%,rgba(244,63,94,0.15),transparent_40%)] animate-pulse" />
 
-      <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl rounded-2xl p-8">
+      <div className="relative z-10 w-full max-w-md bg-black/40 backdrop-blur-3xl border border-white/10 shadow-2xl rounded-3xl p-8">
 
         {/* Logo Space */}
         <div className="flex justify-center mb-6">
@@ -121,29 +168,38 @@ export default function SignupPage() {
 
             <div className="space-y-4">
 
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 text-white placeholder:text-purple-300 rounded-lg p-3 focus:ring-2 focus:ring-[#a3e635] focus:border-transparent transition-all"
-              />
+              <div className="grid gap-2 text-left">
+                <Label className="text-white/60 font-bold">Email</Label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-white/5 border-white/10 text-white placeholder:text-white/20 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                />
+              </div>
 
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 text-white placeholder:text-purple-300 rounded-lg p-3 focus:ring-2 focus:ring-[#a3e635] focus:border-transparent transition-all"
-              />
+              <div className="grid gap-2 text-left">
+                <Label className="text-white/60 font-bold">Password</Label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-white/5 border-white/10 text-white placeholder:text-white/20 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                />
+              </div>
 
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 text-white placeholder:text-purple-300 rounded-lg p-3 focus:ring-2 focus:ring-[#a3e635] focus:border-transparent transition-all"
-              />
+              <div className="grid gap-2 text-left">
+                <Label className="text-white/60 font-bold">Confirm Password</Label>
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full bg-white/5 border-violet-200/10 text-white placeholder:text-white/20 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                />
+              </div>
 
               {error && (
                 <p className="text-red-400 text-sm">{error}</p>
@@ -152,17 +208,17 @@ export default function SignupPage() {
               <button
                 onClick={handleSignUp}
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-[#a3e635] to-[#22c55e] text-black font-semibold py-3 rounded-lg hover:opacity-90 transition-all"
+                className="w-full bg-gradient-to-r from-purple-600 to-violet-600 text-white font-bold py-4 rounded-xl hover:scale-[1.02] shadow-xl shadow-purple-500/20 transition-all active:scale-95 border border-white/10"
               >
                 {loading ? "Creating..." : "Sign Up"}
               </button>
 
               {/* Login Link */}
-              <div className="text-center text-sm text-purple-200 mt-4">
+              <div className="text-center text-sm text-white/40 mt-4">
                 Already have an account?{" "}
                 <Link
                   href="/login"
-                  className="font-semibold text-[#a3e635] hover:underline"
+                  className="font-bold text-white hover:text-rose-400 transition-colors cursor-pointer"
                 >
                   Login
                 </Link>
@@ -229,8 +285,46 @@ export default function SignupPage() {
           0%, 100% { transform: scaleY(0.6); }
           50% { transform: scaleY(1.4); }
         }
+        @keyframes floatWavy {
+          0% { transform: translate(0, 0) rotate(0deg); }
+          33% { transform: translate(30px, -50px) rotate(5deg); }
+          66% { transform: translate(-20px, 20px) rotate(-5deg); }
+          100% { transform: translate(40px, -30px) rotate(3deg); }
+        }
+        @keyframes mesh-1 {
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(10%, 15%) scale(1.1); }
+          100% { transform: translate(0, 0) scale(1); }
+        }
+        @keyframes mesh-2 {
+          0% { transform: translate(0, 0) scale(1.1); }
+          50% { transform: translate(-15%, -10%) scale(1); }
+          100% { transform: translate(0, 0) scale(1.1); }
+        }
+        @keyframes mesh-3 {
+          0% { transform: translate(0, 0) opacity: 0.5; }
+          50% { transform: translate(-10%, 20%) opacity: 0.8; }
+          100% { transform: translate(0, 0) opacity: 0.5; }
+        }
+        @keyframes mesh-4 {
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(20%, -10%) scale(1.2); }
+          100% { transform: translate(0, 0) scale(1); }
+        }
         .animate-wave {
           animation: wave 1.5s infinite ease-in-out;
+        }
+        .animate-mesh-1 {
+          animation: mesh-1 20s infinite alternate ease-in-out;
+        }
+        .animate-mesh-2 {
+          animation: mesh-2 25s infinite alternate ease-in-out;
+        }
+        .animate-mesh-3 {
+          animation: mesh-3 30s infinite alternate ease-in-out;
+        }
+        .animate-mesh-4 {
+          animation: mesh-4 22s infinite alternate ease-in-out;
         }
       `}</style>
 

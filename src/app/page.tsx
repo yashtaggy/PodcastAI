@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
-import { CheckCircle2, ArrowRight, Zap, Target, BarChart3, Globe, Sparkles } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Zap, Target, BarChart3, Globe, Sparkles, Youtube, Instagram, Facebook, Linkedin } from 'lucide-react';
 import Image from 'next/image';
 import { Footer } from '@/components/footer';
 
@@ -102,14 +102,39 @@ export default function Home() {
               Turn every episode into 10+ social media assets automatically.
             </p>
           </div>
-
-          <div className="md:col-span-6 lg:col-span-4 row-span-1 bg-white dark:bg-slate-900 p-8 rounded-[3rem] border-2 border-slate-200 dark:border-slate-800 flex flex-col justify-center items-center text-center hover:shadow-lg transition-all">
-            <div className="flex gap-4 mb-4">
-              <span className="p-3 bg-red-100 dark:bg-red-900/20 rounded-2xl text-[10px] font-bold">YT</span>
-              <span className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-2xl text-[10px] font-bold">IN</span>
-              <span className="p-3 bg-sky-100 dark:bg-sky-900/20 rounded-2xl text-[10px] font-bold">TW</span>
+          <div className="md:col-span-6 lg:col-span-4 row-span-1 bg-white dark:bg-slate-900 p-8 rounded-[3rem] border-2 border-slate-200 dark:border-slate-800 flex flex-col justify-between items-center text-center hover:shadow-lg transition-all">
+            <div className="flex-grow flex items-center justify-center w-full">
+              <div className="grid grid-cols-4 gap-4 md:gap-6 w-full max-w-[320px]">
+                {[
+                  { name: 'YouTube', file: 'youtube.png' },
+                  { name: 'Instagram', file: 'instagram.png' },
+                  { name: 'X', file: 'x.png' },
+                  { name: 'Facebook', file: 'facebook.png' }
+                ].map((platform) => (
+                  <div key={platform.name} className="group relative flex items-center justify-center">
+                    <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center relative transition-transform duration-500 group-hover:scale-110">
+                      <Image
+                        src={`/${platform.file}`}
+                        alt={platform.name}
+                        width={64}
+                        height={64}
+                        className="object-contain drop-shadow-lg"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <p className="font-bold text-slate-700 dark:text-slate-400 uppercase tracking-widest text-[10px]">Auto-Posting Ready</p>
+
+            <div className="flex items-center gap-3 py-3 px-6 bg-lime-50 dark:bg-lime-900/10 rounded-full border border-lime-100 dark:border-lime-900/20 mt-6">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-lime-500"></span>
+              </span>
+              <p className="font-black text-slate-800 dark:text-slate-200 uppercase tracking-[0.2em] text-[11px]">
+                Auto-Posting Ready
+              </p>
+            </div>
           </div>
         </section>
 
@@ -128,6 +153,6 @@ export default function Home() {
         </section>
       </main>
       <Footer />
-    </div>
+    </div >
   );
 }
