@@ -1,14 +1,7 @@
 'use server';
-/**
- * @fileOverview A Genkit flow for generating a podcast launch strategy based on user onboarding data.
- *
- * - generateLaunchStrategy - A function that orchestrates the AI generation of a launch strategy.
- * - AiLaunchStrategyInput - The input type for the generateLaunchStrategy function.
- * - AiLaunchStrategyOutput - The return type for the generateLaunchStrategy function.
- */
 
-import { ai } from '@/ai/genkit';
 import { z } from 'zod';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const AiLaunchStrategyInputSchema = z.object({
   podcastNiche: z.string().describe('The niche or category of the podcast.'),
@@ -26,32 +19,41 @@ const AiLaunchStrategyInputSchema = z.object({
 export type AiLaunchStrategyInput = z.infer<typeof AiLaunchStrategyInputSchema>;
 
 const AiLaunchStrategyOutputSchema = z.object({
-    podcastFormat: z.string().describe("A suggested format for the podcast (e.g., Interview, Solo, Panel Discussion)."),
-    episodeStructure: z.object({
-        intro: z.string().describe("Suggestion for the episode intro."),
-        segments: z.array(z.string()).describe("Suggested segments for the episode."),
-        outro: z.string().describe("Suggestion for the episode outro."),
-    }).describe("An ideal structure for a typical episode."),
-    contentPlan: z.array(z.object({
-        day: z.number(),
-        idea: z.string(),
-        platform: z.string(),
-    })).describe("A 30-day content plan with ideas for different platforms."),
-    guestRecommendations: z.array(z.string()).describe("A list of 5 potential guest recommendations relevant to the niche."),
-    episodeThemes: z.array(z.string()).describe("A list of 5 potential episode themes to explore."),
-    postingStrategy: z.object({
-        recommendation: z.string().describe("A recommendation for the best day and time to post based on the target audience and platforms."),
-        reasoning: z.string().describe("The reasoning behind the posting strategy recommendation.")
-    }).describe("A strategy for when to post content for maximum impact.")
+  podcastFormat: z.string().describe("A suggested format for the podcast (e.g., Interview, Solo, Panel Discussion)."),
+  episodeStructure: z.object({
+    intro: z.string().describe("Suggestion for the episode intro."),
+    segments: z.array(z.string()).describe("Suggested segments for the episode."),
+    outro: z.string().describe("Suggestion for the episode outro."),
+  }).describe("An ideal structure for a typical episode."),
+  contentPlan: z.array(z.object({
+    day: z.number(),
+    idea: z.string(),
+    platform: z.string(),
+  })).describe("A 30-day content plan with ideas for different platforms."),
+  guestRecommendations: z.array(z.string()).describe("A list of 5 potential guest recommendations relevant to the niche."),
+  episodeThemes: z.array(z.string()).describe("A list of 5 potential episode themes to explore."),
+  postingStrategy: z.object({
+    recommendation: z.string().describe("A recommendation for the best day and time to post based on the target audience and platforms."),
+    reasoning: z.string().describe("The reasoning behind the posting strategy recommendation.")
+  }).describe("A strategy for when to post content for maximum impact.")
 });
 export type AiLaunchStrategyOutput = z.infer<typeof AiLaunchStrategyOutputSchema>;
 
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.5-flash",
+  generationConfig: {
+    responseMimeType: "application/json",
+  }
+});
 
-const launchStrategyPrompt = ai.definePrompt({
-    name: 'launchStrategyPrompt',
-    input: { schema: AiLaunchStrategyInputSchema },
-    output: { schema: AiLaunchStrategyOutputSchema },
-    prompt: (input) => `You are a world-class podcast launch strategist. Based on the following user preferences, generate a comprehensive launch strategy.
+/**
+ * Orchestrates the AI generation of a launch strategy.
+ * Now runs directly on the server to avoid relative URL issues.
+ */
+export async function generateLaunchStrategy(input: AiLaunchStrategyInput): Promise<AiLaunchStrategyOutput> {
+  try {
+    const prompt = `You are a world-class podcast launch strategist. Based on the following user preferences, generate a comprehensive launch strategy.
 
     User Preferences:
     - Podcast Niche: ${input.podcastNiche}
@@ -61,37 +63,49 @@ const launchStrategyPrompt = ai.definePrompt({
     - Tone: ${input.tone}
     - Desired Posting Frequency: ${input.postingFrequency}
     - Platform Priority: ${JSON.stringify(input.platformPriority)}
-    - Brand Colors: Primary: ${input.brandColors.primary}, Accent: ${input.brandColors.accent}
+    - Brand Colors: Primary: ${input.brandColors?.primary}, Accent: ${input.brandColors?.accent}
 
-    Generate the following strategy components:
-    1.  **Podcast Format**: Recommend the best format (e.g., Interview, Solo, Panel).
-    2.  **Ideal Episode Structure**: Outline a structure with an intro, distinct segments, and an outro.
-    3.  **30-Day Content Plan**: Provide a high-level 30-day content calendar. Include at least 10 content ideas spread across the prioritized platforms. For each, specify the day, the content idea, and the target platform.
-    4.  **Guest Recommendations**: List 5 specific and relevant potential guests (can be archetypes or real people).
-    5.  **Episode Themes**: Suggest 5 compelling episode themes.
-    6.  **Posting Calendar Strategy**: Provide a recommendation for the best day and time to post content, along with the reasoning, tailored to the target audience and platforms.
-    
-    If the selected languages include Indian languages, provide some India-specific insights or content angles where applicable. Tailor recommendations to the specified tone, expertise level, and target audience.
+    Generate the following strategy components in the exact JSON format specified below:
+    1. podcastFormat: A string recommending the best format (e.g., Interview, Solo, Panel).
+    2. episodeStructure: { intro: string, segments: string[], outro: string }
+    3. contentPlan: An array of 10-15 objects with { day: number, idea: string, platform: string } spread across early weeks.
+    4. guestRecommendations: Array of 5 strings (archetypes or specific roles).
+    5. episodeThemes: Array of 5 strings.
+    6. postingStrategy: { recommendation: string, reasoning: string }
 
-    Provide the output in the specified JSON format.
-    `,
-});
-
-const aiLaunchStrategyFlow = ai.defineFlow(
-  {
-    name: 'aiLaunchStrategyFlow',
-    inputSchema: AiLaunchStrategyInputSchema,
-    outputSchema: AiLaunchStrategyOutputSchema,
-  },
-  async (input) => {
-    const { output } = await launchStrategyPrompt(input);
-    if (!output) {
-      throw new Error('Failed to generate launch strategy.');
+    JSON structure:
+    {
+        "podcastFormat": "...",
+        "episodeStructure": {
+            "intro": "...",
+            "segments": ["...", "..."],
+            "outro": "..."
+        },
+        "contentPlan": [
+            { "day": 1, "idea": "...", "platform": "..." },
+            ...
+        ],
+        "guestRecommendations": ["...", "..."],
+        "episodeThemes": ["...", "..."],
+        "postingStrategy": {
+            "recommendation": "...",
+            "reasoning": "..."
+        }
     }
-    return output;
-  }
-);
 
-export async function generateLaunchStrategy(input: AiLaunchStrategyInput): Promise<AiLaunchStrategyOutput> {
-  return aiLaunchStrategyFlow(input);
+    Be creative and specific to the niche. If Indian languages are selected, use that context.
+    `;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    // Clean markdown if present and parse
+    const jsonString = text.replace(/```json\n?|\n?```/g, "").trim();
+    return JSON.parse(jsonString) as AiLaunchStrategyOutput;
+
+  } catch (error: any) {
+    console.error("Gemini Generation Error (Flow):", error);
+    throw new Error(error.message || "Failed to generate launch strategy");
+  }
 }

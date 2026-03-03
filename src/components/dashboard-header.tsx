@@ -25,6 +25,7 @@ import { Logo } from "./logo";
 export function DashboardHeader() {
   const router = useRouter();
   const [avatar, setAvatar] = useState("🎙️");
+  const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -42,6 +43,9 @@ export function DashboardHeader() {
         const userData = await response.json();
         if (userData?.avatar) {
           setAvatar(userData.avatar);
+        }
+        if (userData?.name) {
+          setUserName(userData.name);
         }
 
       } catch (error) {
@@ -74,9 +78,11 @@ export function DashboardHeader() {
       </div>
 
       <div className="flex items-center gap-6">
-        <Button variant="ghost" size="icon" className="rounded-2xl hover:bg-accent transition-colors w-12 h-12">
-          <Bell className="h-6 w-6 text-muted-foreground" />
-        </Button>
+        {userName && (
+          <span className="hidden md:block text-lg font-black tracking-tight text-foreground/80 lowercase italic">
+            @{userName.toLowerCase().replace(/\s+/g, '')}
+          </span>
+        )}
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

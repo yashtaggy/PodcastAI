@@ -78,7 +78,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-[#030303]">
+    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-background transition-colors duration-500">
 
       {/* High-Contrast Mesh Gradient Background */}
       <div className="absolute inset-0 z-0">
@@ -118,7 +118,7 @@ export default function LoginPage() {
               animationDelay: item.delay,
             }}
           >
-            <div className="p-4 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl scale-125">
+            <div className="p-4 rounded-3xl bg-background/20 border border-foreground/10 backdrop-blur-md shadow-2xl scale-125">
               <item.Icon size={item.size} strokeWidth={1.5} />
             </div>
           </div>
@@ -142,21 +142,21 @@ export default function LoginPage() {
       {/* Moving Gradient Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(139,92,246,0.2),transparent_40%),radial-gradient(circle_at_70%_70%,rgba(244,63,94,0.15),transparent_40%)] animate-pulse" />
 
-      <Card className="relative z-10 w-full max-w-md bg-black/40 backdrop-blur-3xl border border-white/10 shadow-2xl rounded-3xl">
+      <Card className="relative z-10 w-full max-w-md glass-vivid rounded-[2.5rem] p-4">
         <CardHeader className="text-center space-y-6">
 
           {/* LOGO SPACE */}
           <div className="flex justify-center">
-            <div className="h-20 w-20 flex items-center justify-center rounded-full bg-white/10 border border-white/20 shadow-inner overflow-hidden">
+            <div className="h-20 w-20 flex items-center justify-center rounded-full bg-background/20 border border-foreground/10 shadow-inner overflow-hidden">
               <Logo className="h-16 w-16" />
             </div>
           </div>
 
           <div>
-            <CardTitle className="text-3xl font-headline text-white">
+            <CardTitle className="text-3xl font-headline text-foreground">
               Welcome Back
             </CardTitle>
-            <CardDescription className="text-purple-200 mt-2">
+            <CardDescription className="text-muted-foreground mt-2">
               Enter your credentials to access PodCast AI
             </CardDescription>
           </div>
@@ -166,23 +166,23 @@ export default function LoginPage() {
           <div className="grid gap-5">
 
             <div className="grid gap-2 text-left">
-              <Label className="text-white/60 font-bold">Email</Label>
+              <Label className="text-foreground/70 font-bold">Email</Label>
               <Input
                 type="email"
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="bg-background/40 border-slate-200 dark:border-white/20 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-transparent transition-all h-14 rounded-2xl shadow-sm"
               />
             </div>
 
             <div className="grid gap-2 text-left">
-              <Label className="text-white/60 font-bold">Password</Label>
+              <Label className="text-foreground/70 font-bold">Password</Label>
               <Input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="bg-white/5 border-white/10 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="bg-background/40 border-slate-200 dark:border-white/20 text-foreground focus:ring-2 focus:ring-primary focus:border-transparent transition-all h-14 rounded-2xl shadow-sm"
               />
             </div>
 
@@ -200,11 +200,11 @@ export default function LoginPage() {
               {loading ? "Signing in..." : "Sign In"}
             </Button>
 
-            <div className="text-center text-sm text-white/40">
+            <div className="text-center text-sm text-foreground/50">
               Don’t have an account?{" "}
               <Link
                 href="/signup"
-                className="font-bold text-white hover:text-rose-400 transition-colors cursor-pointer"
+                className="font-bold text-foreground hover:text-primary transition-colors cursor-pointer"
               >
                 Sign up
               </Link>

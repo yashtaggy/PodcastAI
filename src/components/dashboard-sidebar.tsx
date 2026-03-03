@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 import { Logo } from "./logo";
 
 const navItems = [
-  { href: "/dashboard/onboarding", icon: Rocket, label: "Onboarding" },
+  { href: "/dashboard/onboarding", icon: Rocket, label: "Planning & Launch" },
   { href: "/dashboard", icon: Podcast, label: "Episodes" },
   { href: "/dashboard/authority-engine", icon: Sparkles, label: "Authority Engine" },
 ];

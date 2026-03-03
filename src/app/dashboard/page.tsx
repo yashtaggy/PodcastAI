@@ -17,18 +17,8 @@ import { formatDistanceToNow } from 'date-fns';
 
 export default function DashboardPage() {
   const { episodes } = useContext(EpisodesContext);
-  const [aiResponse, setAiResponse] = useState<string | null>(null);
 
-  const testAI = async () => {
-    const res = await fetch("/api/test-bedrock");
-    const data = await res.json();
 
-    if (data.results?.[0]?.outputText) {
-      setAiResponse(data.results[0].outputText);
-    } else {
-      setAiResponse("Error calling Bedrock.");
-    }
-  };
 
   return (
     <div className="space-y-6">
@@ -37,10 +27,6 @@ export default function DashboardPage() {
         <h1 className="text-3xl font-headline">Episodes</h1>
 
         <div className="flex gap-3">
-          <Button variant="secondary" onClick={testAI}>
-            Test AWS Titan
-          </Button>
-
           <UploadEpisodeDialog>
             <Button>
               <PlusCircle className="mr-2" />
@@ -50,16 +36,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {aiResponse && (
-        <Card className="bg-card/70 backdrop-blur-lg border border-border/50">
-          <CardHeader>
-            <CardTitle>Titan Response</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>{aiResponse}</p>
-          </CardContent>
-        </Card>
-      )}
+
 
       {episodes.length === 0 ? (
         <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 15rem)' }}>

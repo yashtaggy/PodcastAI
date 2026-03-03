@@ -84,7 +84,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-[#030303]">
+    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-background transition-colors duration-500">
 
       {/* High-Contrast Mesh Gradient Background */}
       <div className="absolute inset-0 z-0">
@@ -124,7 +124,7 @@ export default function SignupPage() {
               animationDelay: item.delay,
             }}
           >
-            <div className="p-4 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl scale-125">
+            <div className="p-4 rounded-3xl bg-background/20 border border-foreground/10 backdrop-blur-md shadow-2xl scale-125">
               <item.Icon size={item.size} strokeWidth={1.5} />
             </div>
           </div>
@@ -148,56 +148,56 @@ export default function SignupPage() {
       {/* Mesh Glow Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(139,92,246,0.2),transparent_40%),radial-gradient(circle_at_70%_70%,rgba(244,63,94,0.15),transparent_40%)] animate-pulse" />
 
-      <div className="relative z-10 w-full max-w-md bg-black/40 backdrop-blur-3xl border border-white/10 shadow-2xl rounded-3xl p-8">
+      <div className="relative z-10 w-full max-w-md glass-vivid rounded-[2.5rem] p-8 shadow-2xl">
 
         {/* Logo Space */}
         <div className="flex justify-center mb-6">
-          <div className="h-20 w-20 flex items-center justify-center rounded-full bg-white/10 border border-white/20 shadow-inner overflow-hidden">
+          <div className="h-20 w-20 flex items-center justify-center rounded-full bg-background/20 border border-foreground/10 shadow-inner overflow-hidden">
             <Logo className="h-16 w-16" />
           </div>
         </div>
 
         {step === "signup" && (
           <>
-            <h2 className="text-3xl font-semibold text-white text-center mb-2">
+            <h2 className="text-3xl font-headline font-black text-foreground text-center mb-2">
               Create Account
             </h2>
-            <p className="text-purple-200 text-center mb-6">
+            <p className="text-muted-foreground text-center mb-6">
               Join PodCast AI and build authority with AI
             </p>
 
             <div className="space-y-4">
 
               <div className="grid gap-2 text-left">
-                <Label className="text-white/60 font-bold">Email</Label>
+                <Label className="text-foreground/70 font-bold">Email</Label>
                 <input
                   type="email"
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-white/5 border-white/10 text-white placeholder:text-white/20 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                  className="w-full bg-background/40 border-slate-200 dark:border-white/20 text-foreground placeholder:text-muted-foreground rounded-2xl p-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none shadow-sm"
                 />
               </div>
 
               <div className="grid gap-2 text-left">
-                <Label className="text-white/60 font-bold">Password</Label>
+                <Label className="text-foreground/70 font-bold">Password</Label>
                 <input
                   type="password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white/5 border-white/10 text-white placeholder:text-white/20 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                  className="w-full bg-background/40 border-slate-200 dark:border-white/20 text-foreground placeholder:text-muted-foreground rounded-2xl p-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none shadow-sm"
                 />
               </div>
 
               <div className="grid gap-2 text-left">
-                <Label className="text-white/60 font-bold">Confirm Password</Label>
+                <Label className="text-foreground/70 font-bold">Confirm Password</Label>
                 <input
                   type="password"
                   placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full bg-white/5 border-violet-200/10 text-white placeholder:text-white/20 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                  className="w-full bg-background/40 border-slate-200 dark:border-white/20 text-foreground placeholder:text-muted-foreground rounded-2xl p-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none shadow-sm"
                 />
               </div>
 
@@ -214,11 +214,11 @@ export default function SignupPage() {
               </button>
 
               {/* Login Link */}
-              <div className="text-center text-sm text-white/40 mt-4">
+              <div className="text-center text-sm text-foreground/50 mt-4">
                 Already have an account?{" "}
                 <Link
                   href="/login"
-                  className="font-bold text-white hover:text-rose-400 transition-colors cursor-pointer"
+                  className="font-bold text-foreground hover:text-primary transition-colors cursor-pointer"
                 >
                   Login
                 </Link>
@@ -230,10 +230,10 @@ export default function SignupPage() {
 
         {step === "confirm" && (
           <>
-            <h2 className="text-3xl font-semibold text-white text-center mb-2">
+            <h2 className="text-3xl font-headline font-black text-foreground text-center mb-2">
               Verify Your Email
             </h2>
-            <p className="text-purple-200 text-center mb-6">
+            <p className="text-muted-foreground text-center mb-6">
               Enter the confirmation code sent to your email
             </p>
 
@@ -244,7 +244,7 @@ export default function SignupPage() {
                 placeholder="Enter confirmation code"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 text-white placeholder:text-purple-300 rounded-lg p-3 focus:ring-2 focus:ring-[#a3e635] focus:border-transparent transition-all"
+                className="w-full bg-background/40 border border-slate-200 dark:border-white/20 text-foreground placeholder:text-muted-foreground rounded-xl p-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none shadow-sm"
               />
 
               {error && (
@@ -254,14 +254,14 @@ export default function SignupPage() {
               <button
                 onClick={handleConfirm}
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-[#a3e635] to-[#22c55e] text-black font-semibold py-3 rounded-lg hover:opacity-90 transition-all"
+                className="w-full bg-primary text-primary-foreground font-black py-4 rounded-xl hover:scale-[1.02] shadow-xl shadow-primary/20 transition-all active:scale-95 border border-white/10"
               >
                 {loading ? "Confirming..." : "Confirm Account"}
               </button>
 
               <button
                 onClick={handleResend}
-                className="text-sm text-[#a3e635] hover:underline w-full text-center"
+                className="text-sm text-primary hover:underline hover:text-primary/80 font-bold w-full text-center transition-colors"
               >
                 Resend Code
               </button>
@@ -269,7 +269,7 @@ export default function SignupPage() {
               {/* Back Button */}
               <button
                 onClick={() => setStep("signup")}
-                className="text-sm text-purple-300 hover:underline w-full text-center mt-2"
+                className="text-sm text-muted-foreground hover:text-foreground hover:underline w-full text-center mt-2 font-medium transition-colors"
               >
                 ← Back to Signup
               </button>

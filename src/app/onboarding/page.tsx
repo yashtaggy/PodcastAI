@@ -87,7 +87,7 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030303] p-6">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background transition-colors duration-500 p-6">
 
       {/* High-Contrast Mesh Gradient Background */}
       <div className="absolute inset-0 z-0">
@@ -150,7 +150,7 @@ export default function OnboardingPage() {
           </p>
         </div>
 
-        <Card className="border-white/10 shadow-2xl bg-black/40 backdrop-blur-3xl overflow-hidden rounded-[2.5rem]">
+        <Card className="glass-vivid overflow-hidden rounded-[2.5rem] shadow-2xl">
           <CardHeader className="p-8 md:p-10 pb-0 flex flex-row items-center justify-between">
             <div className="space-y-1">
               <CardTitle className="text-2xl font-black tracking-tight text-white">Setup Your Profile</CardTitle>
@@ -169,7 +169,7 @@ export default function OnboardingPage() {
                     placeholder="e.g. Yash"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="h-14 px-4 rounded-2xl border-white/10 bg-white/5 focus:ring-purple-500 shadow-sm text-lg font-medium text-white placeholder:text-white/20"
+                    className="h-14 px-4 rounded-2xl border-white/30 bg-background/20 focus:ring-primary shadow-sm text-lg font-medium text-foreground placeholder:text-muted-foreground"
                   />
                 </div>
 
@@ -180,14 +180,14 @@ export default function OnboardingPage() {
                     placeholder="e.g. AI News, Tech Hub"
                     value={podcastDomain}
                     onChange={(e) => setPodcastDomain(e.target.value)}
-                    className="h-14 px-4 rounded-2xl border-white/10 bg-white/5 focus:ring-purple-500 shadow-sm text-lg font-medium text-white placeholder:text-white/20"
+                    className="h-14 px-4 rounded-2xl border-white/30 bg-background/20 focus:ring-primary shadow-sm text-lg font-medium text-foreground placeholder:text-muted-foreground"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label className="text-sm font-bold uppercase tracking-widest text-white/40">Preferred Language</Label>
                   <Select value={preferredLanguage} onValueChange={setPreferredLanguage}>
-                    <SelectTrigger className="h-14 rounded-2xl border-white/10 bg-white/5 text-lg font-medium text-white">
+                    <SelectTrigger className="h-14 rounded-2xl border-white/30 bg-background/20 text-lg font-medium text-foreground">
                       <SelectValue placeholder="Select Language" />
                     </SelectTrigger>
                     <SelectContent className="rounded-2xl border-white/10 bg-slate-900/90 backdrop-blur-xl text-white">
