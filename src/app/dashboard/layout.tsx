@@ -17,9 +17,11 @@ export default function DashboardLayout({
             <DashboardSidebar />
             <SidebarInset className="bg-background flex flex-col overflow-auto">
               <DashboardHeader />
-              <main className="flex-grow p-4 sm:p-6 lg:p-8">
-                {children}
-              </main>
+                <main className="flex-grow">
+                  <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    {children}
+                  </div>
+                </main>
             </SidebarInset>
           </div>
           <Footer />

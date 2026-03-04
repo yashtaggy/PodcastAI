@@ -148,7 +148,7 @@ export default function SignupPage() {
       {/* Mesh Glow Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(139,92,246,0.2),transparent_40%),radial-gradient(circle_at_70%_70%,rgba(244,63,94,0.15),transparent_40%)] animate-pulse" />
 
-      <div className="relative z-10 w-full max-w-md glass-vivid rounded-[2.5rem] p-8 shadow-2xl">
+      <div className="relative z-10 w-full max-w-md sm:max-w-lg lg:max-w-xl glass-vivid rounded-[2.5rem] p-8 shadow-2xl">
 
         {/* Logo Space */}
         <div className="flex justify-center mb-6">

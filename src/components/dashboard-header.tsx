@@ -66,20 +66,21 @@ export function DashboardHeader() {
   };
 
   return (
-    <header className="flex h-24 items-center justify-between border-b bg-background/80 backdrop-blur-xl px-6 md:px-12 sticky top-0 z-50">
-      <div className="flex items-center gap-6">
-        <SidebarTrigger className="hover:bg-accent p-2 rounded-xl transition-colors md:hidden" />
+    <header className="flex h-20 sm:h-24 items-center justify-between border-b bg-background/80 backdrop-blur-xl px-4 sm:px-6 md:px-12 sticky top-0 z-50">
+      <div className="flex items-center gap-4">
+        {/* Show trigger on widths below lg so it opens the slide-over sidebar; hide on lg+ */}
+        <SidebarTrigger className="hover:bg-accent p-2 rounded-xl transition-colors lg:hidden" />
         <Link href="/dashboard" className="flex items-center gap-4 group">
           <Logo className="h-12 w-12 transition-transform duration-500 group-hover:rotate-12" />
-          <span className="text-3xl font-black tracking-tighter text-foreground hidden sm:block">
+          <span className="text-lg sm:text-2xl font-black tracking-tighter text-foreground hidden sm:block">
             PodCast AI
           </span>
         </Link>
       </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4">
         {userName && (
-          <span className="hidden md:block text-lg font-black tracking-tight text-foreground/80 lowercase italic">
+          <span className="hidden lg:block text-lg font-black tracking-tight text-foreground/80 lowercase italic">
             @{userName.toLowerCase().replace(/\s+/g, '')}
           </span>
         )}

@@ -137,7 +137,7 @@ export default function OnboardingPage() {
         ))}
       </div>
 
-      <div className="w-full max-w-2xl z-10 space-y-8">
+      <div className="w-full max-w-2xl sm:max-w-3xl lg:max-w-4xl z-10 space-y-8">
         <div className="flex flex-col items-center text-center space-y-4">
           <div className="bg-white/5 backdrop-blur-2xl p-4 rounded-3xl border border-white/10 shadow-2xl mb-4 group cursor-pointer hover:rotate-3 transition-transform">
             <Logo className="h-16 w-16" />
@@ -151,7 +151,7 @@ export default function OnboardingPage() {
         </div>
 
         <Card className="glass-vivid overflow-hidden rounded-[2.5rem] shadow-2xl">
-          <CardHeader className="p-8 md:p-10 pb-0 flex flex-row items-center justify-between">
+          <CardHeader className="p-6 md:p-10 pb-0 flex flex-row items-center justify-between">
             <div className="space-y-1">
               <CardTitle className="text-2xl font-black tracking-tight text-white">Setup Your Profile</CardTitle>
               <CardDescription className="text-white/40 font-medium">Define your voice & presence</CardDescription>
@@ -159,8 +159,8 @@ export default function OnboardingPage() {
             <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
           </CardHeader>
 
-          <CardContent className="p-8 md:p-10 space-y-8">
-            <div className="grid md:grid-cols-2 gap-8">
+          <CardContent className="p-6 md:p-10 space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-sm font-bold uppercase tracking-widest text-white/40">Creator Name</Label>

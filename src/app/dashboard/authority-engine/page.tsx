@@ -112,7 +112,7 @@ export default function AuthorityEnginePage() {
     };
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Card className="bg-card/70 backdrop-blur-lg border border-border/50">
                 <CardHeader>
                     <CardTitle className="font-headline text-3xl flex items-center gap-3"><Sparkles className="text-primary" />Podcast Authority Engine</CardTitle>
@@ -129,7 +129,7 @@ export default function AuthorityEnginePage() {
                         <CardDescription>Choose your source episode and target platforms.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                        <div className="grid md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
                                 <Label>Source Episode</Label>
                                 <Controller
@@ -137,7 +137,7 @@ export default function AuthorityEnginePage() {
                                     control={control}
                                     render={({ field }) => (
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <SelectTrigger>
+                                            <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Select a processed episode" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -159,7 +159,7 @@ export default function AuthorityEnginePage() {
                                     control={control}
                                     render={({ field }) => (
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <SelectTrigger><SelectValue placeholder="Select a tone" /></SelectTrigger>
+                                            <SelectTrigger className="w-full"><SelectValue placeholder="Select a tone" /></SelectTrigger>
                                             <SelectContent>
                                                 <SelectItem value="Professional">Professional</SelectItem>
                                                 <SelectItem value="Bold">Bold</SelectItem>
@@ -200,8 +200,8 @@ export default function AuthorityEnginePage() {
                             {errors.platforms && <p className="text-sm text-destructive">{errors.platforms.message}</p>}
                         </div>
                     </CardContent>
-                    <CardFooter>
-                        <Button type="submit" disabled={isLoading}>
+                            <CardFooter>
+                        <Button type="submit" disabled={isLoading} className="w-full">
                             {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Generating Content...</> : "Generate Content Package"}
                         </Button>
                     </CardFooter>
@@ -257,7 +257,7 @@ export default function AuthorityEnginePage() {
                         </CardHeader>
                         <CardContent>
                             <Tabs defaultValue={selectedPlatforms[0] || 'instagram'} className="w-full">
-                                <TabsList className={`grid w-full grid-cols-${selectedPlatforms.length > 0 ? selectedPlatforms.length : 1}`}>
+                                <TabsList className="w-full flex flex-wrap gap-2">
                                     {selectedPlatforms.includes("instagram") && <TabsTrigger value="instagram"><Instagram className="mr-2" />Instagram</TabsTrigger>}
                                     {selectedPlatforms.includes("linkedin") && <TabsTrigger value="linkedin"><Linkedin className="mr-2" />LinkedIn</TabsTrigger>}
                                     {selectedPlatforms.includes("twitter") && <TabsTrigger value="twitter"><Twitter className="mr-2" />Twitter</TabsTrigger>}
