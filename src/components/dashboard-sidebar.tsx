@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import { Rocket, Podcast, Sparkles, LogOut } from "lucide-react"
+import { Rocket, Podcast, Sparkles, Zap, LogOut } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { Logo } from "./logo";
@@ -18,6 +18,7 @@ const navItems = [
   { href: "/dashboard/onboarding", icon: Rocket, label: "Planning & Launch" },
   { href: "/dashboard", icon: Podcast, label: "Episodes" },
   { href: "/dashboard/authority-engine", icon: Sparkles, label: "Authority Engine" },
+  { href: "/dashboard/distribution-hub", icon: Zap, label: "Distribution Hub" },
 ];
 
 export function DashboardSidebar() {

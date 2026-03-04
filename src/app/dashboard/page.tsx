@@ -1,5 +1,6 @@
 'use client';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import {
   Card,
@@ -17,6 +18,12 @@ import { formatDistanceToNow } from 'date-fns';
 
 export default function DashboardPage() {
   const { episodes } = useContext(EpisodesContext);
+  const router = useRouter();
+
+  // Redirect dashboard root to the onboarding / Planning & Launch feature by default
+  useEffect(() => {
+    router.replace('/dashboard/onboarding');
+  }, [router]);
 
 
 
