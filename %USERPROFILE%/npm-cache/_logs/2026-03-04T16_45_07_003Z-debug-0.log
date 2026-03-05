@@ -7,6 +7,7 @@
 6 silly config load:file:D:\Projects\PodcastAI\PodcastAI\%USERPROFILE%\npm\etc\npmrc
 7 verbose title npm run dev
 8 verbose argv "run" "dev"
-9 verbose logfile logs-max:10 dir:D:\Projects\PodcastAI\PodcastAI\%USERPROFILE%\npm-cache\_logs\2026-03-03T05_09_14_227Z-
-10 verbose logfile D:\Projects\PodcastAI\PodcastAI\%USERPROFILE%\npm-cache\_logs\2026-03-03T05_09_14_227Z-debug-0.log
-11 silly logfile done cleaning log files
+9 verbose logfile logs-max:10 dir:D:\Projects\PodcastAI\PodcastAI\%USERPROFILE%\npm-cache\_logs\2026-03-04T16_45_07_003Z-
+10 verbose logfile D:\Projects\PodcastAI\PodcastAI\%USERPROFILE%\npm-cache\_logs\2026-03-04T16_45_07_003Z-debug-0.log
+11 silly logfile start cleaning logs, removing 1 files
+12 silly logfile done cleaning log files

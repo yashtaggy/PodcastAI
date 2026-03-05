@@ -30,8 +30,8 @@ export default function DistributionHubPage() {
   const { episodes } = useContext(EpisodesContext);
   const { toast } = useToast();
   const [isAutoPostingEnabled, setIsAutoPostingEnabled] = useState(false);
-  const [activeSchedule, setActiveSchedule] = useState<any>(null);
-  const [selectedEpisodeId, setSelectedEpisodeId] = useState<string>("");
+    const [scheduleData, setScheduleData] = useState<any[]>([]);
+    const [selectedEpisodeId, setSelectedEpisodeId] = useState<string | null>(null);
   const [onboardingData, setOnboardingData] = useState<any>(null);
 
   const processedEpisodes = useMemo(() => episodes.filter(ep => ep.status === 'processed'), [episodes]);
@@ -45,20 +45,34 @@ export default function DistributionHubPage() {
     }
   }, []);
 
-  useEffect(() => {
-    if (selectedEpisodeId && typeof window !== 'undefined') {
-        const schedule = localStorage.getItem(`schedule_${selectedEpisodeId}`);
-        if (schedule) {
-            setActiveSchedule(JSON.parse(schedule));
-        } else {
-            setActiveSchedule(null);
-        }
-    }
-  }, [selectedEpisodeId]);
+    // Load onboarding data once
 
   const handleAddToCalendar = (eventTitle: string) => {
     toast({ title: "Calendar Sync", description: `"${eventTitle}" has been added to your content calendar.` });
   }
+
+    const handleEpisodeSelect = (episodeId: string) => {
+        setSelectedEpisodeId(episodeId);
+        if (typeof window === 'undefined') return;
+        const raw = localStorage.getItem(`schedule_${episodeId}`);
+        if (raw) {
+            try {
+                const parsed = JSON.parse(raw);
+                // if parsed is an object with calendarEvents, normalize to array
+                if (Array.isArray(parsed)) {
+                    setScheduleData(parsed);
+                } else if (parsed && parsed.calendarEvents) {
+                    setScheduleData(parsed.calendarEvents);
+                } else {
+                    setScheduleData([]);
+                }
+            } catch (e) {
+                setScheduleData([]);
+            }
+        } else {
+            setScheduleData([]);
+        }
+    }
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-20">
@@ -98,14 +112,17 @@ export default function DistributionHubPage() {
                             <Input placeholder="Search episodes..." className="pl-8" />
                         </div>
                         <div className="space-y-2">
-                            {processedEpisodes.map(ep => (
-                                <button 
-                                    key={ep.id}
-                                    onClick={() => setSelectedEpisodeId(ep.id)}
-                                    className={`w-full text-left p-3 rounded-lg border transition-all text-sm flex items-center justify-between group ${selectedEpisodeId === ep.id ? 'bg-primary/10 border-primary text-primary' : 'hover:bg-muted'}`}
+                            {processedEpisodes.map(episode => (
+                                <button
+                                    key={episode.id}
+                                    type="button"
+                                    onClick={() => handleEpisodeSelect(episode.id)}
+                                    className={`w-full text-left p-4 rounded-xl border transition ${selectedEpisodeId === episode.id ? "border-violet-500 bg-slate-800" : "border-slate-700 hover:bg-slate-800"}`}
                                 >
-                                    <span className="truncate">{ep.title}</span>
-                                    <ChevronRight className={`size-4 opacity-0 group-hover:opacity-100 transition-opacity ${selectedEpisodeId === ep.id ? 'opacity-100' : ''}`} />
+                                    <div className="flex items-center justify-between">
+                                        <span className="truncate text-sm">{episode.title}</span>
+                                        <ChevronRight className={`size-4 ${selectedEpisodeId === episode.id ? 'opacity-100' : 'opacity-60'}`} />
+                                    </div>
                                 </button>
                             ))}
                         </div>
@@ -173,15 +190,15 @@ export default function DistributionHubPage() {
                     </Card>
                 )}
 
-                {selectedEpisodeId && activeSchedule && (
+                {selectedEpisodeId && scheduleData && scheduleData.length > 0 && (
                     <div className="space-y-6">
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-xl flex items-center gap-2"><Clock className="size-5 text-primary"/>AI Scheduling Strategy</CardTitle>
+                                <CardTitle className="text-xl flex items-center gap-2"><Clock className="size-5 text-primary"/>AI Scheduling Summary</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <p className="text-sm text-muted-foreground leading-relaxed">
-                                    {activeSchedule.strategy}
+                                    This episode has an auto-generated distribution plan with <strong>{scheduleData.length}</strong> scheduled events.
                                 </p>
                             </CardContent>
                         </Card>
@@ -198,10 +215,10 @@ export default function DistributionHubPage() {
                             </CardHeader>
                             <CardContent>
                                 <div className="space-y-6">
-                                    {activeSchedule.calendarEvents.map((event: any, i: number) => (
+                                    {scheduleData.map((event: any, i: number) => (
                                         <div key={i} className="relative pl-8 pb-6 last:pb-0 group">
                                             {/* Timeline Line */}
-                                            {i !== activeSchedule.calendarEvents.length - 1 && (
+                                            {i !== scheduleData.length - 1 && (
                                                 <div className="absolute left-[11px] top-6 bottom-0 w-px bg-border group-hover:bg-primary/30 transition-colors" />
                                             )}
                                             
@@ -213,12 +230,12 @@ export default function DistributionHubPage() {
                                             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border bg-card/50 hover:bg-muted/30 transition-all cursor-default group-hover:border-primary/30 group-hover:shadow-sm">
                                                 <div className="space-y-1">
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Day {event.dayOffset}</span>
+                                                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Day {event.day ?? event.dayOffset ?? i + 1}</span>
                                                         <Badge variant="outline" className="capitalize text-[10px]">{event.platform}</Badge>
                                                     </div>
                                                     <h4 className="font-bold text-sm leading-tight">{event.title}</h4>
                                                     <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                                                        <Lightbulb className="size-3 text-yellow-500"/> {event.reason}
+                                                        <Lightbulb className="size-3 text-yellow-500"/> {event.description ?? event.reason ?? ''}
                                                     </p>
                                                 </div>
                                                 <div className="flex flex-row sm:flex-col items-center sm:items-end gap-3 sm:gap-1 flex-shrink-0">
@@ -238,7 +255,7 @@ export default function DistributionHubPage() {
                     </div>
                 )}
 
-                {selectedEpisodeId && !activeSchedule && (
+                     {selectedEpisodeId && (!scheduleData || scheduleData.length === 0) && (
                      <Card className="py-20 text-center">
                         <CardContent className="space-y-4">
                              <Rocket className="size-12 mx-auto text-muted-foreground/50" />
