@@ -1,4 +1,4 @@
-# 🎙️ PodVision AI - The Ultimate AI-Powered Podcast Growth Engine
+# 🎙️ PodCastAI - The Ultimate AI-Powered Podcast Growth Engine
 
 > **Transform your podcast episodes into viral content across all platforms with the power of AI**
 
@@ -9,7 +9,7 @@
 
 ## 🏆 **Why This Wins Hackathons**
 
-**PodVision AI** is the complete AI-first podcast growth toolkit that transforms how creators scale their content. We solve the #1 creator problem: **turning one episode into 50+ pieces of viral content across all platforms**.
+**PodCastAI** is the complete AI-first podcast growth toolkit that transforms how creators scale their content. We solve the #1 creator problem: **turning one episode into 50+ pieces of viral content across all platforms**.
 
 ### 🎯 **The Problem We Solve**
 - Creators spend 10+ hours manually repurposing each episode
@@ -24,7 +24,7 @@ One-click transformation from podcast episode to complete multi-platform content
 
 ## 🚀 **Core Features That Impress Judges**
 
-### 1. **🎯 AI PodScore Engine**
+### 1. **🎯 AI PodScore Engine (Episodes) **
 - **Real-time episode analysis** with 7 scoring dimensions
 - **Viral potential prediction** using advanced NLP
 - **Engagement timeline** showing emotional peaks and drop-off risks
@@ -50,11 +50,6 @@ One-click transformation from podcast episode to complete multi-platform content
 - **Performance tracking** across all distribution channels
 - **Content adaptation** for platform-specific formats and audiences
 
-### 5. **🔄 Smart Transcription & Processing**
-- **AWS Transcribe integration** with speaker identification
-- **Filler word detection** and automatic cleaning
-- **Timestamp-based content segmentation**
-- **Multi-language support** for global creators
 
 ---
 
@@ -285,7 +280,8 @@ npm run lint
 
 ## 🏆 **Awards & Recognition**
 
-*Ready to win your next hackathon!*
+*GenAI Exchange Hackathon Winner 2025*
+*HCL GUVI AI Buildathon National Finalist 2026*
 
 ---
 
@@ -309,7 +305,7 @@ npm run lint
 
 ## 📞 **Contact & Support**
 
-- **Team**: PodVision AI Hackathon Team
+- **Team**: PODCASTAI
 - **Demo**: [Live Demo Link]
 - **Documentation**: [Full API Docs]
 - **Support**: [Discord Community]
@@ -328,6 +324,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 **[🎯 Try Live Demo](demo-link) | [📚 Read Docs](docs-link) | [💬 Join Community](discord-link)**
 
-*Built with ❤️ for creators, by creators*
+*Built with ❤️ for creators, by Tanmay Khedekar and Yash Tagunde*
 
 </div>
