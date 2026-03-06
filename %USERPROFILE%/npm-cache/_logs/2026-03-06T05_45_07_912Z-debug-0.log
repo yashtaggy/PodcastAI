@@ -1,0 +1,13 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@10.9.3
+2 info using node@v22.19.0
+3 silly config load:file:C:\Program Files\nodejs\node_modules\npm\npmrc
+4 silly config load:file:D:\Projects\PodcastAI\PodcastAI\.npmrc
+5 silly config load:file:C:\Users\Asus\.npmrc
+6 silly config load:file:D:\Projects\PodcastAI\PodcastAI\%USERPROFILE%\npm\etc\npmrc
+7 verbose title npm run dev
+8 verbose argv "run" "dev"
+9 verbose logfile logs-max:10 dir:D:\Projects\PodcastAI\PodcastAI\%USERPROFILE%\npm-cache\_logs\2026-03-06T05_45_07_912Z-
+10 verbose logfile D:\Projects\PodcastAI\PodcastAI\%USERPROFILE%\npm-cache\_logs\2026-03-06T05_45_07_912Z-debug-0.log
+11 silly logfile start cleaning logs, removing 1 files
+12 silly logfile done cleaning log files
