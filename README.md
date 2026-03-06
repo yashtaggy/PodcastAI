@@ -306,6 +306,7 @@ npm run lint
 ## 📞 **Contact & Support**
 
 - **Team**: PODCASTAI
+- **Team-Lead**: Yash Tagunde
 - **Demo**: [Live Demo Link]
 - **Documentation**: [Full API Docs]
 - **Support**: [Discord Community]
