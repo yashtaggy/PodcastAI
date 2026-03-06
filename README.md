@@ -7,7 +7,7 @@
 [![AWS](https://img.shields.io/badge/AWS-Cloud-orange?style=for-the-badge&logo=amazon-aws)](https://aws.amazon.com/)
 [![Gemini AI](https://img.shields.io/badge/Gemini-AI-purple?style=for-the-badge&logo=google)](https://ai.google.dev/)
 
-## 🏆 **Why This Wins Hackathons**
+## About Hackathon**
 
 **PodCastAI** is the complete AI-first podcast growth toolkit that transforms how creators scale their content. We solve the #1 creator problem: **turning one episode into 50+ pieces of viral content across all platforms**.
 
