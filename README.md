@@ -142,23 +142,6 @@ npm run dev
 # Open http://localhost:9002
 ```
 
-### **Environment Variables**
-```env
-# AI Services
-GEMINI_API_KEY=your_google_gemini_api_key
-COHERE_API_KEY=your_cohere_api_key
-
-# AWS Configuration
-AWS_ACCESS_KEY_ID=your_aws_access_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-AWS_REGION=us-east-1
-AWS_S3_BUCKET_NAME=your_s3_bucket_name
-
-# Google Services (Optional)
-GOOGLE_CLIENT_EMAIL=your_service_account_email
-GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
-```
-
 ---
 
 ## 📊 **API Documentation**
@@ -206,17 +189,6 @@ POST /api/update-user-profile  // Update preferences
   ]
 }
 ```
-
----
-
-## 🎯 **Hackathon Pitch Script**
-
-### **30-Second Version**
-*"PodVision AI transforms podcast episodes into viral content across all platforms using advanced AI. Upload once, get 50+ pieces of optimized content with data-driven insights. We're solving the creator economy's biggest bottleneck - content repurposing - saving creators 40+ hours per episode while 10x-ing their reach."*
-
-### **2-Minute Version**
-*"The creator economy is worth $104 billion, but creators waste 80% of their content potential. PodVision AI changes that. Our AI analyzes your podcast episodes across 7 dimensions, extracts viral moments, and generates platform-specific content automatically. From one episode, creators get Instagram Reels, LinkedIn posts, Twitter threads, and YouTube Shorts - all optimized for maximum engagement. We're not just saving time; we're multiplying impact."*
-
 ---
 
 ## 🏗️ **Development Roadmap**
@@ -277,11 +249,6 @@ npm run lint
 - **Scalable architecture** handling 1000+ concurrent users
 
 ---
-
-## 🏆 **Awards & Recognition**
-
-*GenAI Exchange Hackathon Winner 2025*
-*HCL GUVI AI Buildathon National Finalist 2026*
 
 ---
 
