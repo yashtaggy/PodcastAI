@@ -132,7 +132,7 @@ export default function LoginPage() {
             key={i}
             className="w-1 bg-gradient-to-t from-[#a3e635] to-[#c4b5fd] animate-wave"
             style={{
-              height: `${Math.random() * 60 + 20}px`,
+              height: `${((i * 137) % 60) + 20}px`,
               animationDelay: `${i * 0.1}s`,
             }}
           />
