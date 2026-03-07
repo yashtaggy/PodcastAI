@@ -183,9 +183,9 @@ One-click transformation from podcast episode to complete multi-platform content
 
 - **Team**: PODCASTAI
 - **Team-Lead**: Yash Tagunde
-- **Demo**: [Live Demo Link]
-- **Documentation**: [Full API Docs]
-- **Support**: [Discord Community]
+- **Demo**: https://zz3deht72s.us-east-1.awsapprunner.com/
+- **Blog**: https://awsaiforbharat.blogspot.com/2026/03/we-built-ai-that-does-80-of-podcasters.html
+- **Demo Video**: [Discord Community]
 
 ---
 
