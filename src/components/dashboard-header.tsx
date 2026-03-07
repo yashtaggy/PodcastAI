@@ -58,7 +58,7 @@ export function DashboardHeader() {
 
   const handleLogout = async () => {
     try {
-      await signOut({ global: true });
+      await signOut();
       router.push("/login");
     } catch (error) {
       console.error("Logout failed:", error);

@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from '@/components/ui/button'
 import { Logo } from '@/components/logo'
 import Link from 'next/link'
@@ -11,8 +13,25 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 import { Footer } from '@/components/footer'
+import { useEffect } from 'react'
+import { fetchAuthSession } from 'aws-amplify/auth'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const session = await fetchAuthSession();
+        if (session.tokens?.idToken) {
+          router.push("/login");
+        }
+      } catch { }
+    };
+    checkUser();
+  }, [router]);
+
   return (
     <div className="flex flex-col min-h-screen bg-[#f7fee7] dark:bg-slate-950 text-slate-900 dark:text-slate-100 overflow-x-hidden">
 
