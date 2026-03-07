@@ -24,26 +24,26 @@ One-click transformation from podcast episode to complete multi-platform content
 
 ## 🚀 **Core Features That Impress Judges**
 
-### 1. **🎯 AI PodScore Engine (Episodes) **
+### 1. 🎯 AI PodScore Engine (Episodes) 
 - **Real-time episode analysis** with 7 scoring dimensions
 - **Viral potential prediction** using advanced NLP
 - **Engagement timeline** showing emotional peaks and drop-off risks
 - **Improvement intelligence** with actionable recommendations
 
-### 2. **📋 Features Planning & Launch Episodes**
+### 2. 📋 Features Planning & Launch Episodes
 - **Smart episode planning** with AI-suggested topics and structures
 - **Launch sequence optimization** for maximum impact
 - **Content calendar integration** with automated scheduling
 - **Performance prediction** based on historical data and trends
 
-### 3. **🧠 Authority Engine**
+### 3. 🧠 Authority Engine
 - **Automated content extraction** from high-engagement segments
 - **Platform-specific optimization** (Instagram Reels, LinkedIn posts, Twitter threads)
 - **Viral hook generation** with A/B testing suggestions
 - **Simulated audience reactions** for content validation
 - **Authority positioning** through strategic content repurposing
 
-### 4. **� Distribution Hub**
+### 4. � Distribution Hub
 - **Multi-platform content distribution** with one-click publishing
 - **Cross-platform reach predictions** and engagement forecasting
 - **Automated posting schedules** optimized for each platform's algorithm
@@ -86,7 +86,6 @@ One-click transformation from podcast episode to complete multi-platform content
 ### **AI-Powered Backend**
 ```typescript
 // Multi-provider AI integration
-- Google Gemini 2.5 Flash for content analysis
 - AWS Bedrock for enterprise-grade processing
 - Cohere Command-R+ for content generation
 - Custom prompt engineering for optimal results
@@ -118,77 +117,6 @@ One-click transformation from podcast episode to complete multi-platform content
 - **Accessibility-compliant** components
 
 ---
-
-## 🚀 **Quick Start Guide**
-
-### **Prerequisites**
-```bash
-Node.js 18+ | npm/yarn | AWS Account | AI API Keys
-```
-
-### **Installation**
-```bash
-# Clone and install
-git clone <repository-url>
-cd podvision-ai
-npm install
-
-# Environment setup
-cp .env.example .env.local
-# Add your API keys (see Environment Variables section)
-
-# Launch development server
-npm run dev
-# Open http://localhost:9002
-```
-
----
-
-## 📊 **API Documentation**
-
-### **Core Endpoints**
-```typescript
-// Episode Management & Planning
-POST /api/generate-upload-url    // Get presigned S3 URL
-POST /api/save-episode          // Store episode metadata
-POST /api/start-transcription   // Begin AI transcription
-GET  /api/get-transcript        // Retrieve processed transcript
-
-// Features Planning & Launch Episodes
-POST /api/launch-strategy       // Generate episode planning strategy
-POST /api/episode-planning      // AI-suggested topics and structures
-GET  /api/launch-calendar       // Optimized launch sequences
-
-// AI Analysis & Authority Engine
-POST /api/generate-podscore     // Generate episode scoring
-POST /api/authority-engine      // Extract viral content and positioning
-
-// Distribution Hub
-POST /api/distribution-hub      // Multi-platform content distribution
-GET  /api/reach-predictions     // Cross-platform engagement forecasting
-POST /api/schedule-content      // Automated posting schedules
-
-// User Management
-GET  /api/get-user             // Fetch user profile
-POST /api/create-user          // Create new user
-POST /api/update-user-profile  // Update preferences
-```
-
-### **Response Examples**
-```json
-// PodScore Response
-{
-  "podScore": {
-    "overall": { "score": 87, "explanation": "..." },
-    "questionQuality": { "score": 92, "explanation": "..." },
-    "emotionalEngagement": { "score": 85, "explanation": "..." }
-  },
-  "improvementIntelligence": ["Focus on stronger openings", "..."],
-  "engagementTimeline": [
-    { "timestamp": 120, "eventType": "Peak", "description": "..." }
-  ]
-}
-```
 ---
 
 ## 🏗️ **Development Roadmap**
@@ -212,25 +140,6 @@ POST /api/update-user-profile  // Update preferences
 - [ ] Team management capabilities
 
 ---
-
-## 🤝 **Contributing**
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### **Development Setup**
-```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Run type checking
-npm run typecheck
-
-# Run linting
-npm run lint
-```
 
 ---
 
