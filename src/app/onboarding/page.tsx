@@ -130,7 +130,7 @@ export default function OnboardingPage() {
               animationDelay: item.delay,
             }}
           >
-            <div className="p-4 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl scale-110">
+            <div className="p-4 rounded-3xl bg-background/20 border border-foreground/10 backdrop-blur-md shadow-2xl scale-110">
               <item.Icon size={item.size} strokeWidth={1.5} />
             </div>
           </div>
@@ -139,13 +139,13 @@ export default function OnboardingPage() {
 
       <div className="w-full max-w-2xl sm:max-w-3xl lg:max-w-4xl z-10 space-y-8">
         <div className="flex flex-col items-center text-center space-y-4">
-          <div className="bg-white/5 backdrop-blur-2xl p-4 rounded-3xl border border-white/10 shadow-2xl mb-4 group cursor-pointer hover:rotate-3 transition-transform">
+          <div className="bg-background/20 backdrop-blur-2xl p-4 rounded-3xl border border-foreground/10 shadow-2xl mb-4 group cursor-pointer hover:rotate-3 transition-transform">
             <Logo className="h-16 w-16" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-white leading-[1.1]">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-foreground leading-[1.1]">
             Welcome to <span className="text-purple-400 italic">PodCast AI</span>
           </h1>
-          <p className="text-white/60 text-lg max-w-md font-medium">
+          <p className="text-muted-foreground text-lg max-w-md font-medium">
             Let's personalize your creative engine. It only takes a minute.
           </p>
         </div>
@@ -153,8 +153,8 @@ export default function OnboardingPage() {
         <Card className="glass-vivid overflow-hidden rounded-[2.5rem] shadow-2xl">
           <CardHeader className="p-6 md:p-10 pb-0 flex flex-row items-center justify-between">
             <div className="space-y-1">
-              <CardTitle className="text-2xl font-black tracking-tight text-white">Setup Your Profile</CardTitle>
-              <CardDescription className="text-white/40 font-medium">Define your voice & presence</CardDescription>
+              <CardTitle className="text-2xl font-black tracking-tight text-foreground">Setup Your Profile</CardTitle>
+              <CardDescription className="text-muted-foreground font-medium">Define your voice & presence</CardDescription>
             </div>
             <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
           </CardHeader>
@@ -163,34 +163,34 @@ export default function OnboardingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm font-bold uppercase tracking-widest text-white/40">Creator Name</Label>
+                  <Label htmlFor="name" className="text-sm font-bold uppercase tracking-widest text-foreground/70">Creator Name</Label>
                   <Input
                     id="name"
                     placeholder="e.g. Yash"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="h-14 px-4 rounded-2xl border-white/30 bg-background/20 focus:ring-primary shadow-sm text-lg font-medium text-foreground placeholder:text-muted-foreground"
+                    className="h-14 px-4 rounded-2xl border-slate-200 dark:border-white/20 bg-background/40 focus:ring-primary shadow-sm text-lg font-medium text-foreground placeholder:text-muted-foreground"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="domain" className="text-sm font-bold uppercase tracking-widest text-white/40">Podcast Domain</Label>
+                  <Label htmlFor="domain" className="text-sm font-bold uppercase tracking-widest text-foreground/70">Podcast Domain</Label>
                   <Input
                     id="domain"
                     placeholder="e.g. AI News, Tech Hub"
                     value={podcastDomain}
                     onChange={(e) => setPodcastDomain(e.target.value)}
-                    className="h-14 px-4 rounded-2xl border-white/30 bg-background/20 focus:ring-primary shadow-sm text-lg font-medium text-foreground placeholder:text-muted-foreground"
+                    className="h-14 px-4 rounded-2xl border-slate-200 dark:border-white/20 bg-background/40 focus:ring-primary shadow-sm text-lg font-medium text-foreground placeholder:text-muted-foreground"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-sm font-bold uppercase tracking-widest text-white/40">Preferred Language</Label>
+                  <Label className="text-sm font-bold uppercase tracking-widest text-foreground/70">Preferred Language</Label>
                   <Select value={preferredLanguage} onValueChange={setPreferredLanguage}>
-                    <SelectTrigger className="h-14 rounded-2xl border-white/30 bg-background/20 text-lg font-medium text-foreground">
+                    <SelectTrigger className="h-14 rounded-2xl border-slate-200 dark:border-white/20 bg-background/40 text-lg font-medium text-foreground">
                       <SelectValue placeholder="Select Language" />
                     </SelectTrigger>
-                    <SelectContent className="rounded-2xl border-white/10 bg-slate-900/90 backdrop-blur-xl text-white">
+                    <SelectContent className="rounded-2xl border-white/10 bg-background/80 backdrop-blur-xl text-foreground">
                       <SelectItem value="English">English</SelectItem>
                       <SelectItem value="Hindi">Hindi</SelectItem>
                       <SelectItem value="Marathi">Marathi</SelectItem>
@@ -203,7 +203,7 @@ export default function OnboardingPage() {
               </div>
 
               <div className="space-y-4">
-                <Label className="text-sm font-bold uppercase tracking-widest text-white/40 block mb-2">Choose Avatar</Label>
+                <Label className="text-sm font-bold uppercase tracking-widest text-foreground/70 block mb-2">Choose Avatar</Label>
                 <div className="grid grid-cols-3 gap-4">
                   {creativeAvatars.map((item) => (
                     <button
@@ -211,7 +211,7 @@ export default function OnboardingPage() {
                       onClick={() => setAvatar(item.path)}
                       className={`relative aspect-square rounded-3xl p-1 transition-all group overflow-hidden border-2 ${avatar === item.path
                         ? "border-purple-500 bg-purple-500/10 shadow-lg scale-105"
-                        : "border-white/10 bg-white/5 hover:bg-white/10"
+                        : "border-foreground/10 bg-background/10 hover:bg-background/20"
                         }`}
                     >
                       <div className="relative w-full h-full rounded-2xl overflow-hidden">
@@ -259,7 +259,7 @@ export default function OnboardingPage() {
           </CardContent>
         </Card>
 
-        <p className="text-center text-white/40 text-sm font-bold uppercase tracking-[0.2em]">
+        <p className="text-center text-muted-foreground text-sm font-bold uppercase tracking-[0.2em]">
           Powered by PodCast AI Intelligence
         </p>
       </div>
