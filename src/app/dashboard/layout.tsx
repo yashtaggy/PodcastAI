@@ -3,6 +3,7 @@ import { DashboardSidebar } from "@/components/dashboard-sidebar"
 import { DashboardHeader } from "@/components/dashboard-header"
 import { EpisodesProvider } from "@/context/episodes-context"
 import { Footer } from "@/components/footer"
+import { TourManager } from "@/components/tour-manager"
 
 export default function DashboardLayout({
   children,
@@ -17,14 +18,15 @@ export default function DashboardLayout({
             <DashboardSidebar />
             <SidebarInset className="bg-background flex flex-col overflow-auto">
               <DashboardHeader />
-                <main className="flex-grow">
-                  <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    {children}
-                  </div>
-                </main>
+              <main className="flex-grow">
+                <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                  {children}
+                </div>
+              </main>
             </SidebarInset>
           </div>
           <Footer />
+          <TourManager />
         </div>
       </SidebarProvider>
     </EpisodesProvider>

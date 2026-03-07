@@ -46,14 +46,14 @@ export function DashboardSidebar() {
           {navItems.map((item) => (
             <SidebarMenuItem key={item.href}>
               <Link href={item.href}>
-                  <SidebarMenuButton
-                    tooltip={item.label}
-                    isActive={getIsActive(item.href)}
-                    className="rounded-xl h-12 px-4 font-bold text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=true]:shadow-lg active:scale-95 flex items-center gap-3"
-                  >
-                    <item.icon className="size-5" />
-                    <span className="text-sm sm:text-base tracking-tight">{item.label}</span>
-                  </SidebarMenuButton>
+                <SidebarMenuButton
+                  tooltip={item.label}
+                  isActive={getIsActive(item.href)}
+                  className="rounded-xl h-12 px-4 font-bold text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=true]:shadow-lg active:scale-95 flex items-center gap-3"
+                >
+                  <item.icon className="size-5" />
+                  <span className="text-sm sm:text-base tracking-tight">{item.label}</span>
+                </SidebarMenuButton>
               </Link>
             </SidebarMenuItem>
           ))}

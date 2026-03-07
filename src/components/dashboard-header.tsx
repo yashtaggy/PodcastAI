@@ -113,8 +113,14 @@ export function DashboardHeader() {
             <DropdownMenuItem asChild className="rounded-xl p-3 font-bold text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors mb-1">
               <Link href="/dashboard/settings">Settings</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="rounded-xl p-3 font-bold text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors mb-1">
-              Support
+            <DropdownMenuItem asChild className="rounded-xl p-3 font-bold text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors mb-1">
+              <Link href="/dashboard/support">Support</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => window.dispatchEvent(new CustomEvent("start-podcast-tour"))}
+              className="rounded-xl p-3 font-bold text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors mb-1"
+            >
+              Product Tour
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-border mx-[-12px] my-2" />
             <DropdownMenuItem onClick={handleLogout} className="rounded-xl p-3 font-black text-destructive hover:bg-destructive/10 hover:text-destructive cursor-pointer transition-colors">

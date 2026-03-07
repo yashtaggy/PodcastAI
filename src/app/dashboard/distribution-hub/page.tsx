@@ -2,8 +2,8 @@
 
 import { useState, useContext, useEffect, useMemo } from "react";
 import { EpisodesContext } from "@/context/episodes-context";
-
 import { Switch } from "@/components/ui/switch";
+import { CheckCircle2 } from "lucide-react";
 
 import {
   CalendarDays,
@@ -20,8 +20,14 @@ import {
   Globe,
   Flame,
   Users,
-  Share2
+  Share2,
+  Lock,
+  ArrowRight
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const PLATFORM_META: Record<
   string,
@@ -119,354 +125,272 @@ export default function DistributionHubPage() {
 
   return (
     <>
-      <style>{`
 
-      .hub-root{
-        width:100%;
-        padding:1.5rem;
-        background:#0D0F18;
-        color:#E2E8F0;
-      }
-
-      .layout-cols{
-        display:grid;
-        grid-template-columns:minmax(260px,320px) 1fr;
-        gap:1.5rem;
-      }
-
-      @media(max-width:900px){
-        .layout-cols{grid-template-columns:1fr}
-      }
-
-      .content-grid{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-        gap:1.5rem;
-      }
-
-      .hub-card{
-        background:#12151F;
-        border:1px solid rgba(255,255,255,0.07);
-        border-radius:14px;
-      }
-
-      .hub-card-header{
-        padding:16px;
-        border-bottom:1px solid rgba(255,255,255,0.06);
-        font-weight:600;
-        display:flex;
-        align-items:center;
-        gap:8px;
-      }
-
-      .hub-card-body{
-        padding:16px;
-      }
-
-      .episode-btn{
-        width:100%;
-        text-align:left;
-        padding:14px;
-        border-radius:10px;
-        border:1px solid rgba(255,255,255,0.08);
-        background:#12151F;
-        margin-bottom:10px;
-      }
-
-      .schedule-grid{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-        gap:10px;
-      }
-
-      .reach-track{
-        width:100%;
-        height:6px;
-        background:#181C2A;
-        border-radius:999px;
-      }
-
-      .reach-fill{
-        height:100%;
-        border-radius:999px;
-      }
-
-      .ai-item{
-        padding:10px;
-        border-radius:10px;
-        background:#181C2A;
-        margin-bottom:10px;
-      }
-
-      `}</style>
-
-      <div className="hub-root">
+      <div className="w-full space-y-8 animate-in fade-in duration-700">
 
         {/* HEADER */}
-
-        <div style={{display:"flex",justifyContent:"space-between",marginBottom:20}}>
-          <div style={{display:"flex",alignItems:"center",gap:10}}>
-            <CalendarDays size={22}/>
-            <h1 style={{fontSize:28,fontWeight:700}}>Distribution Hub</h1>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-background/50 backdrop-blur-md p-6 rounded-[2rem] border border-border/50 shadow-sm">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-primary/10 rounded-2xl">
+              <CalendarDays className="text-primary w-6 h-6" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-headline font-black tracking-tight text-foreground">
+                Distribution Hub
+              </h1>
+              <p className="text-muted-foreground text-sm">Automate your content reach across Bharats ecosystem</p>
+            </div>
           </div>
 
-          <div style={{display:"flex",alignItems:"center",gap:10}}>
-            <Zap size={16}/>
-            Auto Distribution
+          <div className="flex items-center gap-3 bg-muted/30 px-4 py-2 rounded-2xl border border-border/50">
+            <Zap className="text-amber-500 w-4 h-4" />
+            <span className="text-sm font-bold">Auto Distribution</span>
             <Switch
               checked={autoPosting}
               onCheckedChange={setAutoPosting}
+              className="data-[state=checked]:bg-primary"
             />
           </div>
         </div>
 
-        {/* GRID */}
+        {/* MAIN LAYOUT */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-        <div className="layout-cols">
-
-          {/* EPISODES */}
-
-          <div className="hub-card">
-            <div className="hub-card-header">
-              <Radio size={14}/> Episodes
-            </div>
-
-            <div className="hub-card-body">
-
-              {processedEpisodes.map((episode:any)=>(
-                <button
-                  key={episode.id}
-                  onClick={()=>setSelectedEpisode(episode)}
-                  className="episode-btn"
-                >
-                  {episode.title}
-                </button>
-              ))}
-
-            </div>
+          {/* LEFT COLUMN: EPISODES */}
+          <div className="lg:col-span-3 space-y-4">
+            <Card className="border-none shadow-xl glass-vivid rounded-[2rem] overflow-hidden">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-2">
+                  <Radio className="w-4 h-4 text-primary" />
+                  <CardTitle className="text-lg font-bold">Episodes</CardTitle>
+                </div>
+                <CardDescription>Select to generate plan</CardDescription>
+              </CardHeader>
+              <CardContent className="p-4 space-y-2">
+                {processedEpisodes.length > 0 ? (
+                  processedEpisodes.map((episode: any) => (
+                    <button
+                      key={episode.id}
+                      onClick={() => setSelectedEpisode(episode)}
+                      className={cn(
+                        "w-full text-left p-4 rounded-xl border transition-all duration-300 flex flex-col gap-1 group",
+                        selectedEpisode?.id === episode.id
+                          ? "bg-primary border-primary text-primary-foreground shadow-lg shadow-primary/20 scale-[1.02]"
+                          : "bg-background/40 border-border/50 hover:border-primary/50 hover:bg-background/60 text-foreground"
+                      )}
+                    >
+                      <span className="font-bold line-clamp-1">{episode.title}</span>
+                      <span className={cn(
+                        "text-[10px] uppercase font-black tracking-widest opacity-60",
+                        selectedEpisode?.id === episode.id ? "text-primary-foreground" : "text-muted-foreground"
+                      )}>
+                        {episode.status}
+                      </span>
+                    </button>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <p className="text-sm">No processed episodes yet.</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </div>
 
+          {/* RIGHT COLUMN: CONTENT */}
+          <div className="lg:col-span-9">
+            {selectedEpisode ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in slide-in-from-bottom-4 duration-500">
 
-          {/* RIGHT CONTENT */}
+                {/* SMART CALENDAR */}
+                <Card className="md:col-span-2 border-none shadow-2xl glass-vivid rounded-[2.5rem] overflow-hidden">
+                  <CardHeader className="p-8 pb-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-primary/10 rounded-xl">
+                          <Calendar className="w-5 h-5 text-primary" />
+                        </div>
+                        <CardTitle className="text-2xl font-bold">Smart Calendar</CardTitle>
+                      </div>
+                      <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 font-black">ACTIVE</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-8 pt-4 space-y-6">
+                    {loading ? (
+                      <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                        <Sparkles className="w-8 h-8 text-primary animate-pulse" />
+                        <p className="text-muted-foreground font-medium">AI is crafting your distribution timeline...</p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                        {schedule.map((item: any, i: number) => {
+                          const meta = PLATFORM_META[item.platform];
+                          const Icon = meta?.Icon || Globe;
+                          return (
+                            <div
+                              key={i}
+                              className="group relative p-5 rounded-[1.5rem] border border-border/50 bg-background/30 hover:bg-background/50 hover:border-primary/30 transition-all duration-300"
+                              style={{ borderLeft: `4px solid ${meta?.color || 'var(--primary)'}` }}
+                            >
+                              <div className="flex justify-between items-start mb-3">
+                                <span className="text-[10px] font-black tracking-widest text-muted-foreground uppercase">{item.day}</span>
+                                <div className="p-1.5 rounded-lg" style={{ background: meta?.bg || 'var(--primary-muted)' }}>
+                                  <Icon size={14} color={meta?.color} />
+                                </div>
+                              </div>
+                              <h4 className="font-bold text-sm mb-2 line-clamp-2">{item.content}</h4>
+                              <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground bg-muted/30 w-fit px-2 py-1 rounded-md">
+                                <Clock size={10} /> {item.time}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                    <Button
+                      onClick={syncCalendar}
+                      className={cn(
+                        "w-full h-14 rounded-2xl font-black text-lg transition-all shadow-xl",
+                        synced
+                          ? "bg-green-500 hover:bg-green-600 text-white"
+                          : "bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20"
+                      )}
+                    >
+                      {synced ? (
+                        <span className="flex items-center gap-2">
+                          <CheckCircle2 className="w-5 h-5" /> Calendar Synced!
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-2">
+                          <Share2 className="w-5 h-5" /> Sync with Your Calendar
+                        </span>
+                      )}
+                    </Button>
+                  </CardContent>
+                </Card>
 
-          <div>
+                {/* PREDICTED REACH */}
+                <Card className="border-none shadow-xl glass-vivid rounded-[2rem]">
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-primary font-bold">
+                        <TrendingUp className="w-4 h-4" />
+                        <span>Predicted Reach</span>
+                      </div>
+                      <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">LIVE</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    {Object.entries(reach).map(([platform, value]: any) => {
+                      const meta = PLATFORM_META[Object.keys(PLATFORM_META).find(k => k.toLowerCase() === platform.toLowerCase()) || ""];
+                      const Icon = meta?.Icon || Globe;
+                      return (
+                        <div key={platform} className="space-y-2">
+                          <div className="flex justify-between items-center text-sm">
+                            <div className="flex items-center gap-2 font-bold">
+                              <Icon size={14} color={meta?.color} />
+                              <span>{platform.charAt(0).toUpperCase() + platform.slice(1)}</span>
+                            </div>
+                            <span className="font-black text-primary">{value}%</span>
+                          </div>
+                          <div className="h-2 w-full bg-muted/30 rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full transition-all duration-1000"
+                              style={{ width: `${value}%`, background: meta?.color || 'var(--primary)' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </CardContent>
+                </Card>
 
-          {selectedEpisode ? (
+                {/* AI VIRAL WINDOW - COMING SOON */}
+                <Card className="border-none shadow-xl bg-background/40 rounded-[2rem] border border-border/50 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Lock className="w-8 h-8 text-muted-foreground mb-2" />
+                    <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">Work in progress</span>
+                  </div>
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-amber-500 font-bold">
+                        <Flame className="w-4 h-4" />
+                        <span>AI Viral Window</span>
+                      </div>
+                      <Badge variant="secondary" className="text-[10px] font-bold">COMING SOON</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="p-4 rounded-2xl bg-muted/30 border border-dashed border-border/50 flex flex-col items-center justify-center text-center space-y-2">
+                      <div className="text-2xl font-black text-foreground/20">--:--</div>
+                      <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">Optimal posting window</p>
+                    </div>
+                  </CardContent>
+                </Card>
 
-          <div className="content-grid">
+                {/* AUDIENCE EXPANSION - COMING SOON */}
+                <Card className="border-none shadow-xl bg-background/40 rounded-[2rem] border border-border/50 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Lock className="w-8 h-8 text-muted-foreground mb-2" />
+                    <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">Work in progress</span>
+                  </div>
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-primary font-bold">
+                        <Users className="w-4 h-4" />
+                        <span>Audience Expansion</span>
+                      </div>
+                      <Badge variant="secondary" className="text-[10px] font-bold">COMING SOON</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2 opacity-20 filter grayscale">
+                      <div className="h-12 w-full bg-muted/50 rounded-xl" />
+                      <div className="h-12 w-full bg-muted/50 rounded-xl" />
+                    </div>
+                  </CardContent>
+                </Card>
 
-            {/* CALENDAR */}
+                {/* CROSS PROMOTION - COMING SOON */}
+                <Card className="border-none shadow-xl bg-background/40 rounded-[2rem] border border-border/50 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Lock className="w-8 h-8 text-muted-foreground mb-2" />
+                    <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">Work in progress</span>
+                  </div>
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-violet-500 font-bold">
+                        <Share2 className="w-4 h-4" />
+                        <span>Cross Promotion</span>
+                      </div>
+                      <Badge variant="secondary" className="text-[10px] font-bold">COMING SOON</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2 opacity-20 filter grayscale">
+                      <div className="h-20 w-full bg-muted/50 rounded-xl" />
+                    </div>
+                  </CardContent>
+                </Card>
 
-            <div className="hub-card">
-              <div className="hub-card-header">
-                <Calendar size={14}/> Smart Calendar
               </div>
-
-              <div className="hub-card-body">
-
-              {loading ? "Generating..." : (
-
-              <div className="schedule-grid">
-
-              {schedule.map((item:any,i:number)=>{
-
-                const meta = PLATFORM_META[item.platform]
-                const Icon = meta?.Icon || Globe
-
-                return(
-
-                <div
-                key={i}
-                style={{
-                  padding:12,
-                  borderRadius:10,
-                  background:meta?.bg
-                }}
-                >
-
-                <div style={{fontSize:11,color:"#64748B"}}>
-                {item.day}
+            ) : (
+              <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 bg-background/40 rounded-[3rem] border-2 border-dashed border-border/50 space-y-6">
+                <div className="p-6 bg-primary/10 rounded-full animate-bounce">
+                  <Sparkles className="w-12 h-12 text-primary" />
                 </div>
-
-                <div style={{display:"flex",gap:6}}>
-                <Icon size={14} color={meta?.color}/>
-                {item.platform}
+                <div className="max-w-md">
+                  <h2 className="text-3xl font-headline font-black mb-4">Ready to Go Viral?</h2>
+                  <p className="text-muted-foreground text-lg mb-8">
+                    Select an episode from the left sidebar to generate your AI-powered distribution plan and smart calendar.
+                  </p>
+                  <div className="flex items-center justify-center gap-2 text-primary font-black animate-pulse">
+                    <ArrowRight className="w-5 h-5" />
+                    Select an episode to start
+                  </div>
                 </div>
-
-                <div>{item.content}</div>
-
-                <div style={{fontSize:11,color:"#64748B"}}>
-                <Clock size={10}/> {item.time}
-                </div>
-
-                </div>
-
-                )
-
-              })}
-
               </div>
-
-              )}
-
-              <button
-              onClick={syncCalendar}
-              style={{
-                width:"100%",
-                marginTop:16,
-                padding:12,
-                borderRadius:10,
-                background:"rgba(110,231,183,0.1)",
-                border:"1px solid rgba(110,231,183,0.3)"
-              }}
-              >
-
-              {synced ? "Calendar Synced!" : "Sync with Google Calendar"}
-
-              </button>
-
-              </div>
-            </div>
-
-
-            {/* REACH */}
-
-            <div className="hub-card">
-              <div className="hub-card-header">
-                <TrendingUp size={14}/> Predicted Reach
-              </div>
-
-              <div className="hub-card-body">
-
-              {Object.entries(reach).map(([platform,value]:any)=>{
-
-              const meta = PLATFORM_META[
-                Object.keys(PLATFORM_META).find(
-                k=>k.toLowerCase()===platform.toLowerCase()
-                ) || ""
-              ]
-
-              const Icon = meta?.Icon || Globe
-
-              return(
-
-              <div key={platform} style={{marginBottom:14}}>
-
-              <div style={{display:"flex",justifyContent:"space-between"}}>
-              <div style={{display:"flex",gap:6}}>
-              <Icon size={12} color={meta?.color}/>
-              {platform}
-              </div>
-              {value}%
-              </div>
-
-              <div className="reach-track">
-              <div
-              className="reach-fill"
-              style={{
-              width:`${value}%`,
-              background:meta?.color
-              }}
-              />
-              </div>
-
-              </div>
-
-              )
-
-              })}
-
-              </div>
-            </div>
-
-
-            {/* VIRAL WINDOW */}
-
-            <div className="hub-card">
-              <div className="hub-card-header">
-                <Flame size={14}/> AI Viral Window
-              </div>
-
-              <div className="hub-card-body">
-
-              {viralWindow ? (
-
-              <div className="ai-item">
-
-              Best Upload Time  
-              <b>{viralWindow.time}</b>
-
-              <div style={{fontSize:12,color:"#64748B"}}>
-              Confidence {viralWindow.confidence}%
-              </div>
-
-              </div>
-
-              ) : "Analyzing audience timing..."}
-
-              </div>
-            </div>
-
-
-            {/* AUDIENCE EXPANSION */}
-
-            <div className="hub-card">
-              <div className="hub-card-header">
-                <Users size={14}/> Audience Expansion
-              </div>
-
-              <div className="hub-card-body">
-
-              {audienceExpansion.map((item:any,i:number)=>(
-
-              <div key={i} className="ai-item">
-
-              <b>{item.platform}</b>
-
-              <div style={{fontSize:12,color:"#64748B"}}>
-              {item.community}
-              </div>
-
-              </div>
-
-              ))}
-
-              </div>
-            </div>
-
-
-            {/* CROSS PROMOTION */}
-
-            <div className="hub-card">
-              <div className="hub-card-header">
-                <Share2 size={14}/> Cross Promotion
-              </div>
-
-              <div className="hub-card-body">
-
-              {crossPromo.map((item:any,i:number)=>(
-
-              <div key={i} className="ai-item">
-              {item}
-              </div>
-
-              ))}
-
-              </div>
-            </div>
-
-
-          </div>
-
-          ) : (
-
-          <div style={{padding:40,textAlign:"center",opacity:.7}}>
-            <Sparkles size={30}/>
-            Select an episode to generate AI distribution plan
-          </div>
-
-          )}
-
+            )}
           </div>
 
         </div>
