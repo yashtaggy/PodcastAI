@@ -16,7 +16,7 @@ import { Logo } from "./logo";
 
 const navItems = [
   { href: "/dashboard/onboarding", icon: Rocket, label: "Planning & Launch" },
-  { href: "/dashboard", icon: Podcast, label: "Episodes" },
+  { href: "/dashboard", icon: Podcast, label: "PodScore" },
   { href: "/dashboard/authority-engine", icon: Sparkles, label: "Authority Engine" },
   { href: "/dashboard/distribution-hub", icon: Zap, label: "Distribution Hub" },
 ];
