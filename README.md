@@ -183,8 +183,9 @@ One-click transformation from podcast episode to complete multi-platform content
 
 - **Team**: PODCASTAI
 - **Team-Lead**: Yash Tagunde
+- **Team-Member**: Tanmay Khedekar
 - **Demo**: https://zz3deht72s.us-east-1.awsapprunner.com/
-- **Blog**: https://awsaiforbharat.blogspot.com/2026/03/we-built-ai-that-does-80-of-podcasters.html
+- **Blog/Documentation Of PodCastAI**: https://awsaiforbharat.blogspot.com/2026/03/documentation-of-podcastai.html
 - **Demo Video**: [Discord Community]
 
 ---
@@ -199,7 +200,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ### 🚀 **Ready to Transform Podcast Content Creation?**
 
-**[🎯 Try Live Demo](demo-link) | [📚 Read Docs](docs-link) | [💬 Join Community](discord-link)**
+**[🎯 Try Live Demo](https://zz3deht72s.us-east-1.awsapprunner.com/) | [📚 Read Docs](https://awsaiforbharat.blogspot.com/2026/03/documentation-of-podcastai.html) | [💬 Join Community](discord-link)**
 
 *Built with ❤️ for creators, by Tanmay Khedekar and Yash Tagunde*
 
