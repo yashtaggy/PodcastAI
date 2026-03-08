@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         // 🔥 LEVEL C FEATURES
         Settings: {
           ShowSpeakerLabels: true,
-          MaxSpeakerLabels: 2,   // Change if needed
+          MaxSpeakerLabels: 10,   // Change if needed
         },
 
         // Enable detailed timestamps
